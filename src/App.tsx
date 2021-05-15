@@ -1,6 +1,8 @@
 import React from 'react';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
+import HomePage from './pages/HomePage';
 
 const GlobalStyle = createGlobalStyle`
   ${normalize}
@@ -60,7 +62,12 @@ const App: React.FC = () => {
   return (
     <>
       <GlobalStyle />
-      Hello, React!
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" exact render={() => <Redirect to="/home" />} />
+          <Route path="/home" component={HomePage} />
+        </Switch>
+      </BrowserRouter>
     </>
   );
 };
