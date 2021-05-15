@@ -5,6 +5,7 @@ import ExploreSideBar from './ExploreSideBar';
 import NavigationSideBar from './NavigationSideBar';
 
 const PageTemplateContainer = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -14,8 +15,8 @@ interface ContentWrapperProps {
   width?: string;
 }
 
-const ContentWrapper = styled.div<ContentWrapperProps>`
-  min-height: 100vh;
+const ContentWrapper = styled.main<ContentWrapperProps>`
+  min-height: 100%;
   border-left: 1px solid ${ColorPalette.GRAY_E6};
   border-right: 1px solid ${ColorPalette.GRAY_E6};
 
