@@ -1,8 +1,15 @@
+import useTitle from 'hooks/useTitle';
 import ExploreSideBar from './ExploreSideBar';
 import NavigationSideBar from './NavigationSideBar';
 
-const PageTemplate: React.FC = (props) => {
-  const { children } = props;
+interface PageTemplateProps {
+  title: string;
+}
+
+const PageTemplate: React.FC<PageTemplateProps> = (props) => {
+  const { children, title } = props;
+
+  useTitle(`${title} / Twitter-Clone`);
 
   return (
     <>
