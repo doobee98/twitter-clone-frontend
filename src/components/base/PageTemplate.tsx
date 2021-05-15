@@ -1,14 +1,14 @@
-import Header from './Header';
-import SideBar from './SideBar';
+import ExploreSideBar from './ExploreSideBar';
+import NavigationSideBar from './NavigationSideBar';
 
 const PageTemplate: React.FC = (props) => {
   const { children } = props;
 
   return (
     <>
-      <Header />
+      <NavigationSideBar />
       {children}
-      <SideBar />
+      <ExploreSideBar />
     </>
   );
 };
