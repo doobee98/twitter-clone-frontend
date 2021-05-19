@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 
 const ExploreSideBarContainer = styled.aside`
@@ -11,10 +12,12 @@ const ExploreSideBarContainer = styled.aside`
   align-items: flex-start;
 `;
 
+const ToBeRemovedWrapper = styled(React.Fragment)``;
+
 const ExploreSideBar: React.FC = () => {
   return (
     <ExploreSideBarContainer>
-      <div>ExploreSideBar</div>
+      <ToBeRemovedWrapper>ExploreSideBar</ToBeRemovedWrapper>
     </ExploreSideBarContainer>
   );
 };
