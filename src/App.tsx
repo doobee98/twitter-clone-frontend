@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
+import { login } from 'modules/auth';
+import HomePage from './pages/HomePage';
 
 const GlobalStyle = createGlobalStyle`
   ${normalize}
@@ -57,10 +61,26 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App: React.FC = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const loginRequest = {
+      id: '',
+      password: '',
+    };
+
+    dispatch(login(loginRequest));
+  }, []);
+
   return (
     <>
       <GlobalStyle />
-      Hello, React!
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" exact render={() => <Redirect to="/home" />} />
+          <Route path="/home" component={HomePage} />
+        </Switch>
+      </BrowserRouter>
     </>
   );
 };
