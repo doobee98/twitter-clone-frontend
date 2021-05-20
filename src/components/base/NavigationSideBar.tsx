@@ -1,7 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { RootState } from 'modules';
+import { useAuthSelector } from 'hooks/redux';
 
 const NavigationSideBarContainer = styled.header`
   position: sticky;
@@ -20,7 +19,7 @@ const NavigationSideBarContainer = styled.header`
 const ToBeRemovedWrapper = styled(React.Fragment)``;
 
 const NavigationSideBar: React.FC = () => {
-  const authStore = useSelector((state: RootState) => state.authReducer);
+  const authStore = useAuthSelector();
   const { currentUser } = authStore;
 
   return (
