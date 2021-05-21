@@ -1,20 +1,12 @@
-import { createAction, handleActions } from 'utils/reduxUtils';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import User from '../models/user';
 import { LoginRequest, SignUpRequest } from '../models/request/auth';
-
-const LOGIN = 'auth/login' as const;
-const LOGOUT = 'auth/logout' as const;
-const SIGNUP = 'auth/signup' as const;
 
 interface AuthState {
   currentUser?: User;
 }
 
-export const login = createAction(LOGIN, (request: LoginRequest) => request);
-export const logout = createAction(LOGOUT);
-export const signup = createAction(SIGNUP, (request: SignUpRequest) => request);
-
-type AuthActions = ReturnType<typeof login | typeof logout | typeof signup>;
+const initialState: AuthState = {};
 
 // [TODO: NEED TO BE REMOVED] default user login data for test
 const defaultCurrentUser: User = {
@@ -24,17 +16,17 @@ const defaultCurrentUser: User = {
   follower_num: 2,
 };
 
-const initialState: AuthState = {};
-
-export const authReducer = handleActions<AuthState, AuthActions>(
-  {
-    [LOGIN]: (state, action) => ({
+export const auth = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    login: (state, action: PayloadAction<LoginRequest>) => ({
       currentUser: { ...defaultCurrentUser },
     }),
-    [LOGOUT]: (state) => ({
+    logout: () => ({
       currentUser: undefined,
     }),
-    [SIGNUP]: (state, action) => ({
+    signup: (state, action: PayloadAction<SignUpRequest>) => ({
       currentUser: {
         id: action.payload.id,
         username: action.payload.username,
@@ -43,5 +35,7 @@ export const authReducer = handleActions<AuthState, AuthActions>(
       },
     }),
   },
-  initialState,
-);
+});
+
+export const { login, logout, signup } = auth.actions;
+export default auth.reducer;
