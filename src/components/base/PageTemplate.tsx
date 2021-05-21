@@ -14,6 +14,7 @@ const PageTemplateContainer = styled.div`
 const LeftSideBarWrapper = styled.div`
   position: sticky;
   top: 0;
+  padding: 0 12px;
   overflow-y: auto;
   max-height: 100vh;
   flex-basis: auto;
@@ -41,6 +42,7 @@ const ContentWrapper = styled.main<ContentWrapperProps>`
 
 const RightSideBarWrapper = styled.div`
   position: relative;
+  margin-right: 10px;
   flex-basis: auto;
   flex-grow: 1;
   flex-shrink: 1;
