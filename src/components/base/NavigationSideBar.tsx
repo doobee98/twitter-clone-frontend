@@ -4,17 +4,10 @@ import { useAppDispatch, useAuthSelector } from 'hooks/redux';
 import { login, logout } from 'modules/auth';
 
 const NavigationSideBarContainer = styled.header`
-  position: sticky;
-  top: 0;
-  overflow-y: auto;
-  max-height: 100vh;
-  flex-basis: auto;
-  flex-grow: 1;
-  flex-shrink: 0;
-
+  width: 275px;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
 `;
 
 const ToBeRemovedWrapper = styled(React.Fragment)``;
