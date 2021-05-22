@@ -1,13 +1,9 @@
-import Tweet from 'models/tweet';
+import TweetModel from 'models/tweet';
 import styled, { css } from 'styled-components';
 import React from 'react';
-import TweetProps from '../../models/tweetProps';
 
 const TweetMainContainer = styled.main`
-    padding-top: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
-    padding-left: 10px;
+    padding: 10px;
     border: 2px solid;
     margin: 1.5px;
     margin-top : 10px;
@@ -32,7 +28,46 @@ const TweetCenterWrapper = styled.div`
     margin : 1px;
 `;
 
-export const TweetMain: React.FC<TweetProps> = (props) => {
+const TweetSide: React.FC = () => {
+
+    return (
+        <div>
+            side
+        </div>
+    );
+}
+
+interface TweetTextProps {
+    tweet: TweetModel;
+}
+
+const TweetText: React.FC<TweetTextProps> = (props) => {
+    const { children, tweet, } = props
+
+    return (
+        <div style={{height: '3vh', border: '1px solid'}}>
+            {tweet.text}
+        </div>
+    );
+}
+
+const TweetContent: React.FC = () => {
+
+    return (
+        <div style={{
+            // TO BE REMOVED
+            height: '7vh', border: '1px solid'
+            }}>
+            content
+        </div>
+    );
+}
+
+interface TweetMainProps {
+    tweet: TweetModel;
+}
+
+const TweetMain: React.FC<TweetMainProps> = (props) => {
     const { children, tweet, } = props;
 
     return (
@@ -47,35 +82,5 @@ export const TweetMain: React.FC<TweetProps> = (props) => {
         </TweetMainContainer>
     );
 };
-
-const TweetSide: React.FC = () => {
-
-    return (
-        <div>
-            side
-        </div>
-    );
-}
-
-const TweetText: React.FC<TweetProps> = (props) => {
-    const { children, tweet, } = props
-
-    return (
-        <div style={{height: '3vh', border: '1px solid'}}>
-            {tweet.text}
-        </div>
-    );
-}
-
-const TweetContent: React.FC = () => {
-
-    return (
-        <div style={{height: '7vh', border: '1px solid'}}>
-            content
-        </div>
-    );
-}
-
-
 
 export default TweetMain;

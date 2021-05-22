@@ -1,9 +1,9 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import Tweet from '../../models/tweet';
+import TweetModel from '../../models/tweet';
 import TweetProps from '../../models/tweetProps';
 
-const TweetFooterWrapper = styled.footer`
+const TweetFooterContainer = styled.footer`
     display: flex;
     padding: 5px;
     border: 2px solid;
@@ -20,11 +20,15 @@ const FooterDivWrapper = styled.div`
     margin: 1.5px;
 `;
 
-export const TweetFooter: React.FC<TweetProps> = (props) => {
+interface TweetFooterProps {
+    tweet: TweetModel;
+}
+
+const TweetFooter: React.FC<TweetFooterProps> = (props) => {
     const { children, tweet } = props;
     
     return ( 
-        <TweetFooterWrapper>
+        <TweetFooterContainer>
             <FooterDivWrapper>
                 <div>comments: {tweet.comments}</div>
             </FooterDivWrapper>
@@ -37,7 +41,7 @@ export const TweetFooter: React.FC<TweetProps> = (props) => {
             <FooterDivWrapper>
                 <div>share</div>
             </FooterDivWrapper>
-        </TweetFooterWrapper>
+        </TweetFooterContainer>
     );
 };
 

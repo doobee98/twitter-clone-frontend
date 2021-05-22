@@ -1,7 +1,6 @@
 import React, { Children } from 'react';
 import styled, { css } from 'styled-components';
-import Tweet from '../../models/tweet';
-import TweetProps from '../../models/tweetProps';
+import TweetModel from '../../models/tweet';
 
 const TweetHeaderWrapper = styled.header`
     padding: 5px;
@@ -9,8 +8,11 @@ const TweetHeaderWrapper = styled.header`
     margin: 1.5px;
 `;
 
-export const TweetHeader: React.FC<TweetProps> = (props) => {
-    // const { children, key, user, text, } = props;
+interface TweetHeaderProps {
+    tweet: TweetModel;
+}
+
+const TweetHeader: React.FC<TweetHeaderProps> = (props) => {
     const { children ,tweet } = props;
 
     return (

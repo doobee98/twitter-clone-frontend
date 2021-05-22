@@ -1,4 +1,4 @@
-export default interface Tweet {
+export default interface TweetModel {
     key: number;
     user: string;
     text: string;
