@@ -1,111 +1,67 @@
-import { IconContext, IconType } from 'react-icons';
-import { BsBell, BsBellFill, BsPerson, BsPersonFill } from 'react-icons/bs';
-import { CgMoreO } from 'react-icons/cg';
-import { FaBookmark, FaRegBookmark, FaTwitter } from 'react-icons/fa';
-import { HiHashtag, HiOutlineHashtag } from 'react-icons/hi';
-import { MdMail, MdMailOutline } from 'react-icons/md';
-import {
-  RiHome4Line,
-  RiHome4Fill,
-  RiFileList2Fill,
-  RiFileList2Line,
-} from 'react-icons/ri';
+import { IconContext } from 'react-icons';
+import styled, { css } from 'styled-components';
+import { isEnumType } from 'utils';
+import { BasicType, HighlightType, getIconType } from '../../utils/iconUtils';
 
-/* 
-  How to Search Icon: https://react-icons.github.io/react-icons
-*/
+interface IconWrapperProps {
+  isCircle: boolean;
+  size: number;
+}
 
-interface IconProviderProps {
-  icon: IconType;
+const IconWrapper = styled.div<IconWrapperProps>`
+  border-color: transparent;
+  width: ${(props) => `${props.size}px`};
+  height: ${(props) => `${props.size}px`};
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  ${(props) =>
+    props.isCircle &&
+    css`
+      border-radius: 9999px;
+    `};
+`;
+
+interface IconProps {
+  iconType: BasicType | HighlightType;
+  isHighlighted?: boolean;
   color?: string;
-  size?: string;
+  size?: number;
+  hasCircleWrapper?: boolean;
   style?: React.CSSProperties;
 }
 
-export const IconProvider: React.FC<IconProviderProps> = (props) => {
-  const { icon: IconComponent, color, size, style } = props;
-  const iconStyle = {
+const Icon: React.FC<IconProps> = (props) => {
+  const {
+    iconType,
+    isHighlighted,
     color,
-    size,
+    size = 20,
+    hasCircleWrapper,
+    style,
+  } = props;
+
+  const IconComponent = isEnumType(BasicType, iconType)
+    ? getIconType(iconType)
+    : getIconType(iconType, isHighlighted ?? false);
+
+  const wrapperSize = size;
+  const iconSize = hasCircleWrapper ? size / 1.414 : size;
+  const customIconStyle = {
+    color,
+    size: `${iconSize}px`,
     style,
   };
 
   return (
-    <IconContext.Provider value={iconStyle}>
-      <IconComponent />
-    </IconContext.Provider>
+    <IconWrapper isCircle={hasCircleWrapper ?? false} size={wrapperSize}>
+      <IconContext.Provider value={customIconStyle}>
+        <IconComponent />
+      </IconContext.Provider>
+    </IconWrapper>
   );
 };
 
-interface IconProps {
-  color?: string;
-  size?: string;
-  style?: React.CSSProperties;
-}
-
-interface HighlightableIconProps extends IconProps {
-  isHighlighted: boolean;
-}
-
-export const TwitterIcon: React.FC<IconProps> = (props) => {
-  const { color, size, style } = props;
-  const icon = FaTwitter;
-
-  return <IconProvider icon={icon} color={color} size={size} style={style} />;
-};
-
-export const HomeIcon: React.FC<HighlightableIconProps> = (props) => {
-  const { isHighlighted, color, size, style } = props;
-  const icon = isHighlighted ? RiHome4Fill : RiHome4Line;
-
-  return <IconProvider icon={icon} color={color} size={size} style={style} />;
-};
-
-export const ExploreIcon: React.FC<HighlightableIconProps> = (props) => {
-  const { isHighlighted, color, size, style } = props;
-  const icon = isHighlighted ? HiHashtag : HiOutlineHashtag;
-
-  return <IconProvider icon={icon} color={color} size={size} style={style} />;
-};
-
-export const NotificationsIcon: React.FC<HighlightableIconProps> = (props) => {
-  const { isHighlighted, color, size, style } = props;
-  const icon = isHighlighted ? BsBellFill : BsBell;
-
-  return <IconProvider icon={icon} color={color} size={size} style={style} />;
-};
-
-export const MessagesIcon: React.FC<HighlightableIconProps> = (props) => {
-  const { isHighlighted, color, size, style } = props;
-  const icon = isHighlighted ? MdMail : MdMailOutline;
-
-  return <IconProvider icon={icon} color={color} size={size} style={style} />;
-};
-
-export const BookmarksIcon: React.FC<HighlightableIconProps> = (props) => {
-  const { isHighlighted, color, size, style } = props;
-  const icon = isHighlighted ? FaBookmark : FaRegBookmark;
-
-  return <IconProvider icon={icon} color={color} size={size} style={style} />;
-};
-
-export const ListsIcon: React.FC<HighlightableIconProps> = (props) => {
-  const { isHighlighted, color, size, style } = props;
-  const icon = isHighlighted ? RiFileList2Fill : RiFileList2Line;
-
-  return <IconProvider icon={icon} color={color} size={size} style={style} />;
-};
-
-export const ProfileIcon: React.FC<HighlightableIconProps> = (props) => {
-  const { isHighlighted, color, size, style } = props;
-  const icon = isHighlighted ? BsPersonFill : BsPerson;
-
-  return <IconProvider icon={icon} color={color} size={size} style={style} />;
-};
-
-export const MoreIcon: React.FC<IconProps> = (props) => {
-  const { color, size, style } = props;
-  const icon = CgMoreO;
-
-  return <IconProvider icon={icon} color={color} size={size} style={style} />;
-};
+export default Icon;

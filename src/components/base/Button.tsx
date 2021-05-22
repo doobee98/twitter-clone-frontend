@@ -12,7 +12,7 @@ const ButtonWrapper = styled.button`
   background-color: ${ColorPalette.WHITE};
 
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 
   &:focus {
