@@ -11,6 +11,20 @@ const PageTemplateContainer = styled.div`
   align-items: flex-start;
 `;
 
+const LeftSideBarWrapper = styled.div`
+  position: sticky;
+  top: 0;
+  padding: 0 12px;
+  overflow-y: auto;
+  max-height: 100vh;
+  flex-basis: auto;
+  flex-grow: 1;
+  flex-shrink: 0;
+
+  display: flex;
+  flex-direction: row-reverse;
+`;
+
 interface ContentWrapperProps {
   width?: string;
 }
@@ -26,6 +40,16 @@ const ContentWrapper = styled.main<ContentWrapperProps>`
     `}
 `;
 
+const RightSideBarWrapper = styled.div`
+  position: relative;
+  margin-right: 10px;
+  flex-basis: auto;
+  flex-grow: 1;
+  flex-shrink: 1;
+
+  display: flex;
+`;
+
 interface PageTemplateProps {
   title: string;
   contentWidth?: string;
@@ -38,9 +62,13 @@ const PageTemplate: React.FC<PageTemplateProps> = (props) => {
 
   return (
     <PageTemplateContainer>
-      <NavigationSideBar />
+      <LeftSideBarWrapper>
+        <NavigationSideBar />
+      </LeftSideBarWrapper>
       <ContentWrapper width={contentWidth}>{children}</ContentWrapper>
-      <ExploreSideBar />
+      <RightSideBarWrapper>
+        <ExploreSideBar />
+      </RightSideBarWrapper>
     </PageTemplateContainer>
   );
 };

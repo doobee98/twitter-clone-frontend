@@ -2,10 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ExploreSideBarContainer = styled.aside`
-  position: relative;
-  flex-basis: auto;
-  flex-grow: 1;
-  flex-shrink: 1;
+  max-width: 350px;
 
   display: flex;
   flex-direction: column;
