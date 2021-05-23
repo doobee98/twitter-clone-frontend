@@ -13,6 +13,11 @@ import {
 } from 'react-icons/ri';
 import { isEnumType } from 'utils';
 
+/* 
+  Basic Type      : icons with no interactions.
+  Highlight Type  : icons able to be highlighted (fill, bold, ...)
+*/
+
 export enum BasicType {
   TWITTER = 'basic-twitter',
   MORE_CIRCLE = 'basic-more-circle',
