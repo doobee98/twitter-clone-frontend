@@ -14,6 +14,7 @@ const ImageWrapper = styled.div`
   padding-top: 4px;
 `;
 
+// [REMOVED]
 const TestImage = styled.div`
   margin-left: 0;
   width: 48px;
