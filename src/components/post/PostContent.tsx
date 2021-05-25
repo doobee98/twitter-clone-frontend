@@ -31,10 +31,17 @@ const TextWrapper = styled.textarea`
   }
 `;
 
-const PermissionWrapper = styled.div`
+const PermissionWrapper = styled.div<{ writing: boolean }>`
   height: 45px;
   padding-bottom: 10px;
+  border-bottom: 1px solid ${ColorPalette.GRAY_E6};
   background-color: ${ColorPalette.GRAY_E6};
+  display: none;
+  ${(props) =>
+    props.writing &&
+    css`
+      display: block;
+    `}
 `;
 
 const ToolBarWrapper = styled.div`
@@ -71,7 +78,7 @@ const PostContent: React.FC = () => {
           setCurrentValue(e.target.value);
         }}
       />
-      <PermissionWrapper />
+      <PermissionWrapper writing={writing} />
       <ToolBarWrapper>
         <ToolList />
       </ToolBarWrapper>
