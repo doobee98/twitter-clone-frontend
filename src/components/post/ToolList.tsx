@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { ColorPalette } from '../../utils/colorUtils';
 import { BasicType } from '../../utils/iconUtils';
 import Button from '../base/Button';
-import Icon from '../base/Icon';
+import NavItem from '../base/NavItem';
 
 const ToolListContainer = styled.div`
   height: 100%;
@@ -17,16 +17,32 @@ const ToolWrapper = styled.div`
   float: left;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 19px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: flex-end;
+  shape-outside: inset(calc(100% - 100px) 0 0);
+
+  cursor: pointer;
 `;
 
-const ToolIcon = styled(Icon)`
-  width: 60%;
-  height: 60%;
+const ToolIcon = styled(NavItem)`
   align-items: center;
   justify-content: center;
+
+  & button {
+    width: 40px;
+    height: 40px;
+    padding: 0px;
+    margin: 0px;
+  }
+
+  & svg {
+    width: 30x;
+    height: 30px;
+  }
+
+  color: ${ColorPalette.SKYBLUE};
 `;
 
 const ButtonWrapper = styled.div`
@@ -58,44 +74,19 @@ const ToolList = () => {
     <>
       <ToolListContainer>
         <ToolWrapper>
-          <ToolIcon
-            iconType={BasicType.MEDIA}
-            size={36}
-            color={ColorPalette.SKYBLUE}
-            hasCircleWrapper
-          />
+          <ToolIcon iconType={BasicType.MEDIA} />
         </ToolWrapper>
         <ToolWrapper>
-          <Icon
-            iconType={BasicType.GIF}
-            size={36}
-            color={ColorPalette.SKYBLUE}
-            hasCircleWrapper
-          />
+          <ToolIcon iconType={BasicType.GIF} />
         </ToolWrapper>
         <ToolWrapper>
-          <Icon
-            iconType={BasicType.POLL}
-            size={36}
-            color={ColorPalette.SKYBLUE}
-            hasCircleWrapper
-          />
+          <ToolIcon iconType={BasicType.POLL} />
         </ToolWrapper>
         <ToolWrapper>
-          <Icon
-            iconType={BasicType.EMOJI}
-            size={36}
-            color={ColorPalette.SKYBLUE}
-            hasCircleWrapper
-          />
+          <ToolIcon iconType={BasicType.EMOJI} />
         </ToolWrapper>
         <ToolWrapper>
-          <Icon
-            iconType={BasicType.SCHEDULE}
-            size={36}
-            color={ColorPalette.SKYBLUE}
-            hasCircleWrapper
-          />
+          <ToolIcon iconType={BasicType.SCHEDULE} />
         </ToolWrapper>
       </ToolListContainer>
       <ButtonWrapper>

@@ -52,6 +52,7 @@ const PermissionButton = styled(NavItem)`
   & button {
     margin: 0px;
     padding: 0px;
+    padding-right: 10px;
   }
 
   & div {
