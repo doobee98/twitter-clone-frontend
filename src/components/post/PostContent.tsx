@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
+import { HighlightType } from 'utils/iconUtils';
+import NavItem from '../base/NavItem';
 import ToolList from './ToolList';
 
 const ContentContainer = styled.div`
@@ -35,13 +37,28 @@ const PermissionWrapper = styled.div<{ writing: boolean }>`
   height: 45px;
   padding-bottom: 10px;
   border-bottom: 1px solid ${ColorPalette.GRAY_E6};
-  background-color: ${ColorPalette.GRAY_E6};
+
   display: none;
   ${(props) =>
     props.writing &&
     css`
       display: block;
     `}
+`;
+
+const PermissionButton = styled(NavItem)`
+  color: ${ColorPalette.SKYBLUE};
+
+  & button {
+    margin: 0px;
+    padding: 0px;
+  }
+
+  & div {
+    margin: 0px;
+    margin-left: 6.5px;
+    font-size: 13px;
+  }
 `;
 
 const ToolBarWrapper = styled.div`
@@ -78,7 +95,12 @@ const PostContent: React.FC = () => {
           setCurrentValue(e.target.value);
         }}
       />
-      <PermissionWrapper writing={writing} />
+      <PermissionWrapper writing={writing}>
+        {/* TODO: permission에 따라 내용 바뀌도록 */}
+        <PermissionButton iconType={HighlightType.EARTH}>
+          Everyone can reply
+        </PermissionButton>
+      </PermissionWrapper>
       <ToolBarWrapper>
         <ToolList />
       </ToolBarWrapper>
