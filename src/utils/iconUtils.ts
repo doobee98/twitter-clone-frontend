@@ -10,7 +10,16 @@ import {
   RiHome4Fill,
   RiFileList2Fill,
   RiFileList2Line,
+  RiBarChartHorizontalFill,
+  RiEarthLine,
+  RiEarthFill,
 } from 'react-icons/ri';
+import {
+  AiOutlinePicture,
+  AiOutlineGif,
+  AiOutlineSchedule,
+} from 'react-icons/ai';
+import { VscSmiley } from 'react-icons/vsc';
 import { isEnumType } from 'utils';
 
 /* 
@@ -22,6 +31,11 @@ export enum BasicType {
   TWITTER = 'basic-twitter',
   MORE_CIRCLE = 'basic-more-circle',
   MORE = 'basic-more',
+  MEDIA = 'media',
+  GIF = 'gif',
+  POLL = 'poll',
+  EMOJI = 'emoji',
+  SCHEDULE = 'schedule',
 }
 
 export enum HighlightType {
@@ -32,6 +46,7 @@ export enum HighlightType {
   BOOKMARKS = 'highlight-bookmarks',
   LISTS = 'highlight-lists',
   PROFILE = 'highlight-profile',
+  EARTH = 'highlight-earth',
 }
 
 /* 
@@ -42,6 +57,11 @@ const basicRecord = {
   [BasicType.TWITTER]: FaTwitter,
   [BasicType.MORE_CIRCLE]: CgMoreO,
   [BasicType.MORE]: FiMoreHorizontal,
+  [BasicType.MEDIA]: AiOutlinePicture,
+  [BasicType.GIF]: AiOutlineGif,
+  [BasicType.POLL]: RiBarChartHorizontalFill,
+  [BasicType.EMOJI]: VscSmiley,
+  [BasicType.SCHEDULE]: AiOutlineSchedule,
 };
 
 // [Icon when highlighted state, Icon when basic state]
@@ -53,6 +73,7 @@ const highlightRecord = {
   [HighlightType.BOOKMARKS]: [FaBookmark, FaRegBookmark],
   [HighlightType.LISTS]: [RiFileList2Fill, RiFileList2Line],
   [HighlightType.PROFILE]: [BsPersonFill, BsPerson],
+  [HighlightType.EARTH]: [RiEarthFill, RiEarthLine],
 };
 
 type IgetIconType = {
