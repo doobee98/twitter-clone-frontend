@@ -70,6 +70,11 @@ const UserId = styled.span`
   color: ${ColorPalette.GRAY_70};
 `;
 
+const UserMoreIcon = styled(Icon)`
+  width: 20px;
+  height: 20px;
+`;
+
 const BottomContainer = styled.div`
   width: 100%;
   margin: 12px 0;
@@ -144,7 +149,7 @@ const NavigationSideBar: React.FC = () => {
               <Username>{currentUser.username}</Username>
               <UserId>@{currentUser.id}</UserId>
             </UserButtonTextArea>
-            <Icon iconType={BasicType.MORE} size={20} />
+            <UserMoreIcon iconType={BasicType.MORE} />
           </UserButton>
         )}
       </BottomContainer>

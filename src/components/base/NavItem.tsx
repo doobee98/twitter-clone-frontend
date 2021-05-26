@@ -34,6 +34,11 @@ const NavItemButton = styled(Button)<NavItemButtonProps>`
     `}
 `;
 
+const NavIcon = styled(Icon)`
+  width: 25px;
+  height: 25px;
+`;
+
 const NavItemText = styled.div`
   font-size: 20px;
   font-weight: bold;
@@ -76,7 +81,7 @@ const NavItem: React.FC<NavItemProps> = (props) => {
       onMouseLeave={onHoverOut}
     >
       <NavItemButton isActive={isCurrentPath} isHover={isHover}>
-        <Icon iconType={iconType} isHighlighted={isCurrentPath} size={25} />
+        <NavIcon iconType={iconType} isHighlighted={isCurrentPath} />
         {children && <NavItemText>{children}</NavItemText>}
       </NavItemButton>
     </NavItemContainer>
