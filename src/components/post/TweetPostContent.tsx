@@ -11,7 +11,11 @@ const TweetPostContentContainer = styled.div`
   width: 90%;
 `;
 
-const TweetPostTextWrapper = styled.textarea<{ height: string }>`
+interface TweetPostTextWrapperProps {
+  height: string;
+}
+
+const TweetPostTextWrapper = styled.textarea<TweetPostTextWrapperProps>`
   width: 100%;
   min-height: 56px;
   line-height: 1.35em;
@@ -28,7 +32,11 @@ const TweetPostTextWrapper = styled.textarea<{ height: string }>`
     `}
 `;
 
-const TweetPostPermissionWrapper = styled.div<{ isWritingStarted: boolean }>`
+interface TweetPostPermissionWrapperProps {
+  isWritingStarted: boolean;
+}
+
+const TweetPostPermissionWrapper = styled.div<TweetPostPermissionWrapperProps>`
   height: 45px;
   padding-bottom: 10px;
   border-bottom: 1px solid ${ColorPalette.GRAY_E6};
