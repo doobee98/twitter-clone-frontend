@@ -5,7 +5,7 @@ import { BasicType } from '../../utils/iconUtils';
 import Button from '../base/Button';
 import NavItem from '../base/NavItem';
 
-const ToolListContainer = styled.div`
+const ToolBarContainer = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
@@ -69,10 +69,10 @@ const TweetButton = styled(Button)`
   }
 `;
 
-const ToolList = () => {
+const TweetPostToolBar = () => {
   return (
     <>
-      <ToolListContainer>
+      <ToolBarContainer>
         <ToolWrapper>
           <ToolIcon iconType={BasicType.MEDIA} />
         </ToolWrapper>
@@ -88,7 +88,7 @@ const ToolList = () => {
         <ToolWrapper>
           <ToolIcon iconType={BasicType.SCHEDULE} />
         </ToolWrapper>
-      </ToolListContainer>
+      </ToolBarContainer>
       <ButtonWrapper>
         <TweetButton> Tweet </TweetButton>
       </ButtonWrapper>
@@ -96,4 +96,4 @@ const ToolList = () => {
   );
 };
 
-export default ToolList;
+export default TweetPostToolBar;

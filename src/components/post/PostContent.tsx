@@ -3,15 +3,15 @@ import styled, { css } from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
 import { HighlightType } from 'utils/iconUtils';
 import NavItem from '../base/NavItem';
-import ToolList from './ToolList';
+import TweetPostToolBar from './ToolList';
 
-const PostContentContainer = styled.div`
+const TweetPostContentContainer = styled.div`
   float: left;
   padding-top: 4px;
   width: 90%;
 `;
 
-const TextWrapper = styled.textarea<{ height: string }>`
+const TweetPostTextWrapper = styled.textarea<{ height: string }>`
   width: 100%;
   min-height: 56px;
   padding: 12px 0px;
@@ -28,7 +28,7 @@ const TextWrapper = styled.textarea<{ height: string }>`
     `}
 `;
 
-const PermissionWrapper = styled.div<{ isWritingStarted: boolean }>`
+const TweetPostPermissionWrapper = styled.div<{ isWritingStarted: boolean }>`
   height: 45px;
   padding-bottom: 10px;
   border-bottom: 1px solid ${ColorPalette.GRAY_E6};
@@ -57,22 +57,22 @@ const PermissionButton = styled(NavItem)`
   }
 `;
 
-const ToolBarWrapper = styled.div`
+const TweetPostToolBarWrapper = styled.div`
   display: flex;
   margin: 0px 2px;
   width: 100%;
   height: 52px;
 `;
 
-const PostContent: React.FC = () => {
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const [textareaHeight, setTextareaHeight] = useState('56px');
+const TweetPostContent: React.FC = () => {
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const [textAreaHeight, setTextareaHeight] = useState('56px');
   const [currentValue, setCurrentValue] = useState('');
   const [isWritingStarted, setIsWritingStarted] = useState(false);
 
   useEffect(() => {
-    if (textareaRef.current) {
-      setTextareaHeight(`${textareaRef.current.scrollHeight}px`);
+    if (textAreaRef.current) {
+      setTextareaHeight(`${textAreaRef.current.scrollHeight}px`);
     }
   }, [currentValue]);
 
@@ -81,10 +81,10 @@ const PostContent: React.FC = () => {
   };
 
   return (
-    <PostContentContainer>
-      <TextWrapper
-        ref={textareaRef}
-        height={textareaHeight}
+    <TweetPostContentContainer>
+      <TweetPostTextWrapper
+        ref={textAreaRef}
+        height={textAreaHeight}
         value={currentValue}
         placeholder="What's happening?"
         rows={1}
@@ -94,17 +94,17 @@ const PostContent: React.FC = () => {
           setCurrentValue(e.target.value);
         }}
       />
-      <PermissionWrapper isWritingStarted={isWritingStarted}>
+      <TweetPostPermissionWrapper isWritingStarted={isWritingStarted}>
         {/* TODO: permission에 따라 내용 바뀌도록 */}
         <PermissionButton iconType={HighlightType.EARTH}>
           Everyone can reply
         </PermissionButton>
-      </PermissionWrapper>
-      <ToolBarWrapper>
-        <ToolList />
-      </ToolBarWrapper>
-    </PostContentContainer>
+      </TweetPostPermissionWrapper>
+      <TweetPostToolBarWrapper>
+        <TweetPostToolBar />
+      </TweetPostToolBarWrapper>
+    </TweetPostContentContainer>
   );
 };
 
-export default PostContent;
+export default TweetPostContent;
