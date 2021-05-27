@@ -58,7 +58,7 @@ const ButtonWrapper = styled.div`
 
 const TweetButton = styled(Button)`
   float: right;
-  width: 100%;
+  width: 70px;
   color: ${ColorPalette.WHITE};
   background-color: ${ColorPalette.SKYBLUE};
   font-size: 16px;
