@@ -5,7 +5,7 @@ import { HighlightType } from 'utils/iconUtils';
 import NavItem from '../base/NavItem';
 import ToolList from './ToolList';
 
-const ContentContainer = styled.div`
+const PostContentContainer = styled.div`
   float: left;
   padding-top: 4px;
   width: 90%;
@@ -72,7 +72,7 @@ const PostContent: React.FC = () => {
   }, [currentValue]);
 
   return (
-    <ContentContainer>
+    <PostContentContainer>
       <TextWrapper
         ref={textareaRef}
         value={currentValue}
@@ -95,7 +95,7 @@ const PostContent: React.FC = () => {
       <ToolBarWrapper>
         <ToolList />
       </ToolBarWrapper>
-    </ContentContainer>
+    </PostContentContainer>
   );
 };
 
