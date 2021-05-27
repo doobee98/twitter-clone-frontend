@@ -23,14 +23,14 @@ const TextWrapper = styled.textarea`
   font-size: 20px;
 `;
 
-const PermissionWrapper = styled.div<{ writing: boolean }>`
+const PermissionWrapper = styled.div<{ isWritingStarted: boolean }>`
   height: 45px;
   padding-bottom: 10px;
   border-bottom: 1px solid ${ColorPalette.GRAY_E6};
 
   display: none;
   ${(props) =>
-    props.writing &&
+    props.isWritingStarted &&
     css`
       display: block;
     `}
@@ -62,7 +62,7 @@ const ToolBarWrapper = styled.div`
 const PostContent: React.FC = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [currentValue, setCurrentValue] = useState('');
-  const [writing, setWriting] = useState(false);
+  const [isWritingStarted, setIsWritingStarted] = useState(false);
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -80,13 +80,13 @@ const PostContent: React.FC = () => {
         rows={1}
         defaultValue=""
         onClick={() => {
-          setWriting(true);
+          setIsWritingStarted(true);
         }}
         onChange={(e) => {
           setCurrentValue(e.target.value);
         }}
       />
-      <PermissionWrapper writing={writing}>
+      <PermissionWrapper isWritingStarted={isWritingStarted}>
         {/* TODO: permission에 따라 내용 바뀌도록 */}
         <PermissionButton iconType={HighlightType.EARTH}>
           Everyone can reply
