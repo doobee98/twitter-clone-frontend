@@ -21,16 +21,6 @@ const TextWrapper = styled.textarea`
   border: none;
 
   font-size: 20px;
-  font-family: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto',
-    Helvetica, Arial, sans-serif;
-  font-weight: 400;
-
-  ::placeholder {
-    font-size: 20px;
-    font-family: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto',
-      Helvetica, Arial, sans-serif;
-    font-weight: 400;
-  }
 `;
 
 const PermissionWrapper = styled.div<{ writing: boolean }>`
