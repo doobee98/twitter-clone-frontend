@@ -71,6 +71,10 @@ const PostContent: React.FC = () => {
     }
   }, [currentValue]);
 
+  const handleClick = () => {
+    setIsWritingStarted(true);
+  };
+
   return (
     <PostContentContainer>
       <TextWrapper
@@ -79,9 +83,7 @@ const PostContent: React.FC = () => {
         placeholder="What's happening?"
         rows={1}
         defaultValue=""
-        onClick={() => {
-          setIsWritingStarted(true);
-        }}
+        onClick={handleClick}
         onChange={(e) => {
           setCurrentValue(e.target.value);
         }}
