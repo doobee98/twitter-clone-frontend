@@ -11,7 +11,7 @@ const PostContentContainer = styled.div`
   width: 90%;
 `;
 
-const TextWrapper = styled.textarea`
+const TextWrapper = styled.textarea<{ height: string }>`
   width: 100%;
   min-height: 56px;
   padding: 12px 0px;
@@ -21,6 +21,11 @@ const TextWrapper = styled.textarea`
   border: none;
 
   font-size: 20px;
+
+  ${(props) =>
+    css`
+      height: ${props.height};
+    `}
 `;
 
 const PermissionWrapper = styled.div<{ isWritingStarted: boolean }>`
@@ -61,13 +66,13 @@ const ToolBarWrapper = styled.div`
 
 const PostContent: React.FC = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [textareaHeight, setTextareaHeight] = useState('56px');
   const [currentValue, setCurrentValue] = useState('');
   const [isWritingStarted, setIsWritingStarted] = useState(false);
 
   useEffect(() => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = '0px';
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+      setTextareaHeight(`${textareaRef.current.scrollHeight}px`);
     }
   }, [currentValue]);
 
@@ -79,6 +84,7 @@ const PostContent: React.FC = () => {
     <PostContentContainer>
       <TextWrapper
         ref={textareaRef}
+        height={textareaHeight}
         value={currentValue}
         placeholder="What's happening?"
         rows={1}
