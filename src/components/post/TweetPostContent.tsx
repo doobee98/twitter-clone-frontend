@@ -14,9 +14,9 @@ const TweetPostContentContainer = styled.div`
 const TweetPostTextWrapper = styled.textarea<{ height: string }>`
   width: 100%;
   min-height: 56px;
+  line-height: 1.35em;
   padding: 12px 0px;
 
-  overflow: hidden;
   resize: none;
   border: none;
 
