@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
-import PostContent from './PostContent';
-import PostProfile from './PostProfile';
+import TweetPostContent from './TweetPostContent';
+import TweetPostProfile from './TweetPostProfile';
 
 const PostContainer = styled.div`
   display: flex;
@@ -14,8 +14,8 @@ const PostContainer = styled.div`
 const TweetPost: React.FC = () => {
   return (
     <PostContainer>
-      <PostProfile />
-      <PostContent />
+      <TweetPostProfile />
+      <TweetPostContent />
     </PostContainer>
   );
 };

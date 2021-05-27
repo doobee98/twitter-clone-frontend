@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
 import { HighlightType } from 'utils/iconUtils';
 import NavItem from '../base/NavItem';
-import TweetPostToolBar from './ToolList';
+import TweetPostToolBar from './TweetPostToolBar';
 
 const TweetPostContentContainer = styled.div`
   float: left;
