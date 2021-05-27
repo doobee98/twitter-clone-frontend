@@ -31,11 +31,11 @@ export enum BasicType {
   TWITTER = 'basic-twitter',
   MORE_CIRCLE = 'basic-more-circle',
   MORE = 'basic-more',
-  MEDIA = 'media',
-  GIF = 'gif',
-  POLL = 'poll',
-  EMOJI = 'emoji',
-  SCHEDULE = 'schedule',
+  MEDIA = 'basic-media',
+  GIF = 'basic-gif',
+  POLL = 'basic-poll',
+  EMOJI = 'basic-emoji',
+  SCHEDULE = 'basic-schedule',
 }
 
 export enum HighlightType {
