@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { ColorPalette } from '../../utils/colorUtils';
 import TweetModel from '../../models/tweet';
 import TweetComponent from './TweetComponent';
+import useInfScroll from '../../hooks/useInfScroll';
 
 const defaultTweets: TweetModel[] = [
     {key: 0, user: 'marong142', text: 'hello-world', comments: 5, retweets: 5, likes: 5, },
@@ -31,7 +32,9 @@ const TweetListContainer = styled.div`
 `;
 
 const TweetList: React.FC = () => {
-    const tweets: TweetModel[] = defaultTweets;
+    const [tweets, setTweets] = useState<TweetModel[]>([defaultTweets[0], defaultTweets[1], defaultTweets[2], defaultTweets[3], ]);
+    
+    useInfScroll(defaultTweets, tweets, setTweets);
 
     return (
         <TweetListContainer>
