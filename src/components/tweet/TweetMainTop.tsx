@@ -26,7 +26,7 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
         <TweetMainTopContainer>
             top
             <TweetMainTopItemWrapper>
-                <h3>{ tweet.user }</h3>
+                <h3>{ tweet.user } : { tweet.key }</h3>
             </TweetMainTopItemWrapper>
             <TweetMainTopItemWrapper>
                 isOffical

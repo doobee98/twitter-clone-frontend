@@ -18,7 +18,6 @@ const TweetMainContainer = styled.div`
     vertical-align: top;
 `;
 
-
 interface TweetMainProps {
     tweet: TweetModel;
 }
