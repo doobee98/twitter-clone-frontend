@@ -4,7 +4,7 @@ import { ColorPalette } from 'utils/colorUtils';
 import TweetPostContent from './TweetPostContent';
 import TweetPostProfile from './TweetPostProfile';
 
-const PostContainer = styled.div`
+const TweetPostContainer = styled.div`
   display: flex;
   padding: 0px 16px 4px 16px;
   width: 100%;
@@ -13,10 +13,10 @@ const PostContainer = styled.div`
 
 const TweetPost: React.FC = () => {
   return (
-    <PostContainer>
+    <TweetPostContainer>
       <TweetPostProfile />
       <TweetPostContent />
-    </PostContainer>
+    </TweetPostContainer>
   );
 };
 

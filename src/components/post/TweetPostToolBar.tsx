@@ -38,7 +38,7 @@ const ToolIcon = styled(NavItem)`
   }
 
   & svg {
-    width: 30x;
+    width: 30px;
     height: 30px;
   }
 

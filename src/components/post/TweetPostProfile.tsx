@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
 
-const ProfileWrapper = styled.div`
+const TweetProfileWrapper = styled.div`
   width: 10%;
   height: 100px;
 `;
@@ -23,14 +23,14 @@ const TestImage = styled.div`
   background-color: ${ColorPalette.GREEN};
 `;
 
-const PostProfile: React.FC = () => {
+const TweetPostProfile: React.FC = () => {
   return (
-    <ProfileWrapper>
+    <TweetProfileWrapper>
       <ImageWrapper>
         <TestImage />
       </ImageWrapper>
-    </ProfileWrapper>
+    </TweetProfileWrapper>
   );
 };
 
-export default PostProfile;
+export default TweetPostProfile;
