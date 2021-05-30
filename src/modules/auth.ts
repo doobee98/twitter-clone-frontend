@@ -10,30 +10,40 @@ const initialState: AuthState = {};
 
 // [TODO: NEED TO BE REMOVED] default user login data for test
 const defaultCurrentUser: User = {
-  id: 'doobee98',
+  user_id: 'doobee98',
   username: '이두섭',
-  following_num: 20,
-  follower_num: 2,
+  following_count: 20,
+  follower_count: 2,
+  joined_at: Date(),
 };
 
 export const auth = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<LoginRequest>) => ({
-      currentUser: { ...defaultCurrentUser },
-    }),
-    logout: () => ({
-      currentUser: undefined,
-    }),
-    signup: (state, action: PayloadAction<SignUpRequest>) => ({
-      currentUser: {
-        id: action.payload.id,
-        username: action.payload.username,
-        following_num: 0,
-        follower_num: 0,
-      },
-    }),
+    login: (state, action: PayloadAction<LoginRequest>) => {
+      const { user_id, password } = action.payload;
+      return {
+        currentUser: { ...defaultCurrentUser },
+      };
+    },
+    logout: () => {
+      return {
+        currentUser: undefined,
+      };
+    },
+    signup: (state, action: PayloadAction<SignUpRequest>) => {
+      const { user_id, password, username } = action.payload;
+      return {
+        currentUser: {
+          user_id,
+          username,
+          following_count: 0,
+          follower_count: 0,
+          joined_at: Date(),
+        },
+      };
+    },
   },
 });
 

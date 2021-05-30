@@ -65,7 +65,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const loginRequest = {
-      id: '',
+      user_id: '',
       password: '',
     };
 

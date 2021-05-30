@@ -85,7 +85,7 @@ const NavigationSideBar: React.FC = () => {
   // [TODO: NEED TO BE REMOVED] test for login button
   const fetchLogin = () => {
     const loginRequest = {
-      id: '',
+      user_id: '',
       password: '',
     };
     dispatch(login(loginRequest));
@@ -142,7 +142,7 @@ const NavigationSideBar: React.FC = () => {
           <UserButton>
             <UserButtonTextArea>
               <Username>{currentUser.username}</Username>
-              <UserId>@{currentUser.id}</UserId>
+              <UserId>@{currentUser.user_id}</UserId>
             </UserButtonTextArea>
             <Icon iconType={BasicType.MORE} size={20} />
           </UserButton>
