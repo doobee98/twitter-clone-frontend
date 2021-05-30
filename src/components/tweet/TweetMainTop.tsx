@@ -1,16 +1,40 @@
 import React from 'react';
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components';
+import { FiShare } from 'react-icons/fi';
 import { ColorPalette } from '../../utils/colorUtils';
 import TweetModel from '../../models/tweet';
 
-const TweetMainTopItemWrapper = styled.div`
+const TweetMainTopItem = styled.div`
+    width: auto;
+
     border: 1px solid;
     margin: 1px;
 
     display: inline-block;
 `;
 
+const TweetMainTopLeftContainer = styled.div`
+    postition: absolute;
+    left: 1px;
+
+    float: left;
+    display: inline-block;
+`;
+
+const TweetMainTopRightContainer = styled.div`
+    postition: absolute;
+    right: 0;
+    
+    float: right;
+    display: inline-block;
+`;
+
 const TweetMainTopContainer = styled.div`
+    width: auto;
+    display: flex;
+    flext-direction: row;
+    justify-content: space-betweetn;
+    
     border: 1px solid;
     margin: 1px;
 `;
@@ -24,19 +48,22 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
 
     return (
         <TweetMainTopContainer>
-            top
-            <TweetMainTopItemWrapper>
-                { tweet.user } : { tweet.key }
-            </TweetMainTopItemWrapper>
-            <TweetMainTopItemWrapper>
-                isOffical
-            </TweetMainTopItemWrapper>
-            <TweetMainTopItemWrapper>
-                id, tweetedAt
-            </TweetMainTopItemWrapper>
-            <TweetMainTopItemWrapper >
-                more
-            </TweetMainTopItemWrapper>
+            <TweetMainTopLeftContainer>
+                <TweetMainTopItem>
+                    { tweet.user }
+                </TweetMainTopItem>
+                <TweetMainTopItem>
+                    isOffical
+                </TweetMainTopItem>
+                <TweetMainTopItem>
+                    @{tweet.key} - tweetedAt
+                </TweetMainTopItem>
+            </TweetMainTopLeftContainer>
+            <TweetMainTopRightContainer>
+                <TweetMainTopItem>
+                    more
+                </TweetMainTopItem>
+            </TweetMainTopRightContainer>
         </TweetMainTopContainer>
     );
 };

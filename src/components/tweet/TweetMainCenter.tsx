@@ -3,7 +3,14 @@ import styled, { css } from 'styled-components'
 import { ColorPalette } from '../../utils/colorUtils';
 import TweetModel from '../../models/tweet';
 
-const TweetMainCenterWrapper = styled.div`
+const TweetMainTextWrapper = styled.div`
+    padding: 1px;   
+    margin: 1px;
+`;
+
+const TweetMainContentWrapper = styled.div`
+    height: 10vh;
+
     border: 1px solid;
     margin: 1px;
 `;
@@ -20,7 +27,7 @@ const TweetText: React.FC<TweetMainCenterProps> = (props) => {
         <div>
             text : {tweet.text}
         </div>
-    );
+    );  
 };
 
 const TweetContent: React.FC<TweetMainCenterProps> = (props) => {
@@ -34,11 +41,11 @@ const TweetContent: React.FC<TweetMainCenterProps> = (props) => {
 };
 
 const TweetMainCenterContainer = styled.div`
-    position: relative;
     height: auto;
 
     border: 1px solid;
     margin: 1px;
+
 `;
 
 const TweetMainCenter: React.FC<TweetMainCenterProps> = (props) => {
@@ -46,13 +53,12 @@ const TweetMainCenter: React.FC<TweetMainCenterProps> = (props) => {
 
     return (
         <TweetMainCenterContainer>
-            <div> Center </div>
-            <TweetMainCenterWrapper>
+            <TweetMainTextWrapper>
                 <TweetText tweet={tweet}/>
-            </TweetMainCenterWrapper>
-            <TweetMainCenterWrapper>
+            </TweetMainTextWrapper>
+            <TweetMainContentWrapper>
                 <TweetContent tweet={tweet}/>
-            </TweetMainCenterWrapper>
+            </TweetMainContentWrapper>
         </TweetMainCenterContainer>
     );
 };

@@ -18,21 +18,19 @@ const TweetProfileWrapper = styled.div`
 const TweetProfile: React.FC = () => {
     return (
         <div>
-            sidebar
+            profile
         </div>
     );
 }
 
 const TweetSideContainer = styled.div`
-    height: 100%;
     width: 15%;
-    left: 0px;
-
-    border: 1px solid;
-    margin-left: 2px;
-
-    display: inline-block;
+    height: 100%;
+    
     vertical-align: top;
+    display: inline-block;
+
+    margin-left: 2px;
 `;
 
 interface TweetSideProps {
