@@ -32,7 +32,9 @@ const TweetListContainer = styled.div`
 `;
 
 const TweetList: React.FC = () => {
-    const [tweets, setTweets] = useState<TweetModel[]>([defaultTweets[0], defaultTweets[1], defaultTweets[2], defaultTweets[3], ]);
+    const [tweets, setTweets] = useState<TweetModel[]>(
+        defaultTweets.filter(tweet => tweet.key < 6)
+    );
     
     useInfScroll(defaultTweets, tweets, setTweets);
 

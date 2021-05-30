@@ -8,18 +8,27 @@ const TweetMainCenterWrapper = styled.div`
     margin: 1px;
 `;
 
-const TweetText: React.FC = () => {
+
+interface TweetMainCenterProps {
+    tweet: TweetModel;
+}
+
+const TweetText: React.FC<TweetMainCenterProps> = (props) => {
+    const { children, tweet } = props;
+
     return(
         <div>
-            text
+            text : {tweet.text}
         </div>
     );
 };
 
-const TweetContent: React.FC = () => {
+const TweetContent: React.FC<TweetMainCenterProps> = (props) => {
+    const { children, tweet } = props;
+
     return(
         <div>
-            content
+            content : 
         </div>
     );
 };
@@ -32,11 +41,6 @@ const TweetMainCenterContainer = styled.div`
     margin: 1px;
 `;
 
-
-interface TweetMainCenterProps {
-    tweet: TweetModel;
-}
-
 const TweetMainCenter: React.FC<TweetMainCenterProps> = (props) => {
     const { children, tweet } = props;
 
@@ -44,10 +48,10 @@ const TweetMainCenter: React.FC<TweetMainCenterProps> = (props) => {
         <TweetMainCenterContainer>
             <div> Center </div>
             <TweetMainCenterWrapper>
-                <TweetText />
+                <TweetText tweet={tweet}/>
             </TweetMainCenterWrapper>
             <TweetMainCenterWrapper>
-                <TweetContent />
+                <TweetContent tweet={tweet}/>
             </TweetMainCenterWrapper>
         </TweetMainCenterContainer>
     );
