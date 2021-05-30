@@ -11,6 +11,7 @@ import {
   RiFileList2Fill,
   RiFileList2Line,
 } from 'react-icons/ri';
+import { FiMessageSquare, FiRepeat, FiHeart, FiShare } from 'react-icons/fi';
 import { isEnumType } from 'utils';
 
 /* 
@@ -22,6 +23,12 @@ export enum BasicType {
   TWITTER = 'basic-twitter',
   MORE_CIRCLE = 'basic-more-circle',
   MORE = 'basic-more',
+
+  // tweet-list Bottom icons
+  REPLY = 'basic-reply',
+  RETWEET = 'basic-retweet',
+  LIKE = 'basic-like',
+  SHARE = 'basic-share',
 }
 
 export enum HighlightType {
@@ -42,6 +49,12 @@ const basicRecord = {
   [BasicType.TWITTER]: FaTwitter,
   [BasicType.MORE_CIRCLE]: CgMoreO,
   [BasicType.MORE]: FiMoreHorizontal,
+
+  // tweet-list Bottom icons
+  [BasicType.REPLY]: FiMessageSquare,
+  [BasicType.RETWEET]: FiRepeat,
+  [BasicType.LIKE]: FiHeart,
+  [BasicType.SHARE]: FiShare,
 };
 
 // [Icon when highlighted state, Icon when basic state]
