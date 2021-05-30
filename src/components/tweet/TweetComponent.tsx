@@ -6,11 +6,9 @@ import TweetSide from './TweetSide';
 import TweetMain from './TweetMain';
 
 const TweetContainer = styled.div` 
-    height: 30vh;
-
-    padding-bottom: 4px;
+    padding: 2px 2px 4px;
     border: 2px solid;
-    margin: 1px 10px 2px;
+    margin: 1px 10px 5px;
     &:hover {
         color: ${ColorPalette.SKYBLUE}
     };

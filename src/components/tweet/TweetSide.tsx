@@ -5,9 +5,14 @@ import TweetModel from '../../models/tweet';
 import TweetList from './TweetList';
 
 const TweetProfileWrapper = styled.div`
+    width: 70%; 
     
+    padding: 10%;
     border: 1px solid;
+    border-radius: 9999px;
     margin: 1px;
+
+    align-itmes: center;
 `;
 
 const TweetProfile: React.FC = () => {
@@ -19,9 +24,8 @@ const TweetProfile: React.FC = () => {
 }
 
 const TweetSideContainer = styled.div`
-    
     height: 100%;
-    width: 10%;
+    width: 15%;
     left: 0px;
 
     border: 1px solid;

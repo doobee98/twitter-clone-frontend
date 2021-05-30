@@ -4,8 +4,10 @@ import { ColorPalette } from '../../utils/colorUtils';
 import TweetModel from '../../models/tweet';
 
 const TweetMainBottomItemWrapper = styled.div`
+    padding: 2px;
     border: 1px solid;
     margin: 1px;
+    margin-right: 3px;
 
     display: inline-block;
     flex: 1;
@@ -13,7 +15,6 @@ const TweetMainBottomItemWrapper = styled.div`
 `;
 
 const TweetMainBottomContainer = styled.div`
-    vertical-align: bottom;    
 
     border: 1px solid;
     margin: 1px;
@@ -30,16 +31,16 @@ const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
         <TweetMainBottomContainer>
             <div> Bottom </div>
             <TweetMainBottomItemWrapper>
-                Reply: 
+                Reply: {tweet.comments}
             </TweetMainBottomItemWrapper>
             <TweetMainBottomItemWrapper>
-                Retweet: 
+                Retweet: {tweet.retweets}
             </TweetMainBottomItemWrapper>
             <TweetMainBottomItemWrapper>
-                Like: 
+                Like: {tweet.likes}
             </TweetMainBottomItemWrapper>
             <TweetMainBottomItemWrapper>
-                Share 
+                Share
             </TweetMainBottomItemWrapper>
         </TweetMainBottomContainer>
     );
