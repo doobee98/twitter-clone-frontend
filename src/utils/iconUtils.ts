@@ -2,7 +2,13 @@ import { IconType } from 'react-icons';
 import { BsBell, BsBellFill, BsPerson, BsPersonFill } from 'react-icons/bs';
 import { CgMoreO } from 'react-icons/cg';
 import { FaBookmark, FaRegBookmark, FaTwitter } from 'react-icons/fa';
-import { FiMoreHorizontal } from 'react-icons/fi';
+import {
+  FiMoreHorizontal,
+  FiMessageSquare,
+  FiRepeat,
+  FiHeart,
+  FiShare,
+} from 'react-icons/fi';
 import { HiHashtag, HiOutlineHashtag } from 'react-icons/hi';
 import { MdMail, MdMailOutline } from 'react-icons/md';
 import {
@@ -11,7 +17,6 @@ import {
   RiFileList2Fill,
   RiFileList2Line,
 } from 'react-icons/ri';
-import { FiMessageSquare, FiRepeat, FiHeart, FiShare } from 'react-icons/fi';
 import { isEnumType } from 'utils';
 
 /* 
