@@ -4,11 +4,7 @@ import { ColorPalette } from '../../utils/colorUtils';
 import TweetModel from '../../models/tweet';
 
 const TweetHeader: React.FC = () => {
-    return (
-        <>
-        </>
-    );
+  return <></>;
 };
 
 export default TweetHeader;
-
