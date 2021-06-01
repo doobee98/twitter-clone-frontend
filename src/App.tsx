@@ -5,6 +5,7 @@ import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
 import { login } from 'modules/auth';
 import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
 
 const GlobalStyle = createGlobalStyle`
   ${normalize}
@@ -79,6 +80,7 @@ const App: React.FC = () => {
         <Switch>
           <Route path="/" exact render={() => <Redirect to="/home" />} />
           <Route path="/home" component={HomePage} />
+          <Route path="/login" component={LoginPage} />
         </Switch>
       </BrowserRouter>
     </>

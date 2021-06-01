@@ -1,4 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import AuthApi from 'apis/AuthApi';
+import storage, { AUTH_TOKEN_NAME } from 'utils/storage';
 import User from '../models/user';
 import { LoginRequest, SignUpRequest } from '../models/request/auth';
 
@@ -8,44 +10,63 @@ interface AuthState {
 
 const initialState: AuthState = {};
 
-// [TODO: NEED TO BE REMOVED] default user login data for test
-const defaultCurrentUser: User = {
-  user_id: 'doobee98',
-  username: '이두섭',
-  following_count: 20,
-  follower_count: 2,
-  joined_at: Date(),
-};
+export const login = createAsyncThunk(
+  'auth/login',
+  async (loginRequest: LoginRequest) => {
+    const { user_id, password } = loginRequest;
+    const response = await AuthApi.instance.login(user_id, password);
+    const { data: user, headers } = response;
+    return [user as User, headers.authorization];
+  },
+);
+
+export const logout = createAsyncThunk('auth/logout', async () => {
+  await AuthApi.instance.logout();
+  storage.removeItem(AUTH_TOKEN_NAME);
+});
+
+export const signup = createAsyncThunk(
+  'auth/signup',
+  async (signupRequest: SignUpRequest) => {
+    const { user_id, password, username } = signupRequest;
+    const response = await AuthApi.instance.signup(user_id, password, username);
+    return response.data as User;
+  },
+);
 
 export const auth = createSlice({
   name: 'auth',
   initialState,
-  reducers: {
-    login: (state, action: PayloadAction<LoginRequest>) => {
-      const { user_id, password } = action.payload;
-      return {
-        currentUser: { ...defaultCurrentUser },
-      };
+  reducers: {},
+  extraReducers: {
+    [login.fulfilled.type]: (state, action) => {
+      const [user, token] = action.payload;
+      storage.setItem(AUTH_TOKEN_NAME, token);
+      return { currentUser: user };
     },
-    logout: () => {
+    [login.rejected.type]: (state, error) => {
+      storage.removeItem(AUTH_TOKEN_NAME);
+      console.log(error);
+      return state;
+    },
+    [logout.fulfilled.type]: () => {
       return {
         currentUser: undefined,
       };
     },
-    signup: (state, action: PayloadAction<SignUpRequest>) => {
-      const { user_id, password, username } = action.payload;
-      return {
-        currentUser: {
-          user_id,
-          username,
-          following_count: 0,
-          follower_count: 0,
-          joined_at: Date(),
-        },
-      };
+    [logout.rejected.type]: (state, error) => {
+      console.log(error);
+      return state;
+    },
+    [signup.fulfilled.type]: (state, action) => {
+      window.alert(`${action.payload.user_id}님 회원가입 완료!`);
+      return { currentUser: action.payload };
+    },
+    [signup.rejected.type]: (state, error) => {
+      console.log(error);
+      return state;
     },
   },
 });
 
-export const { login, logout, signup } = auth.actions;
 export default auth.reducer;
