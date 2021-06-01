@@ -36,6 +36,28 @@ const TweetPostTextArea = styled.textarea<TweetPostTextAreaProps>`
     `}
 `;
 
+interface TweetPostMediaWrapperProps {
+  isUploaded: boolean;
+}
+
+const TweetPostMediaWrapper = styled.div<TweetPostMediaWrapperProps>`
+  margin-bottom: 15px;
+  height: 300px;
+  display: none;
+
+  ${(props) =>
+    props.isUploaded &&
+    css`
+      display: block;
+    `}
+`;
+
+const TweetPostImgPreview = styled.img`
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+`;
+
 interface TweetPostPermissionWrapperProps {
   isWritingStarted: boolean;
 }
@@ -81,6 +103,8 @@ const TweetPostContent: React.FC = () => {
   const [textAreaHeight, setTextAreaHeight] = useState('auto');
   const [currentValue, setCurrentValue] = useState('');
   const [isWritingStarted, setIsWritingStarted] = useState(false);
+  const [file, setFile] = useState('');
+  const [isUploaded, setIsUploaded] = useState(false);
 
   type permission = {
     id: number;
@@ -128,6 +152,14 @@ const TweetPostContent: React.FC = () => {
     );
   };
 
+  const handleImgInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(URL.createObjectURL(e.target.files[0]) || '');
+      setIsUploaded(true);
+      setIsWritingStarted(true);
+    }
+  };
+
   return (
     <TweetPostContentContainer>
       <TweetPostTextAreaWrapper>
@@ -142,6 +174,9 @@ const TweetPostContent: React.FC = () => {
           onChange={handleValueChange}
         />
       </TweetPostTextAreaWrapper>
+      <TweetPostMediaWrapper isUploaded={isUploaded}>
+        {file && <TweetPostImgPreview src={file} alt="input_img" />}
+      </TweetPostMediaWrapper>
       <TweetPostPermissionWrapper
         isWritingStarted={isWritingStarted}
         onClick={changePermission}
@@ -151,7 +186,7 @@ const TweetPostContent: React.FC = () => {
         </PermissionButton>
       </TweetPostPermissionWrapper>
       <TweetPostToolBarWrapper>
-        <TweetPostToolBar />
+        <TweetPostToolBar handleImgInput={handleImgInput} />
       </TweetPostToolBarWrapper>
     </TweetPostContentContainer>
   );

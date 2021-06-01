@@ -71,21 +71,17 @@ const TweetButton = styled(Button)`
   }
 `;
 
-const TweetPostToolBar = () => {
-  const [file, setFile] = useState('');
+interface TweetPostToolBarProps {
+  handleImgInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const TweetPostToolBar = (props: TweetPostToolBarProps) => {
+  const { handleImgInput } = props;
 
   const hiddenFileInput = useRef<HTMLInputElement>(null);
 
-  const test = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setFile(URL.createObjectURL(e.target.files[0]) || '');
-      console.log(file);
-    }
-  };
-
   return (
     <>
-      {file && <img src={file} alt="input_img" />}
       <ToolBarContainer>
         <ToolWrapper
           onClick={() => {
@@ -95,7 +91,12 @@ const TweetPostToolBar = () => {
           }}
         >
           <ToolIcon iconType={BasicType.MEDIA} />
-          <HiddenInput type="file" ref={hiddenFileInput} onChange={test} />
+          <HiddenInput
+            type="file"
+            accept="image/jpg,impge/png,image/jpeg"
+            ref={hiddenFileInput}
+            onChange={handleImgInput}
+          />
         </ToolWrapper>
         <ToolWrapper>
           <ToolIcon iconType={BasicType.GIF} />
