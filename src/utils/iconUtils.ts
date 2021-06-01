@@ -1,5 +1,11 @@
 import { IconType } from 'react-icons';
-import { BsBell, BsBellFill, BsPerson, BsPersonFill } from 'react-icons/bs';
+import {
+  BsBell,
+  BsBellFill,
+  BsPerson,
+  BsPersonFill,
+  BsFillPeopleFill,
+} from 'react-icons/bs';
 import { CgMoreO } from 'react-icons/cg';
 import { FaBookmark, FaRegBookmark, FaTwitter } from 'react-icons/fa';
 import { FiMoreHorizontal } from 'react-icons/fi';
@@ -12,13 +18,13 @@ import {
   RiFileList2Line,
   RiBarChartHorizontalFill,
   RiEarthLine,
-  RiEarthFill,
 } from 'react-icons/ri';
 import {
   AiOutlinePicture,
   AiOutlineGif,
   AiOutlineSchedule,
 } from 'react-icons/ai';
+import { BiAt } from 'react-icons/bi';
 import { VscSmiley } from 'react-icons/vsc';
 import { isEnumType } from 'utils';
 
@@ -36,6 +42,7 @@ export enum BasicType {
   POLL = 'basic-poll',
   EMOJI = 'basic-emoji',
   SCHEDULE = 'basic-schedule',
+  EARTH = 'highlight-earth',
 }
 
 export enum HighlightType {
@@ -46,7 +53,6 @@ export enum HighlightType {
   BOOKMARKS = 'highlight-bookmarks',
   LISTS = 'highlight-lists',
   PROFILE = 'highlight-profile',
-  EARTH = 'highlight-earth',
 }
 
 /* 
@@ -62,6 +68,7 @@ const basicRecord = {
   [BasicType.POLL]: RiBarChartHorizontalFill,
   [BasicType.EMOJI]: VscSmiley,
   [BasicType.SCHEDULE]: AiOutlineSchedule,
+  [BasicType.EARTH]: RiEarthLine,
 };
 
 // [Icon when highlighted state, Icon when basic state]
@@ -73,7 +80,6 @@ const highlightRecord = {
   [HighlightType.BOOKMARKS]: [FaBookmark, FaRegBookmark],
   [HighlightType.LISTS]: [RiFileList2Fill, RiFileList2Line],
   [HighlightType.PROFILE]: [BsPersonFill, BsPerson],
-  [HighlightType.EARTH]: [RiEarthFill, RiEarthLine],
 };
 
 type IgetIconType = {

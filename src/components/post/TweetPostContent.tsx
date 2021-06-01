@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
-import { HighlightType } from 'utils/iconUtils';
+import { BasicType } from 'utils/iconUtils';
 import NavItem from '../base/NavItem';
 import TweetPostToolBar from './TweetPostToolBar';
 
@@ -104,7 +104,7 @@ const TweetPostContent: React.FC = () => {
       />
       <TweetPostPermissionWrapper isWritingStarted={isWritingStarted}>
         {/* TODO: permission에 따라 내용 바뀌도록 */}
-        <PermissionButton iconType={HighlightType.EARTH}>
+        <PermissionButton iconType={BasicType.EARTH}>
           Everyone can reply
         </PermissionButton>
       </TweetPostPermissionWrapper>
