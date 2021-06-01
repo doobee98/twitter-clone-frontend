@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
@@ -11,11 +11,15 @@ const TweetPostContentContainer = styled.div`
   width: 90%;
 `;
 
-interface TweetPostTextWrapperProps {
+const TweetPostTextAreaWrapper = styled.div`
+  height: auto;
+`;
+
+interface TweetPostTextAreaProps {
   height: string;
 }
 
-const TweetPostTextWrapper = styled.textarea<TweetPostTextWrapperProps>`
+const TweetPostTextArea = styled.textarea<TweetPostTextAreaProps>`
   width: 100%;
   min-height: 56px;
   line-height: 1.35em;
@@ -74,7 +78,7 @@ const TweetPostToolBarWrapper = styled.div`
 
 const TweetPostContent: React.FC = () => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [textAreaHeight, setTextareaHeight] = useState('56px');
+  const [textAreaHeight, setTextAreaHeight] = useState('auto');
   const [currentValue, setCurrentValue] = useState('');
   const [isWritingStarted, setIsWritingStarted] = useState(false);
 
@@ -104,13 +108,16 @@ const TweetPostContent: React.FC = () => {
   const [permissionType, setPermissionType] = useState(permissions[0]);
 
   useEffect(() => {
-    if (textAreaRef.current) {
-      setTextareaHeight(`${textAreaRef.current.scrollHeight}px`);
-    }
+    setTextAreaHeight(`${textAreaRef.current?.scrollHeight}px`);
   }, [currentValue]);
 
   const handleClick = () => {
     setIsWritingStarted(true);
+  };
+
+  const handleValueChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTextAreaHeight('auto');
+    setCurrentValue(event.target.value);
   };
 
   const changePermission = () => {
@@ -123,18 +130,18 @@ const TweetPostContent: React.FC = () => {
 
   return (
     <TweetPostContentContainer>
-      <TweetPostTextWrapper
-        ref={textAreaRef}
-        height={textAreaHeight}
-        value={currentValue}
-        placeholder="What's happening?"
-        rows={1}
-        defaultValue=""
-        onClick={handleClick}
-        onChange={(e) => {
-          setCurrentValue(e.target.value);
-        }}
-      />
+      <TweetPostTextAreaWrapper>
+        <TweetPostTextArea
+          ref={textAreaRef}
+          height={textAreaHeight}
+          value={currentValue}
+          placeholder="What's happening?"
+          rows={1}
+          defaultValue=""
+          onClick={handleClick}
+          onChange={handleValueChange}
+        />
+      </TweetPostTextAreaWrapper>
       <TweetPostPermissionWrapper
         isWritingStarted={isWritingStarted}
         onClick={changePermission}
