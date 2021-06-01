@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { ColorPalette } from '../../utils/colorUtils';
 import { BasicType } from '../../utils/iconUtils';
@@ -10,7 +10,6 @@ const ToolBarContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: flex-end;
-  shape-outside: inset(calc(100% - 100px) 0 0);
 `;
 
 const ToolWrapper = styled.div`
@@ -21,7 +20,6 @@ const ToolWrapper = styled.div`
   height: 48px;
   display: flex;
   align-items: flex-end;
-  shape-outside: inset(calc(100% - 100px) 0 0);
 
   cursor: pointer;
 `;
@@ -38,7 +36,7 @@ const ToolIcon = styled(NavItem)`
   }
 
   & svg {
-    width: 30px;
+    width: 30x;
     height: 30px;
   }
 
@@ -56,6 +54,10 @@ const ButtonWrapper = styled.div`
   shape-outside: inset(calc(100% - 100px) 0 0);
 `;
 
+const HiddenInput = styled.input`
+  display: none;
+`;
+
 const TweetButton = styled(Button)`
   float: right;
   width: 70px;
@@ -70,11 +72,30 @@ const TweetButton = styled(Button)`
 `;
 
 const TweetPostToolBar = () => {
+  const [file, setFile] = useState('');
+
+  const hiddenFileInput = useRef<HTMLInputElement>(null);
+
+  const test = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(URL.createObjectURL(e.target.files[0]) || '');
+      console.log(file);
+    }
+  };
+
   return (
     <>
+      {file && <img src={file} alt="input_img" />}
       <ToolBarContainer>
-        <ToolWrapper>
+        <ToolWrapper
+          onClick={() => {
+            if (hiddenFileInput.current) {
+              hiddenFileInput.current.click();
+            }
+          }}
+        >
           <ToolIcon iconType={BasicType.MEDIA} />
+          <HiddenInput type="file" ref={hiddenFileInput} onChange={test} />
         </ToolWrapper>
         <ToolWrapper>
           <ToolIcon iconType={BasicType.GIF} />
