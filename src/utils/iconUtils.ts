@@ -43,6 +43,8 @@ export enum BasicType {
   EMOJI = 'basic-emoji',
   SCHEDULE = 'basic-schedule',
   EARTH = 'highlight-earth',
+  FRIENDS = 'basic-friends',
+  AT = 'basic-at',
 }
 
 export enum HighlightType {
@@ -68,6 +70,8 @@ const basicRecord = {
   [BasicType.POLL]: RiBarChartHorizontalFill,
   [BasicType.EMOJI]: VscSmiley,
   [BasicType.SCHEDULE]: AiOutlineSchedule,
+  [BasicType.FRIENDS]: BsFillPeopleFill,
+  [BasicType.AT]: BiAt,
   [BasicType.EARTH]: RiEarthLine,
 };
 

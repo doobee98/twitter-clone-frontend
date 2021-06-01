@@ -78,6 +78,31 @@ const TweetPostContent: React.FC = () => {
   const [currentValue, setCurrentValue] = useState('');
   const [isWritingStarted, setIsWritingStarted] = useState(false);
 
+  type permission = {
+    id: number;
+    permission: string;
+    iconType: BasicType;
+  };
+  const permissions: Array<permission> = [
+    {
+      id: 0,
+      permission: 'Everyone can reply',
+      iconType: BasicType.EARTH,
+    },
+    {
+      id: 1,
+      permission: 'Only people you mention can reply',
+      iconType: BasicType.AT,
+    },
+    {
+      id: 2,
+      permission: 'People you follow can reply',
+      iconType: BasicType.FRIENDS,
+    },
+  ];
+
+  const [permissionType, setPermissionType] = useState(permissions[0]);
+
   useEffect(() => {
     if (textAreaRef.current) {
       setTextareaHeight(`${textAreaRef.current.scrollHeight}px`);
@@ -86,6 +111,14 @@ const TweetPostContent: React.FC = () => {
 
   const handleClick = () => {
     setIsWritingStarted(true);
+  };
+
+  const changePermission = () => {
+    const currentPermission: permission = permissionType;
+    const search = (obj: permission) => obj.id === currentPermission.id;
+    setPermissionType(
+      permissions[(permissions.findIndex(search) + 1) % permissions.length],
+    );
   };
 
   return (
@@ -102,10 +135,12 @@ const TweetPostContent: React.FC = () => {
           setCurrentValue(e.target.value);
         }}
       />
-      <TweetPostPermissionWrapper isWritingStarted={isWritingStarted}>
-        {/* TODO: permission에 따라 내용 바뀌도록 */}
-        <PermissionButton iconType={BasicType.EARTH}>
-          Everyone can reply
+      <TweetPostPermissionWrapper
+        isWritingStarted={isWritingStarted}
+        onClick={changePermission}
+      >
+        <PermissionButton iconType={permissionType.iconType}>
+          {permissionType.permission}
         </PermissionButton>
       </TweetPostPermissionWrapper>
       <TweetPostToolBarWrapper>
