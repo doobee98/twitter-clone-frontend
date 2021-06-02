@@ -1,46 +1,55 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { ColorPalette } from '../../utils/colorUtils';
 import TweetModel from '../../models/tweet';
+import TweetList from './TweetList';
 
 const TweetProfileWrapper = styled.div`
-  width: 70%;
+    width: 70%; 
+    
+    padding: 10%;
+    border: 1px solid;
+    border-radius: 9999px;
+    margin: 1px;
 
-  padding: 10%;
-  border: 1px solid;
-  border-radius: 9999px;
-  margin: 1px;
-
-  align-itmes: center;
+    align-itmes: center;
 `;
 
 const TweetProfile: React.FC = () => {
-  return <div>profile</div>;
-};
+    return (
+        <div>
+            sidebar
+        </div>
+    );
+}
 
 const TweetSideContainer = styled.div`
-  width: 15%;
-  height: 100%;
+    height: 100%;
+    width: 15%;
+    left: 0px;
 
-  vertical-align: top;
-  display: inline-block;
+    border: 1px solid;
+    margin-left: 2px;
 
-  margin-left: 2px;
+    display: inline-block;
+    vertical-align: top;
 `;
 
 interface TweetSideProps {
-  tweet: TweetModel;
+    tweet: TweetModel;
 }
 
 const TweetSide: React.FC<TweetSideProps> = (props) => {
-  const { children, tweet } = props;
+    const { children, tweet, } = props;
 
-  return (
-    <TweetSideContainer>
-      <TweetProfileWrapper>
-        <TweetProfile />
-      </TweetProfileWrapper>
-    </TweetSideContainer>
-  );
+    return (
+        <TweetSideContainer>
+            <TweetProfileWrapper>
+                <TweetProfile />
+            </TweetProfileWrapper>
+        </TweetSideContainer>
+    );
 };
 
 export default TweetSide;
+
