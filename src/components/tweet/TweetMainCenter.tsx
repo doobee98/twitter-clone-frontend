@@ -1,60 +1,55 @@
 import React from 'react';
-import styled, { css } from 'styled-components'
-import { ColorPalette } from '../../utils/colorUtils';
+import styled from 'styled-components';
 import TweetModel from '../../models/tweet';
 
-const TweetMainCenterWrapper = styled.div`
-    border: 1px solid;
-    margin: 1px;
+const TweetMainTextWrapper = styled.div`
+  padding: 1px;
+  margin: 1px;
 `;
 
+const TweetMainContentWrapper = styled.div`
+  height: 10vh;
+
+  border: 1px solid;
+  margin: 1px;
+`;
 
 interface TweetMainCenterProps {
-    tweet: TweetModel;
+  tweet: TweetModel;
 }
 
 const TweetText: React.FC<TweetMainCenterProps> = (props) => {
-    const { children, tweet } = props;
+  const { children, tweet } = props;
 
-    return(
-        <div>
-            text : {tweet.text}
-        </div>
-    );
+  return <div>text : {tweet.text}</div>;
 };
 
 const TweetContent: React.FC<TweetMainCenterProps> = (props) => {
-    const { children, tweet } = props;
+  const { children, tweet } = props;
 
-    return(
-        <div>
-            content : 
-        </div>
-    );
+  return <div>content :</div>;
 };
 
 const TweetMainCenterContainer = styled.div`
-    position: relative;
-    height: auto;
+  height: auto;
 
-    border: 1px solid;
-    margin: 1px;
+  border: 1px solid;
+  margin: 1px;
 `;
 
 const TweetMainCenter: React.FC<TweetMainCenterProps> = (props) => {
-    const { children, tweet } = props;
+  const { children, tweet } = props;
 
-    return (
-        <TweetMainCenterContainer>
-            <div> Center </div>
-            <TweetMainCenterWrapper>
-                <TweetText tweet={tweet}/>
-            </TweetMainCenterWrapper>
-            <TweetMainCenterWrapper>
-                <TweetContent tweet={tweet}/>
-            </TweetMainCenterWrapper>
-        </TweetMainCenterContainer>
-    );
+  return (
+    <TweetMainCenterContainer>
+      <TweetMainTextWrapper>
+        <TweetText tweet={tweet} />
+      </TweetMainTextWrapper>
+      <TweetMainContentWrapper>
+        <TweetContent tweet={tweet} />
+      </TweetMainContentWrapper>
+    </TweetMainCenterContainer>
+  );
 };
 
 export default TweetMainCenter;
