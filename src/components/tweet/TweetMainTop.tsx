@@ -30,7 +30,7 @@ const TweetMainTopRightContainer = styled.div`
 const TweetMainTopContainer = styled.div`
   width: auto;
   display: flex;
-  flext-direction: row;
+  flex-direction: row;
   justify-content: space-betweetn;
 
   border: 1px solid;

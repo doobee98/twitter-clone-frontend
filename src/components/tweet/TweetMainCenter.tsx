@@ -8,7 +8,7 @@ const TweetMainTextWrapper = styled.div`
 `;
 
 const TweetMainContentWrapper = styled.div`
-  height: 10vh;
+  height: 100px;
 
   border: 1px solid;
   margin: 1px;
