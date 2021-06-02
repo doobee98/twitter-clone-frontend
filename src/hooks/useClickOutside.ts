@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 const useClickOutside = (
   ref: React.RefObject<HTMLElement>,
   onClickOutside: () => void,
-  exceptRef: React.RefObject<HTMLElement>,
+  exceptRef?: React.RefObject<HTMLElement>,
 ): void => {
   useEffect(() => {
     const handleClickOutside = (event: any) => {

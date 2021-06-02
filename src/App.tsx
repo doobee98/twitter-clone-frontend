@@ -21,6 +21,12 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
+  body.scroll-lock {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: fixed;
+  }
+
   input {
     appearance: none;
     border-radius: 0;
