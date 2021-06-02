@@ -31,9 +31,6 @@ const TweetContent: React.FC<TweetMainCenterProps> = (props) => {
 };
 
 const TweetMainCenterContainer = styled.div`
-  height: auto;
-
-  border: 1px solid;
   margin: 1px;
 `;
 

@@ -1,39 +1,38 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ColorPalette } from '../../utils/colorUtils';
 import TweetModel from '../../models/tweet';
 
 const TweetMainTopItem = styled.div`
   width: auto;
 
-  border: 1px solid;
   margin: 1px;
 
   display: inline-block;
+
+  &.username {
+    font-weight: bold;
+  }
+
+  &.userid_tweetedAt {
+    color: ${ColorPalette.GRAY_70};
+  }
 `;
 
+// TO BE REFACTORED : awful naming, awful structure
 const TweetMainTopLeftContainer = styled.div`
-  postition: absolute;
-  left: 1px;
-
-  float: left;
   display: inline-block;
 `;
 
 const TweetMainTopRightContainer = styled.div`
-  postition: absolute;
-  right: 0;
-
-  float: right;
   display: inline-block;
 `;
 
 const TweetMainTopContainer = styled.div`
-  width: auto;
   display: flex;
   flex-direction: row;
-  justify-content: space-betweetn;
+  justify-content: space-between;
 
-  border: 1px solid;
   margin: 1px;
 `;
 
@@ -44,12 +43,14 @@ interface TweetMainTopProps {
 const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
   const { children, tweet } = props;
 
+  // <TweetMainTopItem>isOffical</TweetMainTopItem>   ---> should we? after next meeting
   return (
     <TweetMainTopContainer>
       <TweetMainTopLeftContainer>
-        <TweetMainTopItem>{tweet.user}</TweetMainTopItem>
-        <TweetMainTopItem>isOffical</TweetMainTopItem>
-        <TweetMainTopItem>@{tweet.key} - tweetedAt</TweetMainTopItem>
+        <TweetMainTopItem className="username">{tweet.user}</TweetMainTopItem>
+        <TweetMainTopItem className="userid_tweetedAt">
+          @{tweet.key} - tweetedAt
+        </TweetMainTopItem>
       </TweetMainTopLeftContainer>
       <TweetMainTopRightContainer>
         <TweetMainTopItem>more</TweetMainTopItem>

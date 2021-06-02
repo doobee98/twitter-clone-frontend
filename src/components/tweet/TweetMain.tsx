@@ -6,11 +6,10 @@ import TweetMainCenter from './TweetMainCenter';
 import TweetMainBottom from './TweetMainBottom';
 
 const TweetMainContainer = styled.div`
+  display: flex;
   height: 100%;
-  width: 80%;
+  width: 100%;
 
-  border: 1px solid;
-  margin-left: 1px;
   margin-right: 2px;
 
   display: inline-block;

@@ -3,28 +3,26 @@ import styled from 'styled-components';
 import TweetModel from '../../models/tweet';
 
 const TweetProfileWrapper = styled.div`
-  width: 70%;
+  display: flex;
+  width: 40px;
+  height: 40px;
 
-  padding: 10%;
   border: 1px solid;
   border-radius: 9999px;
   margin: 1px;
 
-  align-itmes: center;
+  justify-content: center;
+  align-items: center;
 `;
 
 const TweetProfile: React.FC = () => {
-  return <div>profile</div>;
+  return <div>pic</div>;
 };
 
 const TweetSideContainer = styled.div`
-  width: 15%;
-  height: 100%;
+  display: flex;
 
-  vertical-align: top;
-  display: inline-block;
-
-  margin-left: 2px;
+  width: 50px;
 `;
 
 interface TweetSideProps {

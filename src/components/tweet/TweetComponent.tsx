@@ -6,6 +6,8 @@ import TweetSide from './TweetSide';
 import TweetMain from './TweetMain';
 
 const TweetContainer = styled.div`
+  display: flex;
+
   padding: 2px 2px 4px;
   border: 2px solid;
   margin: 1px 10px 5px;
