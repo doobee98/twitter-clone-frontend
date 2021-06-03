@@ -4,7 +4,7 @@ import { CgMoreO } from 'react-icons/cg';
 import { FaBookmark, FaRegBookmark, FaTwitter } from 'react-icons/fa';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { HiHashtag, HiOutlineHashtag } from 'react-icons/hi';
-import { MdMail, MdMailOutline } from 'react-icons/md';
+import { MdMail, MdMailOutline, MdClose } from 'react-icons/md';
 import {
   RiHome4Line,
   RiHome4Fill,
@@ -17,6 +17,7 @@ export enum BasicType {
   TWITTER = 'basic-twitter',
   MORE_CIRCLE = 'basic-more-circle',
   MORE = 'basic-more',
+  CLOSE = 'basic-close',
 }
 
 export enum HighlightType {
@@ -37,6 +38,7 @@ const basicRecord = {
   [BasicType.TWITTER]: FaTwitter,
   [BasicType.MORE_CIRCLE]: CgMoreO,
   [BasicType.MORE]: FiMoreHorizontal,
+  [BasicType.CLOSE]: MdClose,
 };
 
 // [Icon when highlighted state, Icon when basic state]
