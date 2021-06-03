@@ -9,14 +9,15 @@ const TweetMainTopItem = styled.div`
   margin: 1px;
 
   display: inline-block;
+`;
 
-  &.username {
-    font-weight: bold;
-  }
+// NEED TO BE RENAMED : awful long name
+const TweetMainTopUsername = styled(TweetMainTopItem)`
+  font-weight: bold;
+`;
 
-  &.userid_tweetedAt {
-    color: ${ColorPalette.GRAY_70};
-  }
+const TweetMainTopUseridTweetedAt = styled(TweetMainTopItem)`
+  color: ${ColorPalette.GRAY_70};
 `;
 
 // TO BE REFACTORED : awful naming, awful structure
@@ -47,10 +48,10 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
   return (
     <TweetMainTopContainer>
       <TweetMainTopLeftContainer>
-        <TweetMainTopItem className="username">{tweet.user}</TweetMainTopItem>
-        <TweetMainTopItem className="userid_tweetedAt">
+        <TweetMainTopUsername>{tweet.user}</TweetMainTopUsername>
+        <TweetMainTopUseridTweetedAt>
           @{tweet.key} - tweetedAt
-        </TweetMainTopItem>
+        </TweetMainTopUseridTweetedAt>
       </TweetMainTopLeftContainer>
       <TweetMainTopRightContainer>
         <TweetMainTopItem>more</TweetMainTopItem>
