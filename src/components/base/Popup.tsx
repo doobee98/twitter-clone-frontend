@@ -42,6 +42,13 @@ const CloseButton = styled(NavItem)`
   width: 40px;
 `;
 
+const ContentWrapper = styled.div`
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  padding: 0px 16px;
+`;
+
 interface PopupProps {
   isOpened: boolean;
   onClose: () => void;
@@ -92,7 +99,7 @@ const Popup: React.FC<PopupProps> = (props) => {
             <PopupHeader onClick={onClose}>
               <CloseButton iconType={BasicType.CLOSE} />
             </PopupHeader>
-            {children}
+            <ContentWrapper>{children}</ContentWrapper>
           </PopupContainer>
         </PopupBackground>
       )}
