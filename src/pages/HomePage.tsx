@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PageTemplate from 'components/base/PageTemplate';
 import Popup from 'components/base/Popup';
 import Button from 'components/base/Button';
-import Modal from 'components/base/Modal';
+import TweetPost from 'components/post/TweetPost';
 
 const ToBeRemovedWrapper = styled(React.Fragment)``;
 
@@ -45,7 +45,7 @@ const HomePage: React.FC = () => {
           onClose={closePopup}
           setIsOpened={setIsOpened}
         >
-          <h1>Hello Popup!</h1>
+          <TweetPost />
         </Popup>
       </ToBeRemovedWrapper>
     </PageTemplate>

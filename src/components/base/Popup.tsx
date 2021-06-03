@@ -29,7 +29,7 @@ const PopupContainer = styled.div<PopupContainerProps>`
   background-color: ${ColorPalette.WHITE};
   border-radius: 25px;
   margin-top: ${(props) => props.topMargin + 80}px;
-  width: 560px;
+  width: 600px;
 `;
 
 const PopupHeader = styled.div`
@@ -43,10 +43,9 @@ const CloseButton = styled(NavItem)`
 `;
 
 const ContentWrapper = styled.div`
-  margin-left: auto;
-  margin-right: auto;
+  margin: auto;
   width: 90%;
-  padding: 0px 16px;
+  padding: 10px 0px;
 `;
 
 interface PopupProps {

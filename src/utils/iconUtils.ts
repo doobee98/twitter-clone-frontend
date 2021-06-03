@@ -1,5 +1,11 @@
 import { IconType } from 'react-icons';
-import { BsBell, BsBellFill, BsPerson, BsPersonFill } from 'react-icons/bs';
+import {
+  BsBell,
+  BsBellFill,
+  BsPerson,
+  BsPersonFill,
+  BsFillPeopleFill,
+} from 'react-icons/bs';
 import { CgMoreO } from 'react-icons/cg';
 import { FaBookmark, FaRegBookmark, FaTwitter } from 'react-icons/fa';
 import { FiMoreHorizontal } from 'react-icons/fi';
@@ -10,14 +16,36 @@ import {
   RiHome4Fill,
   RiFileList2Fill,
   RiFileList2Line,
+  RiBarChartHorizontalFill,
+  RiEarthLine,
 } from 'react-icons/ri';
+import {
+  AiOutlinePicture,
+  AiOutlineGif,
+  AiOutlineSchedule,
+} from 'react-icons/ai';
+import { BiAt } from 'react-icons/bi';
+import { VscSmiley } from 'react-icons/vsc';
 import { isEnumType } from 'utils';
+
+/* 
+  Basic Type      : icons with no interactions.
+  Highlight Type  : icons able to be highlighted (fill, bold, ...)
+*/
 
 export enum BasicType {
   TWITTER = 'basic-twitter',
   MORE_CIRCLE = 'basic-more-circle',
   MORE = 'basic-more',
   CLOSE = 'basic-close',
+  MEDIA = 'basic-media',
+  GIF = 'basic-gif',
+  POLL = 'basic-poll',
+  EMOJI = 'basic-emoji',
+  SCHEDULE = 'basic-schedule',
+  EARTH = 'highlight-earth',
+  FRIENDS = 'basic-friends',
+  AT = 'basic-at',
 }
 
 export enum HighlightType {
@@ -39,6 +67,14 @@ const basicRecord = {
   [BasicType.MORE_CIRCLE]: CgMoreO,
   [BasicType.MORE]: FiMoreHorizontal,
   [BasicType.CLOSE]: MdClose,
+  [BasicType.MEDIA]: AiOutlinePicture,
+  [BasicType.GIF]: AiOutlineGif,
+  [BasicType.POLL]: RiBarChartHorizontalFill,
+  [BasicType.EMOJI]: VscSmiley,
+  [BasicType.SCHEDULE]: AiOutlineSchedule,
+  [BasicType.FRIENDS]: BsFillPeopleFill,
+  [BasicType.AT]: BiAt,
+  [BasicType.EARTH]: RiEarthLine,
 };
 
 // [Icon when highlighted state, Icon when basic state]

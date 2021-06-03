@@ -39,7 +39,7 @@ const TweetButton = styled(Button)`
   font-weight: bold;
 
   &:hover {
-    background-color: ${ColorPalette.DARK_SKYBLUE};
+    background-color: ${ColorPalette.SKYBLUE_DARK};
   }
 `;
 
@@ -65,6 +65,7 @@ const UserButtonTextArea = styled.div`
 `;
 
 const Username = styled.strong``;
+
 const UserId = styled.span`
   color: ${ColorPalette.GRAY_70};
 `;
