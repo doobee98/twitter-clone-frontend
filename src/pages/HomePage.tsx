@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PageTemplate from 'components/base/PageTemplate';
 import Popup from 'components/base/Popup';
 import Button from 'components/base/Button';
+import Modal from 'components/base/Modal';
 
 const ToBeRemovedWrapper = styled(React.Fragment)``;
 
@@ -17,6 +18,10 @@ const HomePage: React.FC = () => {
 
   const openPopup = () => {
     setIsOpened(true);
+  };
+
+  const closePopup = () => {
+    setIsOpened(false);
   };
 
   return (
@@ -35,7 +40,11 @@ const HomePage: React.FC = () => {
             팝업테스트용버튼
           </ToBeRemovedTestButton>
         </div>
-        <Popup isOpened={isOpened} setIsOpened={setIsOpened}>
+        <Popup
+          isOpened={isOpened}
+          onClose={closePopup}
+          setIsOpened={setIsOpened}
+        >
           <h1>Hello Popup!</h1>
         </Popup>
       </ToBeRemovedWrapper>

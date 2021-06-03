@@ -2,6 +2,8 @@ import useClickOutside from 'hooks/useClickOutside';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
+import { BasicType } from 'utils/iconUtils';
+import NavItem from './NavItem';
 
 const PopupBackground = styled.div`
   position: absolute;
@@ -25,18 +27,30 @@ interface PopupContainerProps {
 
 const PopupContainer = styled.div<PopupContainerProps>`
   background-color: ${ColorPalette.WHITE};
-  border-radius: 10px;
+  border-radius: 25px;
   margin-top: ${(props) => props.topMargin + 80}px;
+  width: 560px;
+`;
+
+const PopupHeader = styled.div`
+  padding: 0px 16px;
+  border-bottom: 1px solid ${ColorPalette.LIGHTDARK};
+`;
+
+const CloseButton = styled(NavItem)`
+  color: ${ColorPalette.SKYBLUE};
+  width: 40px;
 `;
 
 interface PopupProps {
   isOpened: boolean;
+  onClose: () => void;
   setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
 }
 
 const Popup: React.FC<PopupProps> = (props) => {
-  const { isOpened, setIsOpened, className, children } = props;
+  const { isOpened, onClose, setIsOpened, className, children } = props;
   const [readyToOpen, setReadyToOpen] = useState(isOpened);
   const [topMargin, setTopMargin] = useState(0);
   const popupRef = useRef<HTMLDivElement>(null);
@@ -75,6 +89,9 @@ const Popup: React.FC<PopupProps> = (props) => {
       {readyToOpen && (
         <PopupBackground className={className}>
           <PopupContainer topMargin={topMargin} ref={popupRef}>
+            <PopupHeader onClick={onClose}>
+              <CloseButton iconType={BasicType.CLOSE} />
+            </PopupHeader>
             {children}
           </PopupContainer>
         </PopupBackground>
