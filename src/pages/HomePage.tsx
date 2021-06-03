@@ -28,6 +28,7 @@ const HomePage: React.FC = () => {
     <PageTemplate title="Home">
       <ToBeRemovedWrapper>
         <div>Temporary Home Page</div>
+        <TweetPost />
         <div
           style={{
             height: '200vh',
