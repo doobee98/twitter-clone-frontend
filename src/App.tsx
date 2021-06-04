@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
-import { login } from 'modules/auth';
+import { useAppDispatch } from 'hooks/redux';
+import { info } from 'modules/auth';
+import storage, { AUTH_TOKEN_NAME } from 'utils/storage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 
@@ -62,16 +63,26 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
+  const [initialLoading, setInitialLoading] = useState(false);
 
   useEffect(() => {
-    const loginRequest = {
-      user_id: '',
-      password: '',
+    const completeInitialLoading = () => {
+      setInitialLoading(true);
     };
 
-    dispatch(login(loginRequest));
+    if (!storage.getItem(AUTH_TOKEN_NAME)) {
+      completeInitialLoading();
+      return;
+    }
+
+    dispatch(info()).finally(completeInitialLoading);
   }, []);
+
+  if (!initialLoading) {
+    return null;
+  }
 
   return (
     <>

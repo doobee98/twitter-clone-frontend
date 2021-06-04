@@ -10,6 +10,7 @@ class AuthApi extends Api {
   apiEndPoints = {
     LOGIN: `${authApiPrefix}/login`,
     LOGOUT: `${authApiPrefix}/logout`,
+    INFO: `${authApiPrefix}/info`,
     SIGNUP: `${authApiPrefix}/signup`,
     CURRENT_USER: `${authApiPrefix}/`, // [TO BE REMOVED] TEST endpoint
   };
@@ -33,6 +34,10 @@ class AuthApi extends Api {
 
   logout(): AxiosPromise<void> {
     return ApiBuilder.create().get().url(`${this.apiEndPoints.LOGOUT}`).build();
+  }
+
+  info(): AxiosPromise<User> {
+    return ApiBuilder.create().get().url(`${this.apiEndPoints.INFO}`).build();
   }
 
   signup(id: string, password: string, username: string): AxiosPromise<User> {

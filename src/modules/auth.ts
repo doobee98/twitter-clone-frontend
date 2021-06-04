@@ -25,6 +25,11 @@ export const logout = createAsyncThunk('auth/logout', async () => {
   storage.removeItem(AUTH_TOKEN_NAME);
 });
 
+export const info = createAsyncThunk('auth/info', async () => {
+  const response = await AuthApi.instance.info();
+  return response.data as User;
+});
+
 export const signup = createAsyncThunk(
   'auth/signup',
   async (signupRequest: SignUpRequest) => {
@@ -55,6 +60,15 @@ export const auth = createSlice({
     },
     [logout.rejected.type]: (state, error) => {
       console.log(error);
+      return state;
+    },
+    [info.fulfilled.type]: (state, action) => {
+      const user = action.payload;
+      return { currentUser: user };
+    },
+    [info.rejected.type]: (state, error) => {
+      console.log(error);
+      storage.removeItem(AUTH_TOKEN_NAME);
       return state;
     },
     [signup.fulfilled.type]: (state, action) => {
