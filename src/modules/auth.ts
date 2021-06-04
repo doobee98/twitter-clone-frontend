@@ -45,7 +45,6 @@ export const auth = createSlice({
       return { currentUser: user };
     },
     [login.rejected.type]: (state, error) => {
-      storage.removeItem(AUTH_TOKEN_NAME);
       console.log(error);
       return state;
     },
@@ -60,7 +59,7 @@ export const auth = createSlice({
     },
     [signup.fulfilled.type]: (state, action) => {
       window.alert(`${action.payload.user_id}님 회원가입 완료!`);
-      return { currentUser: action.payload };
+      return state;
     },
     [signup.rejected.type]: (state, error) => {
       console.log(error);
