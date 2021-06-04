@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PageTemplate from 'components/base/PageTemplate';
 import Popup from 'components/base/Popup';
+import Tooltip from 'components/base/Tooltip';
+import TooltipTest from 'components/base/TooltipTest';
 import Button from 'components/base/Button';
 import TweetPost from 'components/post/TweetPost';
 
@@ -15,6 +17,7 @@ const ToBeRemovedTestButton = styled(Button)`
 
 const HomePage: React.FC = () => {
   const [isOpened, setIsOpened] = useState(false);
+  const [isOpenedTT, setIsOpenedTT] = useState(false);
 
   const openPopup = () => {
     setIsOpened(true);
@@ -22,6 +25,14 @@ const HomePage: React.FC = () => {
 
   const closePopup = () => {
     setIsOpened(false);
+  };
+
+  const openTooltip = () => {
+    setIsOpenedTT(true);
+  };
+
+  const closeTooltip = () => {
+    setIsOpenedTT(false);
   };
 
   return (
@@ -40,6 +51,9 @@ const HomePage: React.FC = () => {
           <ToBeRemovedTestButton onClick={openPopup}>
             팝업테스트용버튼
           </ToBeRemovedTestButton>
+          <ToBeRemovedTestButton onClick={openTooltip}>
+            툴팁테스트용버튼
+          </ToBeRemovedTestButton>
         </div>
         <Popup
           isOpened={isOpened}
@@ -48,6 +62,7 @@ const HomePage: React.FC = () => {
         >
           <TweetPost />
         </Popup>
+        <TooltipTest isOpened={isOpenedTT} setIsOpened={setIsOpenedTT} />
       </ToBeRemovedWrapper>
     </PageTemplate>
   );
