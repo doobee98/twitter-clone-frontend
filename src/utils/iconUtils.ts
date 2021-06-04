@@ -5,8 +5,12 @@ import {
   BsPerson,
   BsPersonFill,
   BsFillPeopleFill,
+  BsChatDots,
+  BsGraphUp,
+  BsQuestionCircle,
+  BsDisplay,
 } from 'react-icons/bs';
-import { CgMoreO } from 'react-icons/cg';
+import { CgMoreO, CgShortcut } from 'react-icons/cg';
 import { FaBookmark, FaRegBookmark, FaTwitter } from 'react-icons/fa';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { HiHashtag, HiOutlineHashtag } from 'react-icons/hi';
@@ -18,13 +22,16 @@ import {
   RiFileList2Line,
   RiBarChartHorizontalFill,
   RiEarthLine,
+  RiAdvertisementLine,
 } from 'react-icons/ri';
 import {
   AiOutlinePicture,
   AiOutlineGif,
   AiOutlineSchedule,
+  AiOutlineThunderbolt,
+  AiOutlineSetting,
 } from 'react-icons/ai';
-import { BiAt } from 'react-icons/bi';
+import { BiAt, BiNews } from 'react-icons/bi';
 import { VscSmiley } from 'react-icons/vsc';
 import { isEnumType } from 'utils';
 
@@ -46,6 +53,16 @@ export enum BasicType {
   EARTH = 'highlight-earth',
   FRIENDS = 'basic-friends',
   AT = 'basic-at',
+  //   tooltip icons
+  CHAT = 'basic-chat-bubble',
+  THUNDER = 'basic-thunder',
+  NEWS = 'basic-news',
+  AD = 'basic-ads',
+  GRAPH = 'basic-graph',
+  SETTING = 'basic-setting',
+  QUESTION = 'basic-question',
+  DISPLAY = 'basic-display',
+  SHORTCUT = 'basic-shortcut',
 }
 
 export enum HighlightType {
@@ -75,6 +92,16 @@ const basicRecord = {
   [BasicType.FRIENDS]: BsFillPeopleFill,
   [BasicType.AT]: BiAt,
   [BasicType.EARTH]: RiEarthLine,
+  // tooltip icons
+  [BasicType.CHAT]: BsChatDots,
+  [BasicType.THUNDER]: AiOutlineThunderbolt,
+  [BasicType.NEWS]: BiNews,
+  [BasicType.AD]: RiAdvertisementLine,
+  [BasicType.GRAPH]: BsGraphUp,
+  [BasicType.QUESTION]: BsQuestionCircle,
+  [BasicType.DISPLAY]: BsDisplay,
+  [BasicType.SHORTCUT]: CgShortcut,
+  [BasicType.SETTING]: AiOutlineSetting,
 };
 
 // [Icon when highlighted state, Icon when basic state]
