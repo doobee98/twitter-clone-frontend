@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router';
 import { ColorPalette } from '../../utils/colorUtils';
 import TweetModel from '../../models/tweet';
 import TweetSide from './TweetSide';
@@ -33,12 +34,24 @@ const TweetList: React.FC = () => {
     testTweet.filter((tweet) => tweet.key < initTweetNum),
   );
 
+  const history = useHistory();
+
+  const goToTweet = (tweetLink: string) => {
+    // TO BE ROMVED
+    console.log('list');
+
+    history.push(tweetLink);
+  };
+
   useInfinityScroll(testTweet, tweets, setTweets);
 
   return (
     <TweetListContainer>
       {tweets.map((tweet) => (
-        <TweetContainer key={tweet.key}>
+        <TweetContainer
+          key={tweet.key}
+          onClick={() => goToTweet(`/${tweet.user}/status/${tweet.key}`)}
+        >
           <TweetSide tweet={tweet} />
           <TweetMain tweet={tweet} />
         </TweetContainer>
