@@ -21,6 +21,9 @@ export const login = createAsyncThunk(
       const { data: user, headers } = response;
       return [user as User, headers.authorization];
     } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
       return thunkAPI.rejectWithValue(error.response.data);
     }
   },
@@ -34,6 +37,9 @@ export const logout = createAsyncThunk(
       storage.removeItem(AUTH_TOKEN_NAME);
       return response.data;
     } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
       return thunkAPI.rejectWithValue(error.response.data);
     }
   },
@@ -44,6 +50,9 @@ export const info = createAsyncThunk(`${name}/info`, async (_, thunkAPI) => {
     const response = await AuthApi.instance.info();
     return response.data as User;
   } catch (error) {
+    if (!error.response) {
+      throw error;
+    }
     return thunkAPI.rejectWithValue(error.response.data);
   }
 });
@@ -60,6 +69,9 @@ export const signup = createAsyncThunk(
       );
       return response.data as User;
     } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
       return thunkAPI.rejectWithValue(error.response.data);
     }
   },
