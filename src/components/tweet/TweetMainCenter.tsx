@@ -8,9 +8,13 @@ const TweetMainTextWrapper = styled.div`
 `;
 
 const TweetMainContentWrapper = styled.div`
+  align-items: center;
+  justify-content: center;
+
   height: 100px;
 
   border: 1px solid;
+  border-radius: 15px;
   margin: 1px;
 `;
 
