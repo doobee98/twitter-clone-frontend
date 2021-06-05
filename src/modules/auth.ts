@@ -4,6 +4,8 @@ import storage, { AUTH_TOKEN_NAME } from 'utils/storage';
 import User from '../models/user';
 import { LoginRequest, SignUpRequest } from '../models/request/auth';
 
+const name = 'auth';
+
 interface AuthState {
   currentUser?: User;
 }
@@ -11,36 +13,60 @@ interface AuthState {
 const initialState: AuthState = {};
 
 export const login = createAsyncThunk(
-  'auth/login',
-  async (loginRequest: LoginRequest) => {
-    const { user_id, password } = loginRequest;
-    const response = await AuthApi.instance.login(user_id, password);
-    const { data: user, headers } = response;
-    return [user as User, headers.authorization];
+  `${name}/login`,
+  async (loginRequest: LoginRequest, thunkAPI) => {
+    try {
+      const { user_id, password } = loginRequest;
+      const response = await AuthApi.instance.login(user_id, password);
+      const { data: user, headers } = response;
+      return [user as User, headers.authorization];
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
   },
 );
 
-export const logout = createAsyncThunk('auth/logout', async () => {
-  await AuthApi.instance.logout();
-  storage.removeItem(AUTH_TOKEN_NAME);
-});
+export const logout = createAsyncThunk(
+  `${name}/logout`,
+  async (_, thunkAPI) => {
+    try {
+      const response = await AuthApi.instance.logout();
+      storage.removeItem(AUTH_TOKEN_NAME);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
 
-export const info = createAsyncThunk('auth/info', async () => {
-  const response = await AuthApi.instance.info();
-  return response.data as User;
+export const info = createAsyncThunk(`${name}/info`, async (_, thunkAPI) => {
+  try {
+    const response = await AuthApi.instance.info();
+    return response.data as User;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
 });
 
 export const signup = createAsyncThunk(
-  'auth/signup',
-  async (signupRequest: SignUpRequest) => {
-    const { user_id, password, username } = signupRequest;
-    const response = await AuthApi.instance.signup(user_id, password, username);
-    return response.data as User;
+  `${name}/signup`,
+  async (signupRequest: SignUpRequest, thunkAPI) => {
+    try {
+      const { user_id, password, username } = signupRequest;
+      const response = await AuthApi.instance.signup(
+        user_id,
+        password,
+        username,
+      );
+      return response.data as User;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
   },
 );
 
 export const auth = createSlice({
-  name: 'auth',
+  name,
   initialState,
   reducers: {},
   extraReducers: {
@@ -50,7 +76,7 @@ export const auth = createSlice({
       return { currentUser: user };
     },
     [login.rejected.type]: (state, error) => {
-      console.log(error);
+      console.log(error.payload);
       return state;
     },
     [logout.fulfilled.type]: () => {
@@ -59,7 +85,7 @@ export const auth = createSlice({
       };
     },
     [logout.rejected.type]: (state, error) => {
-      console.log(error);
+      console.log(error.payload);
       return state;
     },
     [info.fulfilled.type]: (state, action) => {
@@ -67,7 +93,7 @@ export const auth = createSlice({
       return { currentUser: user };
     },
     [info.rejected.type]: (state, error) => {
-      console.log(error);
+      console.log(error.payload);
       storage.removeItem(AUTH_TOKEN_NAME);
       return state;
     },
@@ -76,7 +102,7 @@ export const auth = createSlice({
       return state;
     },
     [signup.rejected.type]: (state, error) => {
-      console.log(error);
+      console.log(error.payload);
       return state;
     },
   },
