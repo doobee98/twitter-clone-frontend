@@ -11,6 +11,14 @@ import LoginPage from './pages/LoginPage';
 const GlobalStyle = createGlobalStyle`
   ${normalize}
 
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto',
+      Helvetica, Arial, sans-serif;
+    }
+
   html {
     font-size: 16px;
     height: 100%;
@@ -19,8 +27,6 @@ const GlobalStyle = createGlobalStyle`
   body {
     width: 100%;
     min-height: 100%;
-    margin: 0;
-    padding: 0;
   }
 
   input {
@@ -28,21 +34,11 @@ const GlobalStyle = createGlobalStyle`
     border-radius: 0;
   }
 
-  p {
-    margin: 0;
-  }
-
   ul {
     list-style: none;
     padding-inline-start: 0;
-    padding: 0; 
-    margin: 0;
   }
 
-  li { 
-    padding: 0;
-    margin:0px; 
-  }
 
   a:link { color: inherit; text-decoration: none;}
   a:visited { color: inherit; text-decoration: none;}

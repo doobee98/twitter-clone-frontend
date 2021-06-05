@@ -1,3 +1,12 @@
+export default interface TweetModel {
+  key: number;
+  user: string;
+  text: string;
+  comments: number;
+  retweets: number;
+  likes: number;
+}
+
 export interface Tweet {
   type: 'tweet' | 'retweet' | 'reply';
   tweet_id: string;
