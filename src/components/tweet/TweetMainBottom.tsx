@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ColorPalette } from '../../utils/colorUtils';
 import TweetModel from '../../models/tweet';
@@ -44,22 +44,50 @@ interface TweetMainBottomProps {
 
 const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
   const { children, tweet } = props;
+  const [isShareActive, setIsShareActive] = useState<boolean>(false);
+
+  const shareClick = () => {
+    setIsShareActive(!isShareActive);
+    console.log(isShareActive);
+  };
+
+  const newTweetModal = () => {
+    // TO DO
+    console.log('newTweetModal');
+  };
+
+  const increaseRetweets = () => {
+    tweet.retweets += 1;
+  };
+
+  const increaseLikes = () => {
+    tweet.likes += 1;
+  };
 
   return (
     <TweetMainBottomContainer>
       <TweetMainBottomItemWrapper>
-        <TweetMainBottomIcon iconType={BasicType.REPLY} />
+        <TweetMainBottomIcon
+          iconType={BasicType.REPLY}
+          buttonFunc={newTweetModal}
+        />
         {tweet.comments}
       </TweetMainBottomItemWrapper>
       <TweetMainBottomItemWrapper>
-        <TweetMainBottomIcon iconType={BasicType.RETWEET} />
+        <TweetMainBottomIcon
+          iconType={BasicType.RETWEET}
+          buttonFunc={increaseRetweets}
+        />
         {tweet.retweets}
       </TweetMainBottomItemWrapper>
       <TweetMainBottomItemWrapper>
-        <TweetMainBottomIcon iconType={BasicType.LIKE} />
+        <TweetMainBottomIcon
+          iconType={BasicType.LIKE}
+          buttonFunc={increaseLikes}
+        />
         {tweet.likes}
       </TweetMainBottomItemWrapper>
-      <TweetMainBottomItemWrapper>
+      <TweetMainBottomItemWrapper onClick={shareClick}>
         <TweetMainBottomIcon iconType={BasicType.SHARE} />
       </TweetMainBottomItemWrapper>
     </TweetMainBottomContainer>
