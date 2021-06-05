@@ -4,6 +4,7 @@ import { ColorPalette } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
 import NavItem from '../base/NavItem';
 import TweetPostToolBar from './TweetPostToolBar';
+import useTweetPost from '../../hooks/useTweetPost';
 
 const TweetPostContentContainer = styled.div`
   float: left;
@@ -99,6 +100,9 @@ const TweetPostToolBarWrapper = styled.div`
 `;
 
 const TweetPostContent: React.FC = () => {
+  const { permissionList, selectedPermission, setSelectedPermission } =
+    useTweetPost();
+
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [textAreaHeight, setTextAreaHeight] = useState('auto');
   const [currentValue, setCurrentValue] = useState('');
@@ -111,25 +115,6 @@ const TweetPostContent: React.FC = () => {
     permission: string;
     iconType: BasicType;
   };
-  const permissions: Array<permission> = [
-    {
-      id: 0,
-      permission: 'Everyone can reply',
-      iconType: BasicType.EARTH,
-    },
-    {
-      id: 1,
-      permission: 'Only people you mention can reply',
-      iconType: BasicType.AT,
-    },
-    {
-      id: 2,
-      permission: 'People you follow can reply',
-      iconType: BasicType.FRIENDS,
-    },
-  ];
-
-  const [permissionType, setPermissionType] = useState(permissions[0]);
 
   useEffect(() => {
     setTextAreaHeight(`${textAreaRef.current?.scrollHeight}px`);
@@ -145,11 +130,7 @@ const TweetPostContent: React.FC = () => {
   };
 
   const changePermission = () => {
-    const currentPermission: permission = permissionType;
-    const search = (obj: permission) => obj.id === currentPermission.id;
-    setPermissionType(
-      permissions[(permissions.findIndex(search) + 1) % permissions.length],
-    );
+    setSelectedPermission((selectedPermission + 1) % permissionList.length);
   };
 
   const handleImgInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -181,8 +162,10 @@ const TweetPostContent: React.FC = () => {
         isWritingStarted={isWritingStarted}
         onClick={changePermission}
       >
-        <PermissionButton iconType={permissionType.iconType}>
-          {permissionType.permission}
+        <PermissionButton
+          iconType={permissionList[selectedPermission].iconType}
+        >
+          {permissionList[selectedPermission].permission}
         </PermissionButton>
       </TweetPostPermissionWrapper>
       <TweetPostToolBarWrapper>
