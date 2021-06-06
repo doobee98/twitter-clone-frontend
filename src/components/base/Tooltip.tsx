@@ -1,11 +1,18 @@
 import useClickOutside from 'hooks/useClickOutside';
 import { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
 
-const PopupBackground = styled.div`
+interface PopupBackgroundProps {
+  topMargin: number;
+  leftMargin: number;
+}
+
+const PopupBackground = styled.div<PopupBackgroundProps>`
   position: absolute;
-  top: 0;
+
+  top: ${(props) => props.topMargin}px;
+  /* left: ${(props) => props.leftMargin}px; */
   left: 0;
   z-index: 100;
 
@@ -20,40 +27,41 @@ const PopupBackground = styled.div`
 
 interface PopupContainerProps {
   topMargin: number;
+  leftMargin: number;
 }
 
 const PopupContainer = styled.div<PopupContainerProps>`
   box-shadow: 1px 1px 3px 3px ${ColorPalette.GRAY_E6};
-
   background-color: ${ColorPalette.WHITE};
-  margin-top: ${(props) => props.topMargin + 80}px;
 `;
 
 const ContentWrapper = styled.div``;
 
 interface TooltipProps {
+  position: [number, number];
   isOpened: boolean;
   setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
 }
 
 const Tooltip: React.FC<TooltipProps> = (props) => {
-  const { isOpened, setIsOpened, className, children } = props;
+  const { isOpened, position, setIsOpened, className, children } = props;
   const [readyToOpen, setReadyToOpen] = useState(isOpened);
   const [topMargin, setTopMargin] = useState(0);
+  const [leftMargin, setLeftMargin] = useState(0);
   const popupRef = useRef<HTMLDivElement>(null);
-
   const initTooltip = async () => {
-    const offsetY = window.pageYOffset;
-    await setTopMargin(offsetY);
-    document.body.style.top = `${-offsetY}px`;
-    setReadyToOpen(true);
+    await setTopMargin(position[1]);
+    await setLeftMargin(position[0]);
+    await setReadyToOpen(true);
   };
 
   const finishTooltip = () => {
-    const offsetY = Math.abs(parseInt(document.body.style.top || '0', 10));
-    window.scrollTo({ top: offsetY || 0 });
     setReadyToOpen(false);
+  };
+
+  const clickItem = () => {
+    setIsOpened(false);
   };
 
   useClickOutside(popupRef, () => {
@@ -72,8 +80,17 @@ const Tooltip: React.FC<TooltipProps> = (props) => {
   return (
     <>
       {readyToOpen && (
-        <PopupBackground className={className}>
-          <PopupContainer topMargin={topMargin} ref={popupRef}>
+        <PopupBackground
+          className={className}
+          topMargin={topMargin}
+          leftMargin={leftMargin}
+        >
+          <PopupContainer
+            topMargin={topMargin}
+            leftMargin={leftMargin}
+            ref={popupRef}
+            onClick={() => clickItem()}
+          >
             <ContentWrapper>{children}</ContentWrapper>
           </PopupContainer>
         </PopupBackground>

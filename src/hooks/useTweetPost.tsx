@@ -31,6 +31,9 @@ const permissions: Array<permission> = [
 const useTweetPost = () => {
   const [permissionList, setPermissionList] = useState(permissions);
   const [selectedPermission, setSelectedPermission] = useState(0);
+  const [permissionTooltipTop, setPermissionTooltipTop] = useState(0);
+  const [isOpenedPermissionTooltip, setIsOpenedPermissionTooltip] =
+    useState(false);
 
   useEffect(() => {
     const newPermissionList = permissionList.map((permission) => {
@@ -39,13 +42,32 @@ const useTweetPost = () => {
       return { ...permission, selected: true };
     });
     setPermissionList(newPermissionList);
+    setIsOpenedPermissionTooltip(false);
+    console.log(isOpenedPermissionTooltip);
   }, [selectedPermission]);
+
+  const openPermissionTooltip = (
+    event: React.MouseEvent<HTMLElement, MouseEvent> | undefined,
+  ) => {
+    if (!event) return;
+    setPermissionTooltipTop(event.currentTarget.offsetTop);
+    setIsOpenedPermissionTooltip(true);
+  };
+
+  const closePermissionTooltip = () => {
+    setIsOpenedPermissionTooltip(false);
+  };
 
   return {
     permissionList,
     selectedPermission,
+    permissionTooltipTop,
+    isOpenedPermissionTooltip,
     setPermissionList,
     setSelectedPermission,
+    setIsOpenedPermissionTooltip,
+    openPermissionTooltip,
+    closePermissionTooltip,
   };
 };
 

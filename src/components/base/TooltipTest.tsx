@@ -51,15 +51,16 @@ const LogoNavItem = styled(NavItem)`
 `;
 
 interface TooltipProps {
+  position: [number, number];
   isOpened: boolean;
   setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
 }
 
 const TooltipTest: React.FC<TooltipProps> = (props) => {
-  const { isOpened, setIsOpened, className } = props;
+  const { position, isOpened, setIsOpened, className } = props;
   return (
-    <Tooltip isOpened={isOpened} setIsOpened={setIsOpened}>
+    <Tooltip position={position} isOpened={isOpened} setIsOpened={setIsOpened}>
       <SelectList />
     </Tooltip>
   );

@@ -4,6 +4,7 @@ import { ColorPalette } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
 import NavItem from '../base/NavItem';
 import TweetPostToolBar from './TweetPostToolBar';
+import TweetPostTooltip from './TweetPostPopup';
 import useTweetPost from '../../hooks/useTweetPost';
 
 const TweetPostContentContainer = styled.div`
@@ -100,8 +101,15 @@ const TweetPostToolBarWrapper = styled.div`
 `;
 
 const TweetPostContent: React.FC = () => {
-  const { permissionList, selectedPermission, setSelectedPermission } =
-    useTweetPost();
+  const {
+    permissionList,
+    selectedPermission,
+    permissionTooltipTop,
+    isOpenedPermissionTooltip,
+    setSelectedPermission,
+    setIsOpenedPermissionTooltip,
+    openPermissionTooltip,
+  } = useTweetPost();
 
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [textAreaHeight, setTextAreaHeight] = useState('auto');
@@ -109,12 +117,6 @@ const TweetPostContent: React.FC = () => {
   const [isWritingStarted, setIsWritingStarted] = useState(false);
   const [file, setFile] = useState('');
   const [isUploaded, setIsUploaded] = useState(false);
-
-  type permission = {
-    id: number;
-    permission: string;
-    iconType: BasicType;
-  };
 
   useEffect(() => {
     setTextAreaHeight(`${textAreaRef.current?.scrollHeight}px`);
@@ -158,15 +160,23 @@ const TweetPostContent: React.FC = () => {
       <TweetPostMediaWrapper isUploaded={isUploaded}>
         {file && <TweetPostImgPreview src={file} alt="input_img" />}
       </TweetPostMediaWrapper>
+
       <TweetPostPermissionWrapper
         isWritingStarted={isWritingStarted}
-        onClick={changePermission}
+        onClick={(e) => {
+          openPermissionTooltip(e);
+        }}
       >
         <PermissionButton
           iconType={permissionList[selectedPermission].iconType}
         >
           {permissionList[selectedPermission].permission}
         </PermissionButton>
+        <TweetPostTooltip
+          position={[0, permissionTooltipTop]}
+          isOpened={isOpenedPermissionTooltip}
+          setIsOpened={setIsOpenedPermissionTooltip}
+        />
       </TweetPostPermissionWrapper>
       <TweetPostToolBarWrapper>
         <TweetPostToolBar handleImgInput={handleImgInput} />

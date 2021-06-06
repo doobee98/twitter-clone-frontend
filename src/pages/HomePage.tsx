@@ -2,22 +2,25 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PageTemplate from 'components/base/PageTemplate';
 import Popup from 'components/base/Popup';
-import Tooltip from 'components/base/Tooltip';
 import TooltipTest from 'components/base/TooltipTest';
 import Button from 'components/base/Button';
 import TweetPost from 'components/post/TweetPost';
+import TweetPostTooltip from 'components/post/TweetPostPopup';
 
 const ToBeRemovedWrapper = styled(React.Fragment)``;
 
 const ToBeRemovedTestButton = styled(Button)`
+  margin: 0;
   border: 1px solid black;
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 100px;
 `;
 
 const HomePage: React.FC = () => {
   const [isOpened, setIsOpened] = useState(false);
   const [isOpenedTT, setIsOpenedTT] = useState(false);
+  const [clickLeft, setClickLeft] = useState(0);
+  const [clickTop, setClickTop] = useState(0);
 
   const openPopup = () => {
     setIsOpened(true);
@@ -27,7 +30,14 @@ const HomePage: React.FC = () => {
     setIsOpened(false);
   };
 
-  const openTooltip = () => {
+  const openTooltip = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent> | undefined,
+  ) => {
+    if (!event) return;
+    // setClickLeft(
+    //   event.currentTarget.offsetLeft - event.currentTarget.offsetWidth,
+    // );
+    setClickTop(event.currentTarget.offsetTop);
     setIsOpenedTT(true);
   };
 
@@ -54,6 +64,21 @@ const HomePage: React.FC = () => {
           <ToBeRemovedTestButton onClick={openTooltip}>
             툴팁테스트용버튼
           </ToBeRemovedTestButton>
+          <ToBeRemovedTestButton onClick={openTooltip}>
+            툴팁테스트용버튼
+          </ToBeRemovedTestButton>{' '}
+          <ToBeRemovedTestButton onClick={openTooltip}>
+            툴팁테스트용버튼
+          </ToBeRemovedTestButton>{' '}
+          <ToBeRemovedTestButton onClick={openTooltip}>
+            툴팁테스트용버튼
+          </ToBeRemovedTestButton>{' '}
+          <ToBeRemovedTestButton onClick={openTooltip}>
+            툴팁테스트용버튼
+          </ToBeRemovedTestButton>{' '}
+          <ToBeRemovedTestButton onClick={openTooltip}>
+            툴팁테스트용버튼
+          </ToBeRemovedTestButton>
         </div>
         <Popup
           isOpened={isOpened}
@@ -62,7 +87,11 @@ const HomePage: React.FC = () => {
         >
           <TweetPost />
         </Popup>
-        <TooltipTest isOpened={isOpenedTT} setIsOpened={setIsOpenedTT} />
+        <TooltipTest
+          position={[clickLeft, clickTop]}
+          isOpened={isOpenedTT}
+          setIsOpened={setIsOpenedTT}
+        />
       </ToBeRemovedWrapper>
     </PageTemplate>
   );
