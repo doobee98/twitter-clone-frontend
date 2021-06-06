@@ -1,22 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType, HighlightType } from 'utils/iconUtils';
-import Button from './Button';
-import Icon from './Icon';
-
-const NavItemContainer = styled.div`
-  width: 100%;
-  cursor: pointer;
-`;
+import IconButton from './IconButton';
 
 interface NavItemButtonProps {
   isActive?: boolean;
   isHover?: boolean;
 }
 
-const NavItemButton = styled(Button)<NavItemButtonProps>`
+const NavItemButton = styled(IconButton)<NavItemButtonProps>`
   margin: 5px 0;
   color: inherit;
 
@@ -25,13 +19,18 @@ const NavItemButton = styled(Button)<NavItemButtonProps>`
     css`
       color: ${ColorPalette.SKYBLUE};
     `}
+`;
 
-  ${(props) =>
-    props.isHover &&
-    css`
+const NavItemContainer = styled.div`
+  width: 100%;
+  cursor: pointer;
+
+  &:hover {
+    & > ${NavItemButton} {
       color: ${ColorPalette.SKYBLUE};
       background-color: ${hexToRgbA(ColorPalette.SKYBLUE, 0.1)};
-    `}
+    }
+  }
 `;
 
 const NavItemText = styled.div`
@@ -52,15 +51,6 @@ const NavItem: React.FC<NavItemProps> = (props) => {
   const history = useHistory();
   const location = useLocation();
   const isCurrentPath = link === location.pathname;
-  const [isHover, setIsHover] = useState(false);
-
-  const onHover = () => {
-    setIsHover(true);
-  };
-
-  const onHoverOut = () => {
-    setIsHover(false);
-  };
 
   const goToLink = () => {
     if (link) {
@@ -69,14 +59,12 @@ const NavItem: React.FC<NavItemProps> = (props) => {
   };
 
   return (
-    <NavItemContainer
-      className={className}
-      onClick={goToLink}
-      onMouseEnter={onHover}
-      onMouseLeave={onHoverOut}
-    >
-      <NavItemButton isActive={isCurrentPath} isHover={isHover}>
-        <Icon iconType={iconType} isHighlighted={isCurrentPath} size={25} />
+    <NavItemContainer className={className} onClick={goToLink}>
+      <NavItemButton
+        iconType={iconType}
+        isIconHighlighted={isCurrentPath}
+        isActive={isCurrentPath}
+      >
         {children && <NavItemText>{children}</NavItemText>}
       </NavItemButton>
     </NavItemContainer>
