@@ -124,7 +124,7 @@ const TweetPostContent: React.FC = () => {
     },
   ];
 
-  const [permissionType, setPermissionType] = useState(permissions[0]);
+  const [permissionIndex, setPermissionIndex] = useState(0);
 
   useEffect(() => {
     setTextAreaHeight(`${textAreaRef.current?.scrollHeight}px`);
@@ -140,12 +140,7 @@ const TweetPostContent: React.FC = () => {
   };
 
   const changePermission = () => {
-    const currentPerm = permissions.find(
-      (permission) =>
-        (permission.id + 1) % permissions.length === permissionType.id,
-    );
-    if (!currentPerm) return;
-    setPermissionType(currentPerm);
+    setPermissionIndex((permissionIndex + 1) % permissions.length);
   };
 
   const handleImgInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -177,8 +172,8 @@ const TweetPostContent: React.FC = () => {
         isWritingStarted={isWritingStarted}
         onClick={changePermission}
       >
-        <PermissionButton iconType={permissionType.iconType}>
-          {permissionType.description}
+        <PermissionButton iconType={permissions[permissionIndex].iconType}>
+          {permissions[permissionIndex].description}
         </PermissionButton>
       </TweetPostPermissionWrapper>
       <TweetPostToolBarWrapper>
