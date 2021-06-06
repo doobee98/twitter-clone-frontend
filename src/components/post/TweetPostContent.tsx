@@ -106,25 +106,20 @@ const TweetPostContent: React.FC = () => {
   const [file, setFile] = useState('');
   const [isUploaded, setIsUploaded] = useState(false);
 
-  type permission = {
-    id: number;
-    permission: string;
-    iconType: BasicType;
-  };
-  const permissions: Array<permission> = [
+  const permissions = [
     {
       id: 0,
-      permission: 'Everyone can reply',
+      description: 'Everyone can reply',
       iconType: BasicType.EARTH,
     },
     {
       id: 1,
-      permission: 'Only people you mention can reply',
+      description: 'Only people you mention can reply',
       iconType: BasicType.AT,
     },
     {
       id: 2,
-      permission: 'People you follow can reply',
+      description: 'People you follow can reply',
       iconType: BasicType.FRIENDS,
     },
   ];
@@ -145,11 +140,12 @@ const TweetPostContent: React.FC = () => {
   };
 
   const changePermission = () => {
-    const currentPermission: permission = permissionType;
-    const search = (obj: permission) => obj.id === currentPermission.id;
-    setPermissionType(
-      permissions[(permissions.findIndex(search) + 1) % permissions.length],
+    const currentPerm = permissions.find(
+      (permission) =>
+        (permission.id + 1) % permissions.length === permissionType.id,
     );
+    if (!currentPerm) return;
+    setPermissionType(currentPerm);
   };
 
   const handleImgInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -182,7 +178,7 @@ const TweetPostContent: React.FC = () => {
         onClick={changePermission}
       >
         <PermissionButton iconType={permissionType.iconType}>
-          {permissionType.permission}
+          {permissionType.description}
         </PermissionButton>
       </TweetPostPermissionWrapper>
       <TweetPostToolBarWrapper>
