@@ -50,7 +50,7 @@ export enum BasicType {
   POLL = 'basic-poll',
   EMOJI = 'basic-emoji',
   SCHEDULE = 'basic-schedule',
-  EARTH = 'highlight-earth',
+  EARTH = 'basic-earth',
   FRIENDS = 'basic-friends',
   AT = 'basic-at',
 
