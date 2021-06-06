@@ -36,7 +36,7 @@ const ToolIcon = styled(NavItem)`
   }
 
   & svg {
-    width: 30x;
+    width: 30px;
     height: 30px;
   }
 
@@ -93,7 +93,7 @@ const TweetPostToolBar = (props: TweetPostToolBarProps) => {
           <ToolIcon iconType={BasicType.MEDIA} />
           <HiddenInput
             type="file"
-            accept="image/jpg,impge/png,image/jpeg"
+            accept="image/jpg,image/png,image/jpeg"
             ref={hiddenFileInput}
             onChange={handleImgInput}
           />
