@@ -3,27 +3,27 @@ import { useHistory, useLocation } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType, HighlightType } from 'utils/iconUtils';
-import IconButton from './IconButton';
+import Button from './Button';
+import Icon from './Icon';
 
-interface NavItemButtonProps {
+// change component order to avoid hoisting
+const NavItemButton = styled(Button)`
+  margin: 5px 0;
+`;
+
+interface NavItemContainerProps {
   isActive?: boolean;
-  isHover?: boolean;
 }
 
-const NavItemButton = styled(IconButton)<NavItemButtonProps>`
-  margin: 5px 0;
-  color: inherit;
+const NavItemContainer = styled.div<NavItemContainerProps>`
+  width: 100%;
+  cursor: pointer;
 
   ${(props) =>
     props.isActive &&
     css`
       color: ${ColorPalette.SKYBLUE};
     `}
-`;
-
-const NavItemContainer = styled.div`
-  width: 100%;
-  cursor: pointer;
 
   &:hover {
     & > ${NavItemButton} {
@@ -59,12 +59,13 @@ const NavItem: React.FC<NavItemProps> = (props) => {
   };
 
   return (
-    <NavItemContainer className={className} onClick={goToLink}>
-      <NavItemButton
-        iconType={iconType}
-        isIconHighlighted={isCurrentPath}
-        isActive={isCurrentPath}
-      >
+    <NavItemContainer
+      className={className}
+      onClick={goToLink}
+      isActive={isCurrentPath}
+    >
+      <NavItemButton>
+        <Icon iconType={iconType} isHighlighted={isCurrentPath} size={25} />
         {children && <NavItemText>{children}</NavItemText>}
       </NavItemButton>
     </NavItemContainer>
