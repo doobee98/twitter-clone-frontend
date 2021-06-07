@@ -144,7 +144,7 @@ const NavigationSideBar: React.FC = () => {
               <Username>{currentUser.username}</Username>
               <UserId>@{currentUser.id}</UserId>
             </UserButtonTextArea>
-            <Icon iconType={BasicType.MORE} size={20} />
+            <Icon iconType={BasicType.MORE} iconSize={20} />
           </UserButton>
         )}
       </BottomContainer>

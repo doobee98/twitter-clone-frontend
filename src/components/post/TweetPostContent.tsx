@@ -174,7 +174,10 @@ const TweetPostContent: React.FC = () => {
         onClick={changePermission}
       >
         <PermissionButton>
-          <Icon iconType={permissions[permissionIndex].iconType} size={25} />
+          <Icon
+            iconType={permissions[permissionIndex].iconType}
+            iconSize={25}
+          />
           <PermissionButtonText>
             {permissions[permissionIndex].description}
           </PermissionButtonText>

@@ -70,19 +70,19 @@ const TweetPostToolBar = (props: TweetPostToolBarProps) => {
       <ToolBarContainer>
         <ToolIconList>
           <ToolIconButton onClick={openMediaFileInput}>
-            <Icon iconType={BasicType.MEDIA} size={20} />
+            <Icon iconType={BasicType.MEDIA} iconSize={20} />
           </ToolIconButton>
           <ToolIconButton>
-            <Icon iconType={BasicType.GIF} size={20} />
+            <Icon iconType={BasicType.GIF} iconSize={20} />
           </ToolIconButton>
           <ToolIconButton>
-            <Icon iconType={BasicType.POLL} size={20} />
+            <Icon iconType={BasicType.POLL} iconSize={20} />
           </ToolIconButton>
           <ToolIconButton>
-            <Icon iconType={BasicType.EMOJI} size={20} />
+            <Icon iconType={BasicType.EMOJI} iconSize={20} />
           </ToolIconButton>
           <ToolIconButton>
-            <Icon iconType={BasicType.SCHEDULE} size={20} />
+            <Icon iconType={BasicType.SCHEDULE} iconSize={20} />
           </ToolIconButton>
         </ToolIconList>
         <TweetButton> Tweet </TweetButton>

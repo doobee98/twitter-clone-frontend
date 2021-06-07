@@ -65,7 +65,7 @@ const NavItem: React.FC<NavItemProps> = (props) => {
       isActive={isCurrentPath}
     >
       <NavItemButton>
-        <Icon iconType={iconType} isHighlighted={isCurrentPath} size={25} />
+        <Icon iconType={iconType} isHighlighted={isCurrentPath} iconSize={25} />
         {children && <NavItemText>{children}</NavItemText>}
       </NavItemButton>
     </NavItemContainer>
