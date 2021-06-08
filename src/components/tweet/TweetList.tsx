@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { ColorPalette } from '../../utils/colorUtils';
 import TweetModel from '../../models/tweet';
 import TweetSide from './TweetSide';
@@ -8,7 +8,7 @@ import TweetMain from './TweetMain';
 import useInfinityScroll from '../../hooks/useInfinityScroll';
 import { testTweet } from '../../utils/testTweetUtils';
 
-const TweetContainer = styled.div`
+const TweetWrapper = styled.div`
   display: flex;
 
   padding: 2px 2px 4px;
@@ -48,13 +48,13 @@ const TweetList: React.FC = () => {
   return (
     <TweetListContainer>
       {tweets.map((tweet) => (
-        <TweetContainer
+        <TweetWrapper
           key={tweet.key}
           onClick={() => goToTweet(`/${tweet.user}/status/${tweet.key}`)}
         >
           <TweetSide tweet={tweet} />
           <TweetMain tweet={tweet} />
-        </TweetContainer>
+        </TweetWrapper>
       ))}
     </TweetListContainer>
   );

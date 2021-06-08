@@ -5,7 +5,7 @@ import TweetModel from '../../models/tweet';
 import { BasicType } from '../../utils/iconUtils';
 import NavItem from '../base/NavItem';
 
-const TweetMainBottomIcon = styled(NavItem)`
+const TweetBottomIcon = styled(NavItem)`
   align-items: center;
   justify-content: center;
 
@@ -24,13 +24,13 @@ const TweetMainBottomIcon = styled(NavItem)`
   color: ${ColorPalette.SKYBLUE};
 `;
 
-const TweetMainBottomItemWrapper = styled.div`
+const TweetBottomItemWrapper = styled.div`
   display: flex;
 
   align-items: center;
 `;
 
-const TweetMainBottomContainer = styled.div`
+const TweetBottomContainer = styled.div`
   display: flex;
 
   margin: 1px;
@@ -38,11 +38,11 @@ const TweetMainBottomContainer = styled.div`
   justify-content: space-around;
 `;
 
-interface TweetMainBottomProps {
+interface TweetBottomProps {
   tweet: TweetModel;
 }
 
-const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
+const TweetMainBottom: React.FC<TweetBottomProps> = (props) => {
   const { children, tweet } = props;
   const [isShareActive, setIsShareActive] = useState<boolean>(false);
 
@@ -65,23 +65,23 @@ const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
   };
 
   return (
-    <TweetMainBottomContainer>
-      <TweetMainBottomItemWrapper>
-        <TweetMainBottomIcon iconType={BasicType.REPLY} />
+    <TweetBottomContainer>
+      <TweetBottomItemWrapper>
+        <TweetBottomIcon iconType={BasicType.REPLY} />
         {tweet.comments}
-      </TweetMainBottomItemWrapper>
-      <TweetMainBottomItemWrapper>
-        <TweetMainBottomIcon iconType={BasicType.RETWEET} />
+      </TweetBottomItemWrapper>
+      <TweetBottomItemWrapper>
+        <TweetBottomIcon iconType={BasicType.RETWEET} />
         {tweet.retweets}
-      </TweetMainBottomItemWrapper>
-      <TweetMainBottomItemWrapper>
-        <TweetMainBottomIcon iconType={BasicType.LIKE} />
+      </TweetBottomItemWrapper>
+      <TweetBottomItemWrapper>
+        <TweetBottomIcon iconType={BasicType.LIKE} />
         {tweet.likes}
-      </TweetMainBottomItemWrapper>
-      <TweetMainBottomItemWrapper>
-        <TweetMainBottomIcon iconType={BasicType.SHARE} />
-      </TweetMainBottomItemWrapper>
-    </TweetMainBottomContainer>
+      </TweetBottomItemWrapper>
+      <TweetBottomItemWrapper>
+        <TweetBottomIcon iconType={BasicType.SHARE} />
+      </TweetBottomItemWrapper>
+    </TweetBottomContainer>
   );
 };
 

@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import TweetModel from '../../models/tweet';
 
-const TweetMainTextWrapper = styled.div`
+const TweetCenterTextWrapper = styled.div`
   padding: 1px;
   margin: 1px;
 `;
 
-const TweetMainContentWrapper = styled.div`
+const TweetCenterContentWrapper = styled.div`
   align-items: center;
   justify-content: center;
 
@@ -18,38 +18,38 @@ const TweetMainContentWrapper = styled.div`
   margin: 1px;
 `;
 
-interface TweetMainCenterProps {
+interface TweetCenterProps {
   tweet: TweetModel;
 }
 
-const TweetText: React.FC<TweetMainCenterProps> = (props) => {
+const TweetText: React.FC<TweetCenterProps> = (props) => {
   const { children, tweet } = props;
 
   return <div>text : {tweet.text}</div>;
 };
 
-const TweetContent: React.FC<TweetMainCenterProps> = (props) => {
+const TweetContent: React.FC<TweetCenterProps> = (props) => {
   const { children, tweet } = props;
 
   return <div>content :</div>;
 };
 
-const TweetMainCenterContainer = styled.div`
+const TweetCenterContainer = styled.div`
   margin: 1px;
 `;
 
-const TweetMainCenter: React.FC<TweetMainCenterProps> = (props) => {
+const TweetMainCenter: React.FC<TweetCenterProps> = (props) => {
   const { children, tweet } = props;
 
   return (
-    <TweetMainCenterContainer>
-      <TweetMainTextWrapper>
+    <TweetCenterContainer>
+      <TweetCenterTextWrapper>
         <TweetText tweet={tweet} />
-      </TweetMainTextWrapper>
-      <TweetMainContentWrapper>
+      </TweetCenterTextWrapper>
+      <TweetCenterContentWrapper>
         <TweetContent tweet={tweet} />
-      </TweetMainContentWrapper>
-    </TweetMainCenterContainer>
+      </TweetCenterContentWrapper>
+    </TweetCenterContainer>
   );
 };
 

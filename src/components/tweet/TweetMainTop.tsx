@@ -1,12 +1,12 @@
 import React from 'react';
-import { useHistory } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { ColorPalette } from '../../utils/colorUtils';
 import TweetModel from '../../models/tweet';
 import { BasicType } from '../../utils/iconUtils';
 import NavItem from '../base/NavItem';
 
-const TweetMainTopItem = styled.div`
+const TweetTopItem = styled.div`
   width: auto;
 
   margin: 1px;
@@ -15,7 +15,7 @@ const TweetMainTopItem = styled.div`
 `;
 
 // NEED TO BE RENAMED : awful long name
-const TweetMainTopUsername = styled(TweetMainTopItem)`
+const TweetTopUsername = styled(TweetTopItem)`
   font-weight: bold;
 
   &:hover {
@@ -23,20 +23,19 @@ const TweetMainTopUsername = styled(TweetMainTopItem)`
   }
 `;
 
-const TweetMainTopUseridTweetedAt = styled(TweetMainTopItem)`
+const TweetTopUseridTweetedAt = styled(TweetTopItem)`
   color: ${ColorPalette.GRAY_70};
 `;
 
-// TO BE REFACTORED : awful naming, awful structure
-const TweetMainTopLeftContainer = styled.div`
+const TweetTopLeftContainer = styled.div`
   display: inline-block;
 `;
 
-const TweetMainTopRightContainer = styled.div`
+const TweetTopRightContainer = styled.div`
   display: inline-block;
 `;
 
-const TweetMainTopRightMoreItem = styled(NavItem)`
+const TweetMoreItem = styled(NavItem)`
   align-items: center;
   justify-content: center;
 
@@ -53,7 +52,7 @@ const TweetMainTopRightMoreItem = styled(NavItem)`
   }
 `;
 
-const TweetMainTopContainer = styled.div`
+const TweetTopContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -75,21 +74,20 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
     history.push(`/${tweet.user}`);
   };
 
-  // <TweetMainTopItem>isOffical</TweetMainTopItem>   ---> should we? after next meeting
   return (
-    <TweetMainTopContainer>
-      <TweetMainTopLeftContainer>
-        <TweetMainTopUsername onClick={goToUserProfile}>
+    <TweetTopContainer>
+      <TweetTopLeftContainer>
+        <TweetTopUsername onClick={goToUserProfile}>
           {tweet.user}
-        </TweetMainTopUsername>
-        <TweetMainTopUseridTweetedAt>
+        </TweetTopUsername>
+        <TweetTopUseridTweetedAt>
           @{tweet.key} - tweetedAt
-        </TweetMainTopUseridTweetedAt>
-      </TweetMainTopLeftContainer>
-      <TweetMainTopRightContainer>
-        <TweetMainTopRightMoreItem iconType={BasicType.MORE} />
-      </TweetMainTopRightContainer>
-    </TweetMainTopContainer>
+        </TweetTopUseridTweetedAt>
+      </TweetTopLeftContainer>
+      <TweetTopRightContainer>
+        <TweetMoreItem iconType={BasicType.MORE} />
+      </TweetTopRightContainer>
+    </TweetTopContainer>
   );
 };
 
