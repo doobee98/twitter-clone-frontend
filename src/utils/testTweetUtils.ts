@@ -4,8 +4,8 @@ export const testTweet: TweetModel[] = [
   {
     key: 0,
     user: 'marong142',
-    text: 'sadjlkfasdlf\nsadfjsadlk',
-    comments: 6,
+    text: 'hello-world',
+    comments: 5,
     retweets: 5,
     likes: 5,
   },
