@@ -67,27 +67,18 @@ const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
   return (
     <TweetMainBottomContainer>
       <TweetMainBottomItemWrapper>
-        <TweetMainBottomIcon
-          iconType={BasicType.REPLY}
-          buttonFunc={newTweetModal}
-        />
+        <TweetMainBottomIcon iconType={BasicType.REPLY} />
         {tweet.comments}
       </TweetMainBottomItemWrapper>
       <TweetMainBottomItemWrapper>
-        <TweetMainBottomIcon
-          iconType={BasicType.RETWEET}
-          buttonFunc={increaseRetweets}
-        />
+        <TweetMainBottomIcon iconType={BasicType.RETWEET} />
         {tweet.retweets}
       </TweetMainBottomItemWrapper>
       <TweetMainBottomItemWrapper>
-        <TweetMainBottomIcon
-          iconType={BasicType.LIKE}
-          buttonFunc={increaseLikes}
-        />
+        <TweetMainBottomIcon iconType={BasicType.LIKE} />
         {tweet.likes}
       </TweetMainBottomItemWrapper>
-      <TweetMainBottomItemWrapper onClick={shareClick}>
+      <TweetMainBottomItemWrapper>
         <TweetMainBottomIcon iconType={BasicType.SHARE} />
       </TweetMainBottomItemWrapper>
     </TweetMainBottomContainer>
