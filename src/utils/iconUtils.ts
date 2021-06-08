@@ -10,7 +10,7 @@ import {
   FiShare,
 } from 'react-icons/fi';
 import { HiHashtag, HiOutlineHashtag } from 'react-icons/hi';
-import { MdMail, MdMailOutline } from 'react-icons/md';
+import { MdMail, MdMailOutline, MdClose } from 'react-icons/md';
 import {
   RiHome4Line,
   RiHome4Fill,
@@ -37,18 +37,21 @@ export enum BasicType {
   TWITTER = 'basic-twitter',
   MORE_CIRCLE = 'basic-more-circle',
   MORE = 'basic-more',
-  
+
   MEDIA = 'basic-media',
   GIF = 'basic-gif',
   POLL = 'basic-poll',
   EMOJI = 'basic-emoji',
   SCHEDULE = 'basic-schedule',
-  
+
   // tweet-list Bottom icons
   REPLY = 'basic-reply',
   RETWEET = 'basic-retweet',
   LIKE = 'basic-like',
   SHARE = 'basic-share',
+
+  // modal icons
+  CLOSE = 'basic-close',
 }
 
 export enum HighlightType {
@@ -70,18 +73,21 @@ const basicRecord = {
   [BasicType.TWITTER]: FaTwitter,
   [BasicType.MORE_CIRCLE]: CgMoreO,
   [BasicType.MORE]: FiMoreHorizontal,
-  
+
   [BasicType.MEDIA]: AiOutlinePicture,
   [BasicType.GIF]: AiOutlineGif,
   [BasicType.POLL]: RiBarChartHorizontalFill,
   [BasicType.EMOJI]: VscSmiley,
-  [BasicType.SCHEDULE]: AiOutlineSchedule,  
-    
+  [BasicType.SCHEDULE]: AiOutlineSchedule,
+
   // tweet-list Bottom icons
   [BasicType.REPLY]: FiMessageSquare,
   [BasicType.RETWEET]: FiRepeat,
   [BasicType.LIKE]: FiHeart,
   [BasicType.SHARE]: FiShare,
+
+  // modal icons
+  [BasicType.CLOSE]: MdClose,
 };
 
 // [Icon when highlighted state, Icon when basic state]
