@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import TweetModel from '../../models/tweet';
 
@@ -33,16 +32,9 @@ interface TweetSideProps {
 const TweetSide: React.FC<TweetSideProps> = (props) => {
   const { children, tweet } = props;
 
-  const history = useHistory();
-
-  const goToUserProfile = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    history.push(`/${tweet.user}`);
-  };
-
   return (
     <TweetSideContainer>
-      <TweetProfileWrapper onClick={goToUserProfile}>
+      <TweetProfileWrapper>
         <TweetProfile />
       </TweetProfileWrapper>
     </TweetSideContainer>
