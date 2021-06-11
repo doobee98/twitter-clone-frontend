@@ -28,12 +28,12 @@ const HomePage: React.FC = () => {
         <SpaceSection />
         <TweetList />
       </ContentTemplate>
-      <ContentTemplate width="300px" hideBorder>
+      {/* <ContentTemplate width="300px" hideBorder>
         <ContentHeader hideBorder>
           <strong>SearchBar</strong>
         </ContentHeader>
         <ExploreSideBar />
-      </ContentTemplate>
+      </ContentTemplate> */}
     </PageTemplate>
   );
 };
