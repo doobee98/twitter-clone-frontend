@@ -3,7 +3,7 @@ import TweetsApi from 'apis/TweetsApi';
 import { Tweet } from '../models/tweet';
 import { TweetCreateRequest } from '../models/request/tweets';
 
-const HOME_PAGE_PAGE_COUNT_UNIT = 10;
+const HOMEPAGE_FEED_INITIAL_COUNT = 10;
 
 interface HomeState {
   feed: Tweet[];
@@ -21,7 +21,7 @@ export const fetchFeed = createAsyncThunk(
       const { feed } = rootState.home as HomeState;
       const response = await TweetsApi.instance.getFeed(
         feed.length + 1,
-        HOME_PAGE_PAGE_COUNT_UNIT,
+        HOMEPAGE_FEED_INITIAL_COUNT,
       );
       return response.data;
     } catch (error) {
