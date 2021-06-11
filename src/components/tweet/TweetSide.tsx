@@ -16,10 +16,6 @@ const TweetProfileWrapper = styled.div`
   align-items: center;
 `;
 
-const TweetProfile: React.FC = () => {
-  return <div>pic</div>;
-};
-
 const TweetSideContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -52,8 +48,12 @@ const TweetSide: React.FC<TweetSideProps> = (props) => {
         >
           <Profile userid={tweet.user} username={tweet.user} />
         </TweetProfileWrapper>
+        <ProfileHover
+          isOpen={isOpen}
+          userid={tweet.user}
+          username={tweet.user}
+        />
       </TweetSideContainer>
-      <ProfileHover isOpen={isOpen} userid={tweet.user} username={tweet.user} />
     </>
   );
 };

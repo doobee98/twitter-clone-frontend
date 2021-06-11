@@ -8,9 +8,10 @@ const ProfileHoverItemWrapper = styled.div`
   display: flex;
 
   width: 100%;
-  margin: 1px;
+  margin: 1.5px;
 
   word-break: break-all;
+  text-align: left;
   color: black;
 `;
 
@@ -46,6 +47,36 @@ const ProfileHoverUser = styled(ProfileHoverItemWrapper)<ProfileHoverUserProps>`
     `};
 `;
 
+const ProfileHoverFollowItemContainer = styled(ProfileHoverItemWrapper)`
+  flex-direction: row;
+`;
+
+const ProfileHoverFollowItemWrapper = styled.div`
+  display: flex;
+  margin-right: 10px;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+`;
+
+interface ProfileHoverFollowItemProps {
+  isNumber?: boolean;
+}
+
+const ProfileHoverFollowItem = styled.div<ProfileHoverFollowItemProps>`
+  margin-right: 2px;
+  ${(props) =>
+    props.isNumber
+      ? css`
+          font-weight: bold;
+        `
+      : css`
+          color: ${ColorPalette.GRAY_76};
+        `};
+`;
+
 const ProfileHoverWhoFollowed = styled(ProfileHoverItemWrapper)`
   color: ${ColorPalette.GRAY_76};
 `;
@@ -54,9 +85,9 @@ const ProfileHoverContianer = styled(Button)`
   display: flex;
   flex-direction: column;
   z-index: 10;
-  position: fixed;
 
-  width: 200px;
+  position: absolute;
+  width: 250px;
   border: 1px solid black;
   border-radius: 10px;
 
@@ -97,9 +128,18 @@ const ProfileHover: React.FC<ProfileHoverProps> = (props) => {
             bio djklfasf sadlkfjsadkl asdfsafasdfafdsfas
             aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
           </ProfileHoverItemWrapper>
-          <ProfileHoverItemWrapper>follwer follwing</ProfileHoverItemWrapper>
+          <ProfileHoverFollowItemContainer>
+            <ProfileHoverFollowItemWrapper>
+              <ProfileHoverFollowItem isNumber>130</ProfileHoverFollowItem>
+              <ProfileHoverFollowItem>Following</ProfileHoverFollowItem>
+            </ProfileHoverFollowItemWrapper>
+            <ProfileHoverFollowItemWrapper>
+              <ProfileHoverFollowItem isNumber>1203</ProfileHoverFollowItem>
+              <ProfileHoverFollowItem>Followers</ProfileHoverFollowItem>
+            </ProfileHoverFollowItemWrapper>
+          </ProfileHoverFollowItemContainer>
           <ProfileHoverWhoFollowed>
-            temp : followed by anyone you following
+            temp : followed by anyone
           </ProfileHoverWhoFollowed>
         </ProfileHoverContianer>
       )}
