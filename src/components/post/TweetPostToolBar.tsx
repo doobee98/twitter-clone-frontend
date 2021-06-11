@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { ColorPalette } from '../../utils/colorUtils';
 import { BasicType } from '../../utils/iconUtils';
@@ -10,7 +10,6 @@ const ToolBarContainer = styled.div`
   width: 100%;
   display: flex;
   align-items: flex-end;
-  shape-outside: inset(calc(100% - 100px) 0 0);
 `;
 
 const ToolWrapper = styled.div`
@@ -21,7 +20,6 @@ const ToolWrapper = styled.div`
   height: 48px;
   display: flex;
   align-items: flex-end;
-  shape-outside: inset(calc(100% - 100px) 0 0);
 
   cursor: pointer;
 `;
@@ -56,6 +54,10 @@ const ButtonWrapper = styled.div`
   shape-outside: inset(calc(100% - 100px) 0 0);
 `;
 
+const HiddenInput = styled.input`
+  display: none;
+`;
+
 const TweetButton = styled(Button)`
   float: right;
   width: 70px;
@@ -69,12 +71,32 @@ const TweetButton = styled(Button)`
   }
 `;
 
-const TweetPostToolBar = () => {
+interface TweetPostToolBarProps {
+  handleImgInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const TweetPostToolBar = (props: TweetPostToolBarProps) => {
+  const { handleImgInput } = props;
+
+  const hiddenFileInput = useRef<HTMLInputElement>(null);
+
   return (
     <>
       <ToolBarContainer>
-        <ToolWrapper>
+        <ToolWrapper
+          onClick={() => {
+            if (hiddenFileInput.current) {
+              hiddenFileInput.current.click();
+            }
+          }}
+        >
           <ToolIcon iconType={BasicType.MEDIA} />
+          <HiddenInput
+            type="file"
+            accept="image/jpg,image/png,image/jpeg"
+            ref={hiddenFileInput}
+            onChange={handleImgInput}
+          />
         </ToolWrapper>
         <ToolWrapper>
           <ToolIcon iconType={BasicType.GIF} />
