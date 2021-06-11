@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ColorPalette } from '../../utils/colorUtils';
 import TweetModel from '../../models/tweet';
+import ProfileHover from '../base/ProfileHover';
 
 const TweetMainTopItem = styled.div`
   width: auto;
@@ -43,20 +44,36 @@ interface TweetMainTopProps {
 
 const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
   const { children, tweet } = props;
+  const [isOpen, setIsOpen] = useState(false);
 
+  const openProfileHover = () => {
+    setIsOpen(true);
+  };
+
+  const closeProfileHover = () => {
+    setIsOpen(false);
+  };
   // <TweetMainTopItem>isOffical</TweetMainTopItem>   ---> should we? after next meeting
   return (
-    <TweetMainTopContainer>
-      <TweetMainTopLeftContainer>
-        <TweetMainTopUsername>{tweet.user}</TweetMainTopUsername>
-        <TweetMainTopUseridTweetedAt>
-          @{tweet.key} - tweetedAt
-        </TweetMainTopUseridTweetedAt>
-      </TweetMainTopLeftContainer>
-      <TweetMainTopRightContainer>
-        <TweetMainTopItem>more</TweetMainTopItem>
-      </TweetMainTopRightContainer>
-    </TweetMainTopContainer>
+    <>
+      <TweetMainTopContainer>
+        <TweetMainTopLeftContainer>
+          <TweetMainTopUsername
+            onMouseEnter={openProfileHover}
+            onMouseLeave={closeProfileHover}
+          >
+            {tweet.user}
+          </TweetMainTopUsername>
+          <TweetMainTopUseridTweetedAt>
+            @{tweet.key} - tweetedAt
+          </TweetMainTopUseridTweetedAt>
+        </TweetMainTopLeftContainer>
+        <TweetMainTopRightContainer>
+          <TweetMainTopItem>more</TweetMainTopItem>
+        </TweetMainTopRightContainer>
+      </TweetMainTopContainer>
+      <ProfileHover isOpen={isOpen} userid={tweet.user} username={tweet.user} />
+    </>
   );
 };
 

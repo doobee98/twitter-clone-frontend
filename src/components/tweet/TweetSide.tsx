@@ -1,14 +1,15 @@
-import React from 'react';
+import ProfileHover from 'components/base/ProfileHover';
+import React, { useState } from 'react';
+import { Profiler } from 'react-router/node_modules/@types/react';
 import styled from 'styled-components';
 import TweetModel from '../../models/tweet';
+import Profile from '../base/Profile';
 
 const TweetProfileWrapper = styled.div`
   display: flex;
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
 
-  border: 1px solid;
-  border-radius: 9999px;
   margin: 1px;
 
   justify-content: center;
@@ -21,8 +22,9 @@ const TweetProfile: React.FC = () => {
 
 const TweetSideContainer = styled.div`
   display: flex;
+  justify-content: center;
 
-  width: 50px;
+  width: 60px;
 `;
 
 interface TweetSideProps {
@@ -31,13 +33,28 @@ interface TweetSideProps {
 
 const TweetSide: React.FC<TweetSideProps> = (props) => {
   const { children, tweet } = props;
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openProfileHover = () => {
+    setIsOpen(true);
+  };
+
+  const closeProfileHover = () => {
+    setIsOpen(false);
+  };
 
   return (
-    <TweetSideContainer>
-      <TweetProfileWrapper>
-        <TweetProfile />
-      </TweetProfileWrapper>
-    </TweetSideContainer>
+    <>
+      <TweetSideContainer>
+        <TweetProfileWrapper
+          onMouseEnter={openProfileHover}
+          onMouseLeave={closeProfileHover}
+        >
+          <Profile userid={tweet.user} username={tweet.user} />
+        </TweetProfileWrapper>
+      </TweetSideContainer>
+      <ProfileHover isOpen={isOpen} userid={tweet.user} username={tweet.user} />
+    </>
   );
 };
 
