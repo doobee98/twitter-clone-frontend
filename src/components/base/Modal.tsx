@@ -1,7 +1,7 @@
-import useClickOutside from '../../hooks/useClickOutside';
 import React, { Children, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
+import useClickOutside from '../../hooks/useClickOutside';
 
 interface ModalBackgroundProps {
   isLocked: boolean;
