@@ -67,6 +67,36 @@ export const deleteTweet = createAsyncThunk(
   },
 );
 
+export const likeTweet = createAsyncThunk(
+  'tweets/likeTweet',
+  async (tweetId: string, thunkAPI) => {
+    try {
+      await TweetsApi.instance.likeTweet(tweetId);
+      return tweetId;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const dislikeTweet = createAsyncThunk(
+  'tweets/dislikeTweet',
+  async (tweetId: string, thunkAPI) => {
+    try {
+      await TweetsApi.instance.dislikeTweet(tweetId);
+      return tweetId;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export const home = createSlice({
   name: 'home',
   initialState,
@@ -99,6 +129,42 @@ export const home = createSlice({
       };
     },
     [deleteTweet.rejected.type]: (state, error) => {
+      console.log(error.payload);
+      return state;
+    },
+    [deleteTweet.fulfilled.type]: (state, action) => {
+      const deletedTweetId = action.payload;
+      return {
+        feed: state.feed.filter((tweet) => tweet.tweet_id !== deletedTweetId),
+      };
+    },
+    [deleteTweet.rejected.type]: (state, error) => {
+      console.log(error.payload);
+      return state;
+    },
+    [likeTweet.fulfilled.type]: (state, action) => {
+      const tweetId = action.payload;
+      return {
+        feed: state.feed.map((tweet) => ({
+          ...tweet,
+          like_flag: tweet.tweet_id === tweetId ? true : tweet.like_flag,
+        })),
+      };
+    },
+    [likeTweet.rejected.type]: (state, error) => {
+      console.log(error.payload);
+      return state;
+    },
+    [dislikeTweet.fulfilled.type]: (state, action) => {
+      const tweetId = action.payload;
+      return {
+        feed: state.feed.map((tweet) => ({
+          ...tweet,
+          like_flag: tweet.tweet_id === tweetId ? false : tweet.like_flag,
+        })),
+      };
+    },
+    [dislikeTweet.rejected.type]: (state, error) => {
       console.log(error.payload);
       return state;
     },
