@@ -13,8 +13,8 @@ const ModalBackground = styled.div<ModalBackgroundProps>`
   left: 0;
   z-index: 100;
 
-  width: 100%;
-  height: 100%;
+  width: 120%;
+  height: 120%;
   margin: 0;
   background-color: ${(props) =>
     props.isLocked && hexToRgbA(ColorPalette.BLACK, 0.4)};
@@ -93,29 +93,20 @@ const Modal: React.FC<ModalProps> = (props) => {
 
   const initTooltip = async () => {
     await setReadyToOpen(true);
-    if (isLocked) disableScroll();
-    else {
-      setTopMargin(position[1]);
-      setLeftMargin(position[0]);
+    if (isLocked) {
+      document.body.style.paddingRight = ` ${
+        window.innerWidth - document.documentElement.clientWidth
+      }px`;
+      document.body.style.overflow = 'hidden';
     }
   };
 
   const finishTooltip = () => {
-    if (isLocked) activateScroll();
+    if (isLocked) {
+      document.body.style.overflow = 'unset';
+      document.body.style.paddingRight = ` ${0}px`;
+    }
     setReadyToOpen(false);
-  };
-
-  const disableScroll = async () => {
-    const offsetY = window.pageYOffset;
-    document.body.style.top = `${-offsetY}px`;
-    document.body.classList.add('scroll-lock');
-  };
-
-  const activateScroll = () => {
-    const offsetY = Math.abs(parseInt(document.body.style.top || '0', 10));
-    document.body.classList.remove('scroll-lock');
-    document.body.style.removeProperty('top');
-    window.scrollTo({ top: offsetY || 0 });
   };
 
   useClickOutside(popupRef, () => {
@@ -128,7 +119,9 @@ const Modal: React.FC<ModalProps> = (props) => {
       return () => {}; // NEED default return function
     }
     initTooltip();
-    return finishTooltip;
+    return () => {
+      finishTooltip();
+    };
   }, [isOpened]);
 
   return (
