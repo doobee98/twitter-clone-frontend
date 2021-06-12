@@ -1,5 +1,3 @@
-import useClickOutside from 'hooks/useClickOutside';
-import { Children, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
@@ -32,6 +30,7 @@ const PostPopupModalHeader: React.FC<PostPopupModalHeaderProps> = (props) => {
 };
 
 const PostPopupModalContentWrapper = styled.div`
+  margin-bottom: 10px;
   & :last-child {
     border: none;
   }
@@ -53,7 +52,7 @@ interface PostPopupModalProps {
 }
 
 const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
-  const { isOpened, width, setIsOpened, className, children } = props;
+  const { isOpened, width, setIsOpened } = props;
 
   const closePopup = () => {
     setIsOpened(false);
@@ -62,7 +61,6 @@ const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
   return (
     <>
       <Modal
-        position={[0, 0]}
         width={width}
         isLocked
         isOpened={isOpened}

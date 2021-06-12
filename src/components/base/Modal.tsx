@@ -37,7 +37,6 @@ const ModalContainer = styled.div<ModalContainerProps>`
   position: absolute;
   background-color: ${ColorPalette.WHITE};
   border-radius: 25px;
-  padding: 0;
 
   top: ${(props) => (props.isLocked ? 100 : props.top)}px;
   left: ${(props) => !props.isLocked && props.left}px;
@@ -52,7 +51,7 @@ const ContentWrapper = styled.div`
 `;
 
 interface ModalProps {
-  position: [number, number];
+  position?: [number, number];
   isLocked: boolean;
   width: number;
   isOpened: boolean;
@@ -61,15 +60,7 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = (props) => {
-  const {
-    isOpened,
-    position,
-    width,
-    isLocked,
-    setIsOpened,
-    className,
-    children,
-  } = props;
+  const { isOpened, width, isLocked, setIsOpened, className, children } = props;
 
   const [readyToOpen, setReadyToOpen] = useState(isOpened);
   const [top, setTop] = useState(0);

@@ -21,9 +21,6 @@ const HomePage: React.FC = () => {
   const openPopup = () => {
     setIsOpened(true);
   };
-  const closePopup = () => {
-    setIsOpened(false);
-  };
 
   return (
     <PageTemplate title="Home">
