@@ -3,6 +3,7 @@ import { Children, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
+import TweetPost from '../post/TweetPost';
 import NavItem from '../base/NavItem';
 import Modal from '../base/Modal';
 
@@ -28,6 +29,20 @@ const PopupModalHeader: React.FC<PopupModalHeaderProps> = (props) => {
   );
 };
 
+const PostContentWrapper = styled.div`
+  & :last-child {
+    border: none;
+  }
+`;
+
+const PostContent: React.FC = () => {
+  return (
+    <PostContentWrapper>
+      <TweetPost />
+    </PostContentWrapper>
+  );
+};
+
 interface PopupModalProps {
   width: number;
   isOpened: boolean;
@@ -50,9 +65,9 @@ const PopupModal: React.FC<PopupModalProps> = (props) => {
         isLocked
         isOpened={isOpened}
         setIsOpened={setIsOpened}
-        Header={<PopupModalHeader onClose={() => closePopup()} />}
       >
-        {children}
+        <PopupModalHeader onClose={() => closePopup()} />
+        <PostContent />
       </Modal>
     </>
   );

@@ -69,8 +69,6 @@ interface ModalProps {
   isOpened: boolean;
   setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
-  Header?: any;
-  Footer?: any;
 }
 
 const Modal: React.FC<ModalProps> = (props) => {
@@ -82,8 +80,6 @@ const Modal: React.FC<ModalProps> = (props) => {
     setIsOpened,
     className,
     children,
-    Header,
-    Footer,
   } = props;
 
   const [readyToOpen, setReadyToOpen] = useState(isOpened);
@@ -132,12 +128,10 @@ const Modal: React.FC<ModalProps> = (props) => {
             ref={popupRef}
             isLocked={isLocked}
             top={top + 100}
-            left={left + 100}
+            left={left}
             width={width}
           >
-            {Header && <HeaderWrapper>{Header}</HeaderWrapper>}
-            <ContentWrapper>{children}</ContentWrapper>
-            {Footer && <FooterWrapper>{Footer}</FooterWrapper>}
+            {children}
           </ModalContainer>
         </ModalBackground>
       )}
