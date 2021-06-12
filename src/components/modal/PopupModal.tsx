@@ -8,7 +8,9 @@ import NavItem from '../base/NavItem';
 import Modal from '../base/Modal';
 
 const PopupHeader = styled.div`
-  padding: 0;
+  border-bottom: 1px solid ${hexToRgbA(ColorPalette.BLACK, 0.2)};
+  margin-bottom: 10px;
+  height: 50px;
 `;
 
 const CloseButton = styled(NavItem)`
