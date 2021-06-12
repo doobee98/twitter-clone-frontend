@@ -43,32 +43,8 @@ const ToolIcon = styled(NavItem)`
   color: ${ColorPalette.SKYBLUE};
 `;
 
-const ButtonWrapper = styled.div`
-  float: left;
-  align-items: center;
-  justify-content: center;
-  width: 15%;
-  height: 100%;
-  display: flex;
-  align-items: flex-end;
-  shape-outside: inset(calc(100% - 100px) 0 0);
-`;
-
 const HiddenInput = styled.input`
   display: none;
-`;
-
-const TweetButton = styled(Button)`
-  float: right;
-  width: 70px;
-  color: ${ColorPalette.WHITE};
-  background-color: ${ColorPalette.SKYBLUE};
-  font-size: 16px;
-  font-weight: bold;
-
-  &:hover {
-    background-color: ${ColorPalette.SKYBLUE_DARK};
-  }
 `;
 
 interface TweetPostToolBarProps {
@@ -111,9 +87,6 @@ const TweetPostToolBar = (props: TweetPostToolBarProps) => {
           <ToolIcon iconType={BasicType.SCHEDULE} />
         </ToolWrapper>
       </ToolBarContainer>
-      <ButtonWrapper>
-        <TweetButton> Tweet </TweetButton>
-      </ButtonWrapper>
     </>
   );
 };

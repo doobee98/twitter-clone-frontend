@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
 import NavItem from '../base/NavItem';
+import Button from '../base/Button';
 import TweetPostToolBar from './TweetPostToolBar';
 
 const TweetPostContentContainer = styled.div`
@@ -98,6 +99,30 @@ const TweetPostToolBarWrapper = styled.div`
   height: 52px;
 `;
 
+const ButtonWrapper = styled.div`
+  float: left;
+  align-items: center;
+  justify-content: center;
+  width: 15%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  shape-outside: inset(calc(100% - 100px) 0 0);
+`;
+
+const TweetButton = styled(Button)`
+  float: right;
+  width: 70px;
+  color: ${ColorPalette.WHITE};
+  background-color: ${ColorPalette.SKYBLUE};
+  font-size: 16px;
+  font-weight: bold;
+
+  &:hover {
+    background-color: ${ColorPalette.SKYBLUE_DARK};
+  }
+`;
+
 const TweetPostContent: React.FC = () => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [textAreaHeight, setTextAreaHeight] = useState('auto');
@@ -178,6 +203,9 @@ const TweetPostContent: React.FC = () => {
       </TweetPostPermissionWrapper>
       <TweetPostToolBarWrapper>
         <TweetPostToolBar handleImgInput={handleImgInput} />
+        <ButtonWrapper>
+          <TweetButton> Tweet </TweetButton>
+        </ButtonWrapper>
       </TweetPostToolBarWrapper>
     </TweetPostContentContainer>
   );
