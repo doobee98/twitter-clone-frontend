@@ -1,6 +1,5 @@
-import ProfileHover from 'components/base/ProfileHover';
 import React, { useState } from 'react';
-import { Profiler } from 'react-router/node_modules/@types/react';
+import ProfileHover from 'components/base/ProfileHover';
 import styled from 'styled-components';
 import TweetModel from '../../models/tweet';
 import Profile from '../base/Profile';

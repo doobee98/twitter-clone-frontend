@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
 import Profile from './Profile';
 
-const ProfileHoverItemWrapper = styled.div`
+const ProfileTooltipItemWrapper = styled.div`
   display: flex;
 
   width: 100%;
@@ -15,7 +15,7 @@ const ProfileHoverItemWrapper = styled.div`
   color: black;
 `;
 
-const ProfileHoverHeader = styled(ProfileHoverItemWrapper)`
+const ProfileTooltipHeader = styled(ProfileTooltipItemWrapper)`
   justify-content: space-between;
 `;
 
@@ -29,11 +29,13 @@ const FollowButton = styled(Button)`
   }
 `;
 
-interface ProfileHoverUserProps {
+interface ProfileTooltipUserProps {
   usertype: 'userid' | 'username';
 }
 
-const ProfileHoverUser = styled(ProfileHoverItemWrapper)<ProfileHoverUserProps>`
+const ProfileTooltipUser = styled(
+  ProfileTooltipItemWrapper,
+)<ProfileTooltipUserProps>`
   ${(props) =>
     props.usertype === 'username' &&
     css`
@@ -47,11 +49,11 @@ const ProfileHoverUser = styled(ProfileHoverItemWrapper)<ProfileHoverUserProps>`
     `};
 `;
 
-const ProfileHoverFollowItemContainer = styled(ProfileHoverItemWrapper)`
+const ProfileTooltipFollowItemContainer = styled(ProfileTooltipItemWrapper)`
   flex-direction: row;
 `;
 
-const ProfileHoverFollowItemWrapper = styled.div`
+const ProfileTooltipFollowItemWrapper = styled.div`
   display: flex;
   margin-right: 10px;
 
@@ -61,11 +63,11 @@ const ProfileHoverFollowItemWrapper = styled.div`
   }
 `;
 
-interface ProfileHoverFollowItemProps {
+interface ProfileTooltipFollowItemProps {
   isNumber?: boolean;
 }
 
-const ProfileHoverFollowItem = styled.div<ProfileHoverFollowItemProps>`
+const ProfileTooltipFollowItem = styled.div<ProfileTooltipFollowItemProps>`
   margin-right: 2px;
   ${(props) =>
     props.isNumber
@@ -77,11 +79,11 @@ const ProfileHoverFollowItem = styled.div<ProfileHoverFollowItemProps>`
         `};
 `;
 
-const ProfileHoverWhoFollowed = styled(ProfileHoverItemWrapper)`
+const ProfileTooltipWhoFollowed = styled(ProfileTooltipItemWrapper)`
   color: ${ColorPalette.GRAY_76};
 `;
 
-const ProfileHoverContianer = styled(Button)`
+const ProfileTooltipContianer = styled(Button)`
   display: flex;
   flex-direction: column;
   z-index: 10;
@@ -96,55 +98,60 @@ const ProfileHoverContianer = styled(Button)`
   cursor: default;
 `;
 
-interface ProfileHoverProps {
+interface ProfileTooltipProps {
   isOpen: boolean;
   userid: string;
   username: string;
 }
 
-const ProfileHover: React.FC<ProfileHoverProps> = (props) => {
-  const { children, isOpen, userid, username } = props;
-  const [isThisHover, setIsThisHover] = useState(false);
+const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
+  const { isOpen, userid, username } = props;
+  const [isHoverActive, setIsHoverActive] = useState(false);
 
   const openProfile = () => {
-    setIsThisHover(true);
+    setIsHoverActive(true);
   };
 
   const closeProfile = () => {
-    setIsThisHover(false);
+    setIsHoverActive(false);
   };
 
   return (
     <>
-      {(isOpen || isThisHover) && (
-        <ProfileHoverContianer onHover={openProfile} onHoverOut={closeProfile}>
-          <ProfileHoverHeader>
+      {(isOpen || isHoverActive) && (
+        <ProfileTooltipContianer
+          onHover={openProfile}
+          onHoverOut={closeProfile}
+        >
+          <ProfileTooltipHeader>
             <Profile userid={userid} username={username} />
             <FollowButton>Follow</FollowButton>
-          </ProfileHoverHeader>
-          <ProfileHoverUser usertype="username">{username}</ProfileHoverUser>
-          <ProfileHoverUser usertype="userid">@{userid}</ProfileHoverUser>
-          <ProfileHoverItemWrapper>
+          </ProfileTooltipHeader>
+          <ProfileTooltipUser usertype="username">
+            {username}
+          </ProfileTooltipUser>
+          <ProfileTooltipUser usertype="userid">@{userid}</ProfileTooltipUser>
+          <ProfileTooltipItemWrapper>
             bio djklfasf sadlkfjsadkl asdfsafasdfafdsfas
             aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          </ProfileHoverItemWrapper>
-          <ProfileHoverFollowItemContainer>
-            <ProfileHoverFollowItemWrapper>
-              <ProfileHoverFollowItem isNumber>130</ProfileHoverFollowItem>
-              <ProfileHoverFollowItem>Following</ProfileHoverFollowItem>
-            </ProfileHoverFollowItemWrapper>
-            <ProfileHoverFollowItemWrapper>
-              <ProfileHoverFollowItem isNumber>1203</ProfileHoverFollowItem>
-              <ProfileHoverFollowItem>Followers</ProfileHoverFollowItem>
-            </ProfileHoverFollowItemWrapper>
-          </ProfileHoverFollowItemContainer>
-          <ProfileHoverWhoFollowed>
+          </ProfileTooltipItemWrapper>
+          <ProfileTooltipFollowItemContainer>
+            <ProfileTooltipFollowItemWrapper>
+              <ProfileTooltipFollowItem isNumber>130</ProfileTooltipFollowItem>
+              <ProfileTooltipFollowItem>Following</ProfileTooltipFollowItem>
+            </ProfileTooltipFollowItemWrapper>
+            <ProfileTooltipFollowItemWrapper>
+              <ProfileTooltipFollowItem isNumber>1203</ProfileTooltipFollowItem>
+              <ProfileTooltipFollowItem>Followers</ProfileTooltipFollowItem>
+            </ProfileTooltipFollowItemWrapper>
+          </ProfileTooltipFollowItemContainer>
+          <ProfileTooltipWhoFollowed>
             temp : followed by anyone
-          </ProfileHoverWhoFollowed>
-        </ProfileHoverContianer>
+          </ProfileTooltipWhoFollowed>
+        </ProfileTooltipContianer>
       )}
     </>
   );
 };
 
-export default ProfileHover;
+export default ProfileTooltip;

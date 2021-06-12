@@ -8,7 +8,7 @@ import Button from './Button';
 const ProfileWrapper = styled.div`
   display: flex;
   justify-content: center;
-  allign-items: center;
+  align-items: center;
 
   width: 50px;
   height: 50px;
@@ -17,14 +17,14 @@ const ProfileWrapper = styled.div`
 `;
 
 interface ImageWrapperProps {
-  profielSrc?: string;
+  profileSrc?: string;
 }
 const ImageWrapper = styled.div<ImageWrapperProps>`
   width: 100%;
   height: 100%;
-  border-radius: ${48 / 2}px;
+  border-radius: 24px;
 
-  background-color: ${(props) => props.profielSrc || ColorPalette.GREEN};
+  background-color: ${(props) => props.profileSrc || ColorPalette.GREEN};
 `;
 
 // [REMOVED]
@@ -37,7 +37,7 @@ interface ProfileProps {
 }
 
 const Profile: React.FC<ProfileProps> = (props) => {
-  const { children, userid, username, profileSrc } = props;
+  const { userid, username, profileSrc } = props;
 
   const history = useHistory();
   const goToUserProfile = () => {
@@ -46,7 +46,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
 
   return (
     <ProfileWrapper onClick={goToUserProfile}>
-      <ImageWrapper profielSrc={profileSrc}>
+      <ImageWrapper profileSrc={profileSrc}>
         <TestImage />
       </ImageWrapper>
     </ProfileWrapper>
