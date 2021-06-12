@@ -3,11 +3,11 @@ import { Children, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
-import TweetPost from '../post/TweetPost';
+import TweetPost from 'components/post/TweetPost';
 import NavItem from '../base/NavItem';
 import Modal from '../base/Modal';
 
-const PopupHeader = styled.div`
+const PostPopupModalHeaderWrapper = styled.div`
   border-bottom: 1px solid ${hexToRgbA(ColorPalette.BLACK, 0.2)};
   margin-bottom: 10px;
   height: 50px;
@@ -18,41 +18,41 @@ const CloseButton = styled(NavItem)`
   width: 40px;
 `;
 
-interface PopupModalHeaderProps {
+interface PostPopupModalHeaderProps {
   onClose: () => void;
 }
 
-const PopupModalHeader: React.FC<PopupModalHeaderProps> = (props) => {
+const PostPopupModalHeader: React.FC<PostPopupModalHeaderProps> = (props) => {
   const { onClose } = props;
   return (
-    <PopupHeader onClick={onClose}>
+    <PostPopupModalHeaderWrapper onClick={onClose}>
       <CloseButton iconType={BasicType.CLOSE} />
-    </PopupHeader>
+    </PostPopupModalHeaderWrapper>
   );
 };
 
-const PostContentWrapper = styled.div`
+const PostPopupModalContentWrapper = styled.div`
   & :last-child {
     border: none;
   }
 `;
 
-const PostContent: React.FC = () => {
+const PostPopupModalContent: React.FC = () => {
   return (
-    <PostContentWrapper>
+    <PostPopupModalContentWrapper>
       <TweetPost />
-    </PostContentWrapper>
+    </PostPopupModalContentWrapper>
   );
 };
 
-interface PopupModalProps {
+interface PostPopupModalProps {
   width: number;
   isOpened: boolean;
   setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
 }
 
-const PopupModal: React.FC<PopupModalProps> = (props) => {
+const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
   const { isOpened, width, setIsOpened, className, children } = props;
 
   const closePopup = () => {
@@ -68,11 +68,11 @@ const PopupModal: React.FC<PopupModalProps> = (props) => {
         isOpened={isOpened}
         setIsOpened={setIsOpened}
       >
-        <PopupModalHeader onClose={() => closePopup()} />
-        <PostContent />
+        <PostPopupModalHeader onClose={() => closePopup()} />
+        <PostPopupModalContent />
       </Modal>
     </>
   );
 };
 
-export default PopupModal;
+export default PostPopupModal;

@@ -5,7 +5,7 @@ import TweetList from 'components/tweet/TweetList';
 import TweetPost from 'components/post/TweetPost';
 // REMOVE
 import Button from 'components/base/Button';
-import PopupModal from 'components/modal/PopupModal';
+import PostPopupModal from 'components/modal/PostPopupModal';
 
 // REMOVED
 const ToBeRemovedTestButton = styled(Button)`
@@ -33,9 +33,11 @@ const HomePage: React.FC = () => {
       <ToBeRemovedTestButton onClick={openPopup}>
         팝업테스트용버튼
       </ToBeRemovedTestButton>
-      <PopupModal isOpened={isOpened} setIsOpened={setIsOpened} width={600}>
-        <TweetPost />
-      </PopupModal>
+      <PostPopupModal
+        isOpened={isOpened}
+        setIsOpened={setIsOpened}
+        width={600}
+      />
 
       <TweetPost />
       <TweetList />

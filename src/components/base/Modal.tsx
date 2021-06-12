@@ -1,5 +1,5 @@
 import React, { Children, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import useClickOutside from '../../hooks/useClickOutside';
 
@@ -11,18 +11,19 @@ const ModalBackground = styled.div<ModalBackgroundProps>`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 10;
 
-  width: 120%;
-  height: 120%;
+  width: 100%;
+  height: 100%;
   margin: 0;
-  background-color: ${(props) =>
-    props.isLocked && hexToRgbA(ColorPalette.BLACK, 0.4)};
 
   display: flex;
   justify-content: center;
   align-items: flex-start;
   border-collapse: collapse;
+
+  background-color: ${(props) =>
+    props.isLocked && hexToRgbA(ColorPalette.BLACK, 0.4)};
 `;
 
 interface ModalContainerProps {
@@ -43,23 +44,11 @@ const ModalContainer = styled.div<ModalContainerProps>`
   width: ${(props) => props.width}px;
 `;
 
-const HeaderWrapper = styled.div`
-  padding-left: 20px;
-  border-bottom: 1px solid ${ColorPalette.BLACK};
-`;
-
 const ContentWrapper = styled.div`
   margin: auto;
   width: 90%;
   padding: 10px 0px;
   padding-top: 0;
-`;
-
-const FooterWrapper = styled.div`
-  padding: 0;
-
-  margin: auto;
-  width: 90%;
 `;
 
 interface ModalProps {
