@@ -19,4 +19,7 @@ export interface Tweet {
   reply_count: number;
   retweet_count: number;
   like_count: number;
+
+  like_flag: boolean;
+  reply_id?: string;
 }
