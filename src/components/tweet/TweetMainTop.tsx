@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ColorPalette } from '../../utils/colorUtils';
 import TweetModel from '../../models/tweet';
-import ProfileHover from '../base/ProfileHover';
+import ProfileTooltip from '../base/ProfileTooltip';
 
 const TweetMainTopItem = styled.div`
   width: auto;
@@ -72,7 +72,11 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
           <TweetMainTopItem>more</TweetMainTopItem>
         </TweetMainTopRightContainer>
       </TweetMainTopContainer>
-      <ProfileHover isOpen={isOpen} userid={tweet.user} username={tweet.user} />
+      <ProfileTooltip
+        isOpen={isOpen}
+        userid={tweet.user}
+        username={tweet.user}
+      />
     </>
   );
 };

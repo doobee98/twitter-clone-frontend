@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ProfileHover from 'components/base/ProfileHover';
+import ProfileTooltip from 'components/base/ProfileTooltip';
 import styled from 'styled-components';
 import TweetModel from '../../models/tweet';
 import Profile from '../base/Profile';
@@ -47,7 +47,7 @@ const TweetSide: React.FC<TweetSideProps> = (props) => {
         >
           <Profile userid={tweet.user} username={tweet.user} />
         </TweetProfileWrapper>
-        <ProfileHover
+        <ProfileTooltip
           isOpen={isOpen}
           userid={tweet.user}
           username={tweet.user}
