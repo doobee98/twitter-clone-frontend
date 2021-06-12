@@ -5,6 +5,9 @@ import { BasicType } from 'utils/iconUtils';
 import NavItem from '../base/NavItem';
 import Button from '../base/Button';
 import TweetPostToolBar from './TweetPostToolBar';
+import useInput from '../../hooks/useInput';
+import { useAppDispatch } from '../../hooks/redux';
+import { createTweet } from '../../modules/home';
 
 const TweetPostContentContainer = styled.div`
   float: left;
@@ -126,10 +129,11 @@ const TweetButton = styled(Button)`
 const TweetPostContent: React.FC = () => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [textAreaHeight, setTextAreaHeight] = useState('auto');
-  const [currentValue, setCurrentValue] = useState('');
   const [isWritingStarted, setIsWritingStarted] = useState(false);
   const [file, setFile] = useState('');
   const [isUploaded, setIsUploaded] = useState(false);
+  const [tweetContent, onChangeTweetContent, setTweetContent] = useInput('');
+  const dispatch = useAppDispatch();
 
   const permissions = [
     {
@@ -148,26 +152,22 @@ const TweetPostContent: React.FC = () => {
       iconType: BasicType.FRIENDS,
     },
   ];
-
   const [permissionIndex, setPermissionIndex] = useState(0);
 
   useEffect(() => {
     setTextAreaHeight(`${textAreaRef.current?.scrollHeight}px`);
-  }, [currentValue]);
+  }, [tweetContent]);
 
   const handleClick = () => {
     setIsWritingStarted(true);
   };
-
-  const handleValueChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setTextAreaHeight('auto');
-    setCurrentValue(event.target.value);
-  };
-
   const changePermission = () => {
     setPermissionIndex((permissionIndex + 1) % permissions.length);
   };
-
+  const onTweetTextChange = (event: React.ChangeEvent) => {
+    setTextAreaHeight('auto');
+    onChangeTweetContent(event as React.ChangeEvent<HTMLInputElement>);
+  };
   const handleImgInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setFile(URL.createObjectURL(e.target.files[0]) || '');
@@ -176,18 +176,28 @@ const TweetPostContent: React.FC = () => {
     }
   };
 
+  const handleCreateTweet = async () => {
+    dispatch(createTweet({ content: tweetContent, image_src_list: [file] }));
+
+    setTweetContent('');
+    setTextAreaHeight('auto');
+    setFile('');
+    setIsUploaded(false);
+    setIsWritingStarted(false);
+  };
+
   return (
     <TweetPostContentContainer>
       <TweetPostTextAreaWrapper>
         <TweetPostTextArea
           ref={textAreaRef}
           height={textAreaHeight}
-          value={currentValue}
+          value={tweetContent}
           placeholder="What's happening?"
           rows={1}
           defaultValue=""
           onClick={handleClick}
-          onChange={handleValueChange}
+          onChange={onTweetTextChange}
         />
       </TweetPostTextAreaWrapper>
       <TweetPostMediaWrapper isUploaded={isUploaded}>
@@ -204,7 +214,7 @@ const TweetPostContent: React.FC = () => {
       <TweetPostToolBarWrapper>
         <TweetPostToolBar handleImgInput={handleImgInput} />
         <ButtonWrapper>
-          <TweetButton> Tweet </TweetButton>
+          <TweetButton onClick={handleCreateTweet}> Tweet </TweetButton>
         </ButtonWrapper>
       </TweetPostToolBarWrapper>
     </TweetPostContentContainer>
