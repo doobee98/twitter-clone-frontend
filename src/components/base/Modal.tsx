@@ -27,8 +27,8 @@ const ModalBackground = styled.div<ModalBackgroundProps>`
 
 interface ModalContainerProps {
   isLocked: boolean;
-  topMargin: number;
-  leftMargin: number;
+  top: number;
+  left: number;
   width: number;
 }
 
@@ -38,8 +38,8 @@ const ModalContainer = styled.div<ModalContainerProps>`
   border-radius: 25px;
   padding: 0;
 
-  top: ${(props) => (props.isLocked ? 100 : props.topMargin)}px;
-  left: ${(props) => !props.isLocked && props.leftMargin}px;
+  top: ${(props) => (props.isLocked ? 100 : props.top)}px;
+  left: ${(props) => !props.isLocked && props.left}px;
   width: ${(props) => props.width}px;
 `;
 
@@ -87,8 +87,8 @@ const Modal: React.FC<ModalProps> = (props) => {
   } = props;
 
   const [readyToOpen, setReadyToOpen] = useState(isOpened);
-  const [topMargin, setTopMargin] = useState(0);
-  const [leftMargin, setLeftMargin] = useState(0);
+  const [top, setTop] = useState(0);
+  const [left, setLeft] = useState(0);
   const popupRef = useRef<HTMLDivElement>(null);
 
   const initTooltip = async () => {
@@ -131,8 +131,8 @@ const Modal: React.FC<ModalProps> = (props) => {
           <ModalContainer
             ref={popupRef}
             isLocked={isLocked}
-            topMargin={topMargin + 100}
-            leftMargin={leftMargin + 100}
+            top={top + 100}
+            left={left + 100}
             width={width}
           >
             {Header && <HeaderWrapper>{Header}</HeaderWrapper>}
