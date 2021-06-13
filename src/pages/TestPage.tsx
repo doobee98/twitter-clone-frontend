@@ -6,8 +6,7 @@ import { useAppDispatch, useAuthSelector, useHomeSelector } from 'hooks/redux';
 import { login, logout, signup } from 'modules/auth';
 import { createTweet, deleteTweet, fetchFeed } from 'modules/home';
 
-// TODO: SignUpPage 따로 만들것
-const LoginPage: React.FC = () => {
+const TestPage: React.FC = () => {
   const [id, onChangeId] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [username, onChangeUsername] = useInput('');
@@ -114,4 +113,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default TestPage;
