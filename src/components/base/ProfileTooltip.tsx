@@ -83,13 +83,14 @@ const ProfileTooltipWhoFollowed = styled(ProfileTooltipItemWrapper)`
   color: ${ColorPalette.GRAY_76};
 `;
 
-const ProfileTooltipContianer = styled(Button)`
+const ProfileTooltipContianer = styled.div`
   display: flex;
   flex-direction: column;
   z-index: 10;
 
   position: absolute;
   width: 250px;
+  padding: 5px;
   border: 1px solid black;
   border-radius: 10px;
 
@@ -120,8 +121,8 @@ const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
     <>
       {(isOpen || isHoverActive) && (
         <ProfileTooltipContianer
-          onHover={openProfile}
-          onHoverOut={closeProfile}
+          onMouseEnter={openProfile}
+          onMouseLeave={closeProfile}
         >
           <ProfileTooltipHeader>
             <Profile userid={userid} username={username} />
