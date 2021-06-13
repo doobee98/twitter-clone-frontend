@@ -1,4 +1,4 @@
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
@@ -59,9 +59,11 @@ const LoginHelpContainer = styled.div`
   margin-top: 30px;
 `;
 
-const LoginHelpItem = styled(Link)`
+const LoginHelpItem = styled.div`
+  color: ${ColorPalette.SKYBLUE};
+  cursor: pointer;
+
   &:hover {
-    color: ${ColorPalette.SKYBLUE};
     text-decoration: underline;
   }
 `;
@@ -81,6 +83,10 @@ const LoginMain: React.FC = () => {
     }
   };
 
+  const goToSignup = () => {
+    // TODO
+  };
+
   return (
     <LoginMainContainer>
       <TwitterIcon iconType={BasicType.TWITTER} iconSize={40} />
@@ -94,7 +100,7 @@ const LoginMain: React.FC = () => {
       />
       <LoginButton onClick={fetchLogin}>Log in</LoginButton>
       <LoginHelpContainer>
-        <LoginHelpItem to="/signup">Sign Up for Twitter</LoginHelpItem>
+        <LoginHelpItem onClick={goToSignup}>Sign Up for Twitter</LoginHelpItem>
       </LoginHelpContainer>
     </LoginMainContainer>
   );
