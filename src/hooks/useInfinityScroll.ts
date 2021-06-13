@@ -1,22 +1,15 @@
+import { fetchFeed } from 'modules/home';
 import React, { useEffect } from 'react';
-import TweetModel from '../models/tweet';
+import { Tweet } from '../models/tweet';
+import { useAppDispatch } from './redux';
 
-const useInfinityScroll = (
-  defaultTweets: TweetModel[],
-  tweets: TweetModel[],
-  setTweets: React.Dispatch<React.SetStateAction<TweetModel[]>>,
-) => {
+const useInfinityScroll = (feed: Tweet[], scrollFunction: () => any) => {
   const infScroll = () => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
-    if (tweets.length >= defaultTweets.length) {
-      return;
-    }
-
+    // need debouncing
     if (scrollTop + clientHeight === scrollHeight) {
-      const newTweets: TweetModel[] = [...tweets, defaultTweets[tweets.length]];
-
-      setTweets(newTweets);
+      scrollFunction();
     }
   };
 
