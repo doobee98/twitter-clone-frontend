@@ -1,7 +1,10 @@
+import { Link, useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { useAppDispatch } from 'hooks/redux';
+import useInput from 'hooks/useInput';
+import { login } from 'modules/auth';
 import { ColorPalette } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
 
@@ -64,13 +67,32 @@ const LoginHelpItem = styled(Link)`
 `;
 
 const LoginMain: React.FC = () => {
+  const [id, onChangeId] = useInput('');
+  const [password, onChangePassword] = useInput('');
+
+  const history = useHistory();
+  const dispatch = useAppDispatch();
+
+  const fetchLogin = async () => {
+    const result = await dispatch(login({ user_id: id, password }));
+
+    if (result.type === 'auth/login/fulfilled') {
+      history.push('/home');
+    }
+  };
+
   return (
     <LoginMainContainer>
       <TwitterIcon iconType={BasicType.TWITTER} iconSize={40} />
       <LoginTitle>Log in to Twitter</LoginTitle>
-      <LoginInput placeholder="Username" />
-      <LoginInput placeholder="Password" />
-      <LoginButton>Log in</LoginButton>
+      <LoginInput value={id} onChange={onChangeId} placeholder="Id" />
+      <LoginInput
+        type="password"
+        value={password}
+        onChange={onChangePassword}
+        placeholder="Password"
+      />
+      <LoginButton onClick={fetchLogin}>Log in</LoginButton>
       <LoginHelpContainer>
         <LoginHelpItem to="/signup">Sign Up for Twitter</LoginHelpItem>
       </LoginHelpContainer>

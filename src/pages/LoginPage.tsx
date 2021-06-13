@@ -1,6 +1,8 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginMain from 'components/login/LoginMain';
+import { useAuthSelector } from 'hooks/redux';
 
 const LoginPageWrapper = styled.div`
   display: flex;
@@ -9,6 +11,13 @@ const LoginPageWrapper = styled.div`
 `;
 
 const LoginPage: React.FC = () => {
+  const authStore = useAuthSelector();
+  const { currentUser } = authStore;
+
+  if (currentUser) {
+    return <Redirect to="/home" />;
+  }
+
   return (
     <LoginPageWrapper>
       <LoginMain />
