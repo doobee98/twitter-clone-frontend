@@ -1,6 +1,6 @@
-import Icon from 'components/base/Icon';
 import React, { useRef } from 'react';
 import styled from 'styled-components';
+import Icon from 'components/base/Icon';
 import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
 import { BasicType } from '../../utils/iconUtils';
 import Button from '../base/Button';

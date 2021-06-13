@@ -31,6 +31,7 @@ const TweetPostTextArea = styled.textarea<TweetPostTextAreaProps>`
 
   resize: none;
   border: none;
+  overflow: hidden;
 
   font-size: 20px;
 
@@ -168,6 +169,8 @@ const TweetPostContent: React.FC = () => {
     setTextAreaHeight('auto');
     onChangeTweetContent(event as React.ChangeEvent<HTMLInputElement>);
   };
+
+  //   Not work
   const handleImgInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setFile(URL.createObjectURL(e.target.files[0]) || '');
@@ -176,14 +179,17 @@ const TweetPostContent: React.FC = () => {
     }
   };
 
-  const handleCreateTweet = async () => {
-    dispatch(createTweet({ content: tweetContent, image_src_list: [file] }));
-
+  const clearTweetPost = () => {
     setTweetContent('');
     setTextAreaHeight('auto');
     setFile('');
     setIsUploaded(false);
     setIsWritingStarted(false);
+  };
+
+  const handleCreateTweet = async () => {
+    dispatch(createTweet({ content: tweetContent }));
+    clearTweetPost();
   };
 
   return (
@@ -194,7 +200,6 @@ const TweetPostContent: React.FC = () => {
           height={textAreaHeight}
           value={tweetContent}
           placeholder="What's happening?"
-          rows={1}
           defaultValue=""
           onClick={handleClick}
           onChange={onTweetTextChange}
