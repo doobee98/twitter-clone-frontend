@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useAppDispatch, useHomeSelector } from 'hooks/redux';
+import { fetchFeed } from 'modules/home';
 import { ColorPalette } from '../../utils/colorUtils';
-import TweetModel from '../../models/tweet';
+import TweetModel, { Tweet } from '../../models/tweet';
 import TweetComponent from './TweetComponent';
 import useInfinityScroll from '../../hooks/useInfinityScroll';
 import { testTweet } from '../../utils/testTweetUtils';
@@ -12,17 +14,33 @@ const TweetListContainer = styled.div`
 `;
 
 const TweetList: React.FC = () => {
-  const initTweetNum = 6;
-  const [tweets, setTweets] = useState<TweetModel[]>(
-    testTweet.filter((tweet) => tweet.key < initTweetNum),
-  );
+  const [isInit, setIsInit] = useState(true);
 
-  useInfinityScroll(testTweet, tweets, setTweets);
+  const homeStore = useHomeSelector();
+  const dispatch = useAppDispatch();
+  const { feed } = homeStore;
+
+  const handleFetchFeed = async () => {
+    dispatch(fetchFeed());
+  };
+
+  // init fetch
+  if (isInit) {
+    setIsInit(false);
+    handleFetchFeed();
+  }
+
+  useInfinityScroll(feed, handleFetchFeed);
+
+  // TO BE REMOVED
+  useEffect(() => {
+    console.log(feed);
+  }, [feed]);
 
   return (
     <TweetListContainer>
-      {tweets.map((tweet) => (
-        <TweetComponent key={tweet.key} tweet={tweet} />
+      {feed.map((tweet) => (
+        <TweetComponent key={tweet.tweet_id} tweet={tweet} />
       ))}
     </TweetListContainer>
   );
