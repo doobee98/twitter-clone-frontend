@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { MouseEvent, useState } from 'react';
 import styled from 'styled-components';
+import { setTimeout } from 'timers';
 import { ColorPalette } from '../../utils/colorUtils';
 import TweetModel from '../../models/tweet';
 import ProfileTooltip from '../base/ProfileTooltip';
@@ -12,7 +13,6 @@ const TweetMainTopItem = styled.div`
   display: inline-block;
 `;
 
-// NEED TO BE RENAMED : awful long name
 const TweetMainTopUsername = styled(TweetMainTopItem)`
   font-weight: bold;
 `;
@@ -21,7 +21,6 @@ const TweetMainTopUseridTweetedAt = styled(TweetMainTopItem)`
   color: ${ColorPalette.GRAY_70};
 `;
 
-// TO BE REFACTORED : awful naming, awful structure
 const TweetMainTopLeftContainer = styled.div`
   display: inline-block;
 `;
@@ -43,24 +42,34 @@ interface TweetMainTopProps {
 }
 
 const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
-  const { children, tweet } = props;
+  const { tweet } = props;
   const [isOpen, setIsOpen] = useState(false);
+  const [timer, setTimer] = useState<NodeJS.Timeout | undefined>();
 
-  const openProfileHover = () => {
-    setIsOpen(true);
+  const openProfileTooltip = () => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    const newTimer = setTimeout(() => setIsOpen(true), 800);
+    setTimer(newTimer);
   };
 
-  const closeProfileHover = () => {
-    setIsOpen(false);
+  const closeProfileTooltip = () => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    const newTimer = setTimeout(() => setIsOpen(false), 500);
+    setTimer(newTimer);
   };
-  // <TweetMainTopItem>isOffical</TweetMainTopItem>   ---> should we? after next meeting
+
   return (
     <>
       <TweetMainTopContainer>
         <TweetMainTopLeftContainer>
           <TweetMainTopUsername
-            onMouseEnter={openProfileHover}
-            onMouseLeave={closeProfileHover}
+            onMouseEnter={openProfileTooltip}
+            onMouseLeave={closeProfileTooltip}
           >
             {tweet.user}
           </TweetMainTopUsername>

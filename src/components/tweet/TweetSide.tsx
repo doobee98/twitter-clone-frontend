@@ -27,23 +27,33 @@ interface TweetSideProps {
 }
 
 const TweetSide: React.FC<TweetSideProps> = (props) => {
-  const { children, tweet } = props;
+  const { tweet } = props;
   const [isOpen, setIsOpen] = useState(false);
+  const [timer, setTimer] = useState<NodeJS.Timeout | undefined>();
 
-  const openProfileHover = () => {
-    setIsOpen(true);
+  const openProfileTooltip = () => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    const newTimer = setTimeout(() => setIsOpen(true), 800);
+    setTimer(newTimer);
   };
 
-  const closeProfileHover = () => {
-    setIsOpen(false);
+  const closeProfileTooltip = () => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    const newTimer = setTimeout(() => setIsOpen(false), 500);
+    setTimer(newTimer);
   };
 
   return (
     <>
       <TweetSideContainer>
         <TweetProfileWrapper
-          onMouseEnter={openProfileHover}
-          onMouseLeave={closeProfileHover}
+          onMouseEnter={openProfileTooltip}
+          onMouseLeave={closeProfileTooltip}
         >
           <Profile userid={tweet.user} username={tweet.user} />
         </TweetProfileWrapper>
