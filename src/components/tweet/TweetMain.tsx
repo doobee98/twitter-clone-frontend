@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import TweetModel from '../../models/tweet';
+import { Tweet } from '../../models/tweet';
 import TweetMainTop from './TweetMainTop';
 import TweetMainCenter from './TweetMainCenter';
 import TweetMainBottom from './TweetMainBottom';
@@ -17,7 +17,7 @@ const TweetMainContainer = styled.div`
 `;
 
 interface TweetMainProps {
-  tweet: TweetModel;
+  tweet: Tweet;
 }
 
 const TweetMain: React.FC<TweetMainProps> = (props) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ColorPalette } from '../../utils/colorUtils';
-import TweetModel from '../../models/tweet';
+import { Tweet } from '../../models/tweet';
 
 const TweetMainTopItem = styled.div`
   width: auto;
@@ -38,7 +38,7 @@ const TweetMainTopContainer = styled.div`
 `;
 
 interface TweetMainTopProps {
-  tweet: TweetModel;
+  tweet: Tweet;
 }
 
 const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
@@ -48,9 +48,9 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
   return (
     <TweetMainTopContainer>
       <TweetMainTopLeftContainer>
-        <TweetMainTopUsername>{tweet.user}</TweetMainTopUsername>
+        <TweetMainTopUsername>{tweet.writer_id}</TweetMainTopUsername>
         <TweetMainTopUseridTweetedAt>
-          @{tweet.key} - tweetedAt
+          @{tweet.writer_id} - {tweet.tweeted_at}
         </TweetMainTopUseridTweetedAt>
       </TweetMainTopLeftContainer>
       <TweetMainTopRightContainer>

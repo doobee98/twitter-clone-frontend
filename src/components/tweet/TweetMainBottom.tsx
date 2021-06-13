@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
 import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
-import TweetModel from '../../models/tweet';
+import { Tweet } from '../../models/tweet';
 import { BasicType } from '../../utils/iconUtils';
 
 const TweetMainBottomContainer = styled.div`
@@ -49,7 +49,7 @@ const HoverText = styled.div`
 `;
 
 interface TweetMainBottomProps {
-  tweet: TweetModel;
+  tweet: Tweet;
 }
 
 const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
@@ -76,19 +76,19 @@ const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
       <TweetMainBottomItem onClick={handleReply}>
         <HoverArea highlightColor={ColorPalette.SKYBLUE}>
           <HoverIcon iconType={BasicType.REPLY} iconSize={16} />
-          <HoverText>{tweet.comments}</HoverText>
+          <HoverText>{tweet.reply_count}</HoverText>
         </HoverArea>
       </TweetMainBottomItem>
       <TweetMainBottomItem onClick={handleRetweet}>
         <HoverArea highlightColor={ColorPalette.GREEN}>
           <HoverIcon iconType={BasicType.RETWEET} iconSize={16} />
-          <HoverText>{tweet.retweets}</HoverText>
+          <HoverText>{tweet.retweet_count}</HoverText>
         </HoverArea>
       </TweetMainBottomItem>
       <TweetMainBottomItem onClick={handleLike}>
         <HoverArea highlightColor={ColorPalette.MAGENTA}>
           <HoverIcon iconType={BasicType.LIKE} iconSize={16} />
-          <HoverText>{tweet.likes}</HoverText>
+          <HoverText>{tweet.like_count}</HoverText>
         </HoverArea>
       </TweetMainBottomItem>
       <TweetMainBottomItem onClick={handleShare}>
