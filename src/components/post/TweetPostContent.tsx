@@ -5,6 +5,7 @@ import { BasicType } from 'utils/iconUtils';
 import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
 import TweetPostToolBar from './TweetPostToolBar';
+import TweetPostText from './TweetPostText';
 import useInput from '../../hooks/useInput';
 import { useAppDispatch } from '../../hooks/redux';
 import { createTweet } from '../../modules/home';
@@ -17,28 +18,6 @@ const TweetPostContentContainer = styled.div`
 
 const TweetPostTextAreaWrapper = styled.div`
   height: auto;
-`;
-
-interface TweetPostTextAreaProps {
-  height: string;
-}
-
-const TweetPostTextArea = styled.textarea<TweetPostTextAreaProps>`
-  width: 100%;
-  min-height: 56px;
-  line-height: 1.35em;
-  padding: 12px 0px;
-
-  resize: none;
-  border: none;
-  overflow: hidden;
-
-  font-size: 20px;
-
-  ${(props) =>
-    css`
-      height: ${props.height};
-    `}
 `;
 
 interface TweetPostMediaWrapperProps {
@@ -128,9 +107,8 @@ const TweetButton = styled(Button)`
 `;
 
 const TweetPostContent: React.FC = () => {
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [textAreaHeight, setTextAreaHeight] = useState('auto');
   const [isWritingStarted, setIsWritingStarted] = useState(false);
+  const [textAreaHeight, setTextAreaHeight] = useState('auto');
   const [file, setFile] = useState('');
   const [isUploaded, setIsUploaded] = useState(false);
   const [tweetContent, onChangeTweetContent, setTweetContent] = useInput('');
@@ -155,19 +133,8 @@ const TweetPostContent: React.FC = () => {
   ];
   const [permissionIndex, setPermissionIndex] = useState(0);
 
-  useEffect(() => {
-    setTextAreaHeight(`${textAreaRef.current?.scrollHeight}px`);
-  }, [tweetContent]);
-
-  const handleClick = () => {
-    setIsWritingStarted(true);
-  };
   const changePermission = () => {
     setPermissionIndex((permissionIndex + 1) % permissions.length);
-  };
-  const onTweetTextChange = (event: React.ChangeEvent) => {
-    setTextAreaHeight('auto');
-    onChangeTweetContent(event as React.ChangeEvent<HTMLInputElement>);
   };
 
   //   Not work
@@ -181,7 +148,7 @@ const TweetPostContent: React.FC = () => {
 
   const clearTweetPost = () => {
     setTweetContent('');
-    setTextAreaHeight('auto');
+    setTextAreaHeight('0px');
     setFile('');
     setIsUploaded(false);
     setIsWritingStarted(false);
@@ -195,14 +162,13 @@ const TweetPostContent: React.FC = () => {
   return (
     <TweetPostContentContainer>
       <TweetPostTextAreaWrapper>
-        <TweetPostTextArea
-          ref={textAreaRef}
-          height={textAreaHeight}
-          value={tweetContent}
-          placeholder="What's happening?"
-          defaultValue=""
-          onClick={handleClick}
-          onChange={onTweetTextChange}
+        <TweetPostText
+          tweetContent={tweetContent}
+          textAreaHeight={textAreaHeight}
+          onChangeTweetContent={onChangeTweetContent}
+          setIsWritingStarted={setIsWritingStarted}
+          setTextAreaHeight={setTextAreaHeight}
+          clearTweetPost={clearTweetPost}
         />
       </TweetPostTextAreaWrapper>
       <TweetPostMediaWrapper isUploaded={isUploaded}>
