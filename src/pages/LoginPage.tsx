@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginMain from 'components/login/LoginMain';
 import { useAuthSelector } from 'hooks/redux';
+import useTitle from 'hooks/useTitle';
 
 const LoginPageWrapper = styled.div`
   display: flex;
@@ -13,6 +14,8 @@ const LoginPageWrapper = styled.div`
 const LoginPage: React.FC = () => {
   const authStore = useAuthSelector();
   const { currentUser } = authStore;
+
+  useTitle('Login / Twitter-Clone');
 
   if (currentUser) {
     return <Redirect to="/home" />;
