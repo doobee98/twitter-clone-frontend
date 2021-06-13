@@ -6,7 +6,7 @@ import TweetPostProfile from './TweetPostProfile';
 
 const TweetPostContainer = styled.div`
   display: flex;
-  padding: 0px 16px 4px 16px;
+  padding: 0px 16px;
   width: 100%;
   border: 1px solid ${ColorPalette.BLACK};
 `;

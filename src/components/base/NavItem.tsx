@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
@@ -6,19 +6,18 @@ import { BasicType, HighlightType } from 'utils/iconUtils';
 import Button from './Button';
 import Icon from './Icon';
 
-const NavItemContainer = styled.div`
-  width: 100%;
-  cursor: pointer;
+// change component order to avoid hoisting
+const NavItemButton = styled(Button)`
+  margin: 5px 0;
 `;
 
-interface NavItemButtonProps {
+interface NavItemContainerProps {
   isActive?: boolean;
-  isHover?: boolean;
 }
 
-const NavItemButton = styled(Button)<NavItemButtonProps>`
-  margin: 5px 0;
-  color: inherit;
+const NavItemContainer = styled.div<NavItemContainerProps>`
+  width: 100%;
+  cursor: pointer;
 
   ${(props) =>
     props.isActive &&
@@ -26,12 +25,12 @@ const NavItemButton = styled(Button)<NavItemButtonProps>`
       color: ${ColorPalette.SKYBLUE};
     `}
 
-  ${(props) =>
-    props.isHover &&
-    css`
+  &:hover {
+    & > ${NavItemButton} {
       color: ${ColorPalette.SKYBLUE};
       background-color: ${hexToRgbA(ColorPalette.SKYBLUE, 0.1)};
-    `}
+    }
+  }
 `;
 
 const NavItemText = styled.div`
@@ -52,15 +51,6 @@ const NavItem: React.FC<NavItemProps> = (props) => {
   const history = useHistory();
   const location = useLocation();
   const isCurrentPath = link === location.pathname;
-  const [isHover, setIsHover] = useState(false);
-
-  const onHover = () => {
-    setIsHover(true);
-  };
-
-  const onHoverOut = () => {
-    setIsHover(false);
-  };
 
   const goToLink = () => {
     if (link) {
@@ -72,11 +62,10 @@ const NavItem: React.FC<NavItemProps> = (props) => {
     <NavItemContainer
       className={className}
       onClick={goToLink}
-      onMouseEnter={onHover}
-      onMouseLeave={onHoverOut}
+      isActive={isCurrentPath}
     >
-      <NavItemButton isActive={isCurrentPath} isHover={isHover}>
-        <Icon iconType={iconType} isHighlighted={isCurrentPath} size={25} />
+      <NavItemButton>
+        <Icon iconType={iconType} isHighlighted={isCurrentPath} iconSize={25} />
         {children && <NavItemText>{children}</NavItemText>}
       </NavItemButton>
     </NavItemContainer>

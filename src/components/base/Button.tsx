@@ -1,5 +1,5 @@
+import React from 'react';
 import styled from 'styled-components';
-import { ColorPalette } from 'utils/colorUtils';
 
 const ButtonWrapper = styled.button`
   border-color: transparent;
@@ -8,8 +8,8 @@ const ButtonWrapper = styled.button`
   font-size: 15px;
 
   cursor: pointer;
-  color: ${ColorPalette.BLACK};
-  background-color: ${ColorPalette.WHITE};
+  color: inherit;
+  background-color: inherit;
 
   display: flex;
   justify-content: space-around;
@@ -25,15 +25,25 @@ const ButtonWrapper = styled.button`
   }
 `;
 
-interface ButtonProps {
+export interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
-  onClick?: (event?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onClick?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onHover?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  onHoverOut?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   className?: string;
 }
 
 const Button: React.FC<ButtonProps> = (props) => {
-  const { type = 'button', disabled, onClick, className, children } = props;
+  const {
+    type = 'button',
+    disabled,
+    onClick,
+    onHover,
+    onHoverOut,
+    className,
+    children,
+  } = props;
 
   return (
     <ButtonWrapper
@@ -41,6 +51,8 @@ const Button: React.FC<ButtonProps> = (props) => {
       className={className}
       disabled={disabled}
       onClick={onClick}
+      onMouseEnter={onHover}
+      onMouseLeave={onHoverOut}
     >
       {children}
     </ButtonWrapper>

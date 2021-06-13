@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { ColorPalette } from 'utils/colorUtils';
+import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
-import NavItem from '../base/NavItem';
+import Button from 'components/base/Button';
+import Icon from 'components/base/Icon';
 import TweetPostToolBar from './TweetPostToolBar';
 
 const TweetPostContentContainer = styled.div`
@@ -75,20 +76,20 @@ const TweetPostPermissionWrapper = styled.div<TweetPostPermissionWrapperProps>`
     `}
 `;
 
-const PermissionButton = styled(NavItem)`
+const PermissionButton = styled(Button)`
   color: ${ColorPalette.SKYBLUE};
+  margin: 0px;
+  padding: 2px 5px;
 
-  & button {
-    margin: 0px;
-    padding: 0px;
-    padding-right: 8px;
+  &:hover {
+    background-color: ${hexToRgbA(ColorPalette.SKYBLUE, 0.1)};
   }
+`;
 
-  & div {
-    margin: 0px;
-    margin-left: 6.5px;
-    font-size: 13px;
-  }
+const PermissionButtonText = styled.div`
+  margin-left: 6.5px;
+  font-size: 13px;
+  font-weight: bold;
 `;
 
 const TweetPostToolBarWrapper = styled.div`
@@ -172,8 +173,14 @@ const TweetPostContent: React.FC = () => {
         isWritingStarted={isWritingStarted}
         onClick={changePermission}
       >
-        <PermissionButton iconType={permissions[permissionIndex].iconType}>
-          {permissions[permissionIndex].description}
+        <PermissionButton>
+          <Icon
+            iconType={permissions[permissionIndex].iconType}
+            iconSize={25}
+          />
+          <PermissionButtonText>
+            {permissions[permissionIndex].description}
+          </PermissionButtonText>
         </PermissionButton>
       </TweetPostPermissionWrapper>
       <TweetPostToolBarWrapper>
