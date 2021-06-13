@@ -1,6 +1,6 @@
 import { fetchFeed } from 'modules/home';
 import React, { useEffect } from 'react';
-import { Tweet } from '../models/tweet';
+import Tweet from '../models/tweet';
 import { useAppDispatch } from './redux';
 
 const useInfinityScroll = (feed: Tweet[], scrollFunction: () => any) => {

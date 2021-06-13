@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
 import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
-import { Tweet } from '../../models/tweet';
+import Tweet from '../../models/tweet';
 import { BasicType } from '../../utils/iconUtils';
 
 const TweetMainBottomContainer = styled.div`

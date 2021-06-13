@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Tweet } from '../../models/tweet';
+import Tweet from '../../models/tweet';
 import TweetMainTop from './TweetMainTop';
 import TweetMainCenter from './TweetMainCenter';
 import TweetMainBottom from './TweetMainBottom';

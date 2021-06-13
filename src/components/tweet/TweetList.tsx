@@ -3,10 +3,9 @@ import styled from 'styled-components';
 import { useAppDispatch, useHomeSelector } from 'hooks/redux';
 import { fetchFeed } from 'modules/home';
 import { ColorPalette } from '../../utils/colorUtils';
-import TweetModel, { Tweet } from '../../models/tweet';
+import Tweet from '../../models/tweet';
 import TweetComponent from './TweetComponent';
 import useInfinityScroll from '../../hooks/useInfinityScroll';
-import { testTweet } from '../../utils/testTweetUtils';
 
 const TweetListContainer = styled.div`
   border: 2px solid ${ColorPalette.SKYBLUE};

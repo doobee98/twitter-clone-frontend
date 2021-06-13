@@ -1,5 +1,5 @@
 import { AxiosPromise } from 'axios';
-import { Tweet } from 'models/tweet';
+import Tweet from 'models/tweet';
 import Api from './Api';
 import ApiBuilder from './ApiBuilder';
 
