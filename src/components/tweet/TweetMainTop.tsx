@@ -37,6 +37,12 @@ const TweetMainTopContainer = styled.div`
   margin: 1px;
 `;
 
+const TestButton = styled.div`
+  width: 100px;
+  height: 100px;
+  border: 1px solid black;
+`;
+
 interface TweetMainTopProps {
   tweet: TweetModel;
 }
@@ -52,6 +58,7 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
     }
     const newTimer = setTimeout(() => setIsOpen(true), 800);
     setTimer(newTimer);
+    console.log('open');
   };
 
   const closeProfileTooltip = () => {
@@ -61,10 +68,16 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
 
     const newTimer = setTimeout(() => setIsOpen(false), 500);
     setTimer(newTimer);
+    console.log('close');
+  };
+
+  const printOpen = () => {
+    console.log(isOpen);
   };
 
   return (
     <>
+      <TestButton onClick={printOpen}>test</TestButton>
       <TweetMainTopContainer>
         <TweetMainTopLeftContainer>
           <TweetMainTopUsername
