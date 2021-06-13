@@ -6,6 +6,7 @@ export enum ColorPalette {
   SKYBLUE = '#1da0f2',
   SKYBLUE_DARK = '#1a91da',
   GREEN = '#17bf63',
+  MAGENTA = '#e0245e',
 
   GRAY_70 = '#707070',
   GRAY_76 = '#767676',
