@@ -15,7 +15,11 @@ import {
   FiHeart,
   FiShare,
 } from 'react-icons/fi';
-import { HiHashtag, HiOutlineHashtag } from 'react-icons/hi';
+import {
+  HiHashtag,
+  HiOutlineArrowLeft,
+  HiOutlineHashtag,
+} from 'react-icons/hi';
 import { MdMail, MdMailOutline } from 'react-icons/md';
 import {
   RiHome4Line,
@@ -43,6 +47,7 @@ export enum BasicType {
   TWITTER = 'basic-twitter',
   MORE_CIRCLE = 'basic-more-circle',
   MORE = 'basic-more',
+  LEFT_ARROW = 'basic-left-arrow',
 
   // tweet-post icons
   MEDIA = 'basic-media',
@@ -79,6 +84,7 @@ const basicRecord = {
   [BasicType.TWITTER]: FaTwitter,
   [BasicType.MORE_CIRCLE]: CgMoreO,
   [BasicType.MORE]: FiMoreHorizontal,
+  [BasicType.LEFT_ARROW]: HiOutlineArrowLeft,
 
   // tweet-post icons
   [BasicType.MEDIA]: AiOutlinePicture,
