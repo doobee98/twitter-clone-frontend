@@ -8,6 +8,7 @@ import storage, { AUTH_TOKEN_NAME } from 'utils/storage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import TestPage from './pages/TestPage';
+import ProfilePage from './pages/ProfilePage';
 
 const GlobalStyle = createGlobalStyle`
   ${normalize}
@@ -90,6 +91,7 @@ const App: React.FC = () => {
           <Route path="/home" component={HomePage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/test" component={TestPage} />
+          <Route path="/:id" component={ProfilePage} />
         </Switch>
       </BrowserRouter>
     </>
