@@ -20,7 +20,7 @@ class UsersApi extends Api {
     return this._instance;
   }
 
-  login(id: string): AxiosPromise<User> {
+  getUser(id: string): AxiosPromise<User> {
     return ApiBuilder.create().get().url(this.apiEndPoints.USER(id)).build();
   }
 }
