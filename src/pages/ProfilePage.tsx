@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from 'components/base/Button';
@@ -11,9 +11,14 @@ import Icon from 'components/base/Icon';
 import PageTemplate from 'components/base/PageTemplate';
 import ProfileHeader from 'components/profile/ProfileHeader';
 import ProfileFeed from 'components/profile/ProfileFeed';
-import { useAuthSelector } from 'hooks/redux';
+import {
+  useAppDispatch,
+  useAuthSelector,
+  useProfileSelector,
+} from 'hooks/redux';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
+import { getUser } from 'modules/profile';
 
 const BackButton = styled(Button)`
   color: ${ColorPalette.SKYBLUE};
@@ -41,20 +46,25 @@ interface ProfilePageParams {
 }
 
 const ProfilePage: React.FC = () => {
-  const authStore = useAuthSelector();
-  const { currentUser } = authStore;
-  const { id: user_id } = useParams<ProfilePageParams>();
+  const { currentUser } = useAuthSelector();
+  const { user } = useProfileSelector();
+  const dispatch = useAppDispatch();
+  const { id: paramId } = useParams<ProfilePageParams>();
 
-  const isMyProfile = currentUser && currentUser.user_id === user_id;
-
-  // TO BE REMOVED: 일단은 자기 자신것만 디자인하기
-  const user = currentUser;
-  const tweetCount = 2;
+  useEffect(() => {
+    if (!user || user.user_id !== paramId) {
+      dispatch(getUser(paramId));
+    }
+  }, []);
 
   if (!user) {
     // TODO: 에러 띄우기? 또는 에러 페이지로 라우팅?
     return null;
   }
+
+  // MOCK-UP DATA
+  const tweetCount = 2;
+  const isMyProfile = currentUser?.user_id === user.user_id;
 
   return (
     <PageTemplate title={`${user.username} (@${user.user_id})`}>
