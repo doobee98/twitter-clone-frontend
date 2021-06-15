@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { ColorPalette } from '../../utils/colorUtils';
 import Tweet from '../../models/tweet';
+import getTweetedTimeGap from '../../utils/getTweetedTimeGap';
 
 const TweetMainTopItem = styled.div`
   width: auto;
@@ -44,13 +45,14 @@ interface TweetMainTopProps {
 const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
   const { children, tweet } = props;
 
-  // <TweetMainTopItem>isOffical</TweetMainTopItem>   ---> should we? after next meeting
+  const elapsed = getTweetedTimeGap(tweet.tweeted_at);
+
   return (
     <TweetMainTopContainer>
       <TweetMainTopLeftContainer>
         <TweetMainTopUsername>{tweet.writer_id}</TweetMainTopUsername>
         <TweetMainTopUseridTweetedAt>
-          @{tweet.writer_id} - {tweet.tweeted_at}
+          @{tweet.writer_id} - {elapsed}
         </TweetMainTopUseridTweetedAt>
       </TweetMainTopLeftContainer>
       <TweetMainTopRightContainer>
