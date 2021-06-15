@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import Button from 'components/base/Button';
-import { useAppDispatch, useProfileSelector } from 'hooks/redux';
-import { followUser, unfollowUser } from 'modules/profile';
+import { useAppDispatch } from 'hooks/redux';
+import { followUser, unfollowUser } from 'modules/userRecord';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
+import User from 'models/user';
 
 const Follow = styled(Button)`
   color: ${ColorPalette.SKYBLUE};
@@ -31,8 +32,12 @@ const Unfollow = styled(Button)`
   background-color: ${ColorPalette.MAGENTA};
 `;
 
-const FollowButton: React.FC = () => {
-  const { user } = useProfileSelector();
+interface FollowButtonProps {
+  user: User;
+}
+
+const FollowButton: React.FC<FollowButtonProps> = (props) => {
+  const { user } = props;
   const dispatch = useAppDispatch();
   const [isHover, setIsHover] = useState(false);
 

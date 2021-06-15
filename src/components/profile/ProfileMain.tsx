@@ -3,7 +3,12 @@ import styled from 'styled-components';
 import Button from 'components/base/Button';
 import { ContentHeader, ContentSection } from 'components/base/ContentTemplate';
 import Icon from 'components/base/Icon';
-import { useAuthSelector, useProfileSelector } from 'hooks/redux';
+import {
+  useAppSelector,
+  useAuthSelector,
+  useProfileSelector,
+  useUserSelector,
+} from 'hooks/redux';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
 import ProfileHeader from './ProfileHeader';
@@ -31,14 +36,15 @@ const TweetCount = styled.div`
   color: ${ColorPalette.GRAY_70};
 `;
 
-const ProfileMain: React.FC = () => {
-  const { currentUser } = useAuthSelector();
-  const { user, feed, totalCount } = useProfileSelector();
+interface ProfileMainProps {
+  userId: string;
+}
 
-  // TO BE REMOVED (test output)
-  useEffect(() => {
-    console.log(feed);
-  }, [feed]);
+const ProfileMain: React.FC<ProfileMainProps> = (props) => {
+  const { userId } = props;
+  const { currentUser } = useAuthSelector();
+  const user = useUserSelector(userId);
+  const totalCount = useAppSelector((state) => state.profile.totalCount);
 
   if (!user) {
     return null;
@@ -61,7 +67,7 @@ const ProfileMain: React.FC = () => {
       </ContentHeader>
       <ContentSection>
         <ProfileHeader />
-        {!isMyProfile && <FollowButton />}
+        {!isMyProfile && <FollowButton user={user} />}
       </ContentSection>
       <ContentSection>
         <ProfileFeed />
