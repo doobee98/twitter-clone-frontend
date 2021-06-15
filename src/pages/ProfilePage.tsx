@@ -18,7 +18,12 @@ import {
 } from 'hooks/redux';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
-import { getUser } from 'modules/profile';
+import {
+  followUser,
+  getUser,
+  getUserFeed,
+  unfollowUser,
+} from 'modules/profile';
 
 const BackButton = styled(Button)`
   color: ${ColorPalette.SKYBLUE};
@@ -41,30 +46,66 @@ const TweetCount = styled.div`
   color: ${ColorPalette.GRAY_70};
 `;
 
+const FollowButton = styled(Button)`
+  color: ${ColorPalette.SKYBLUE};
+  font-weight: bold;
+  border: 1px solid ${ColorPalette.SKYBLUE};
+
+  &:hover {
+    background-color: ${hexToRgbA(ColorPalette.SKYBLUE, 0.1)};
+  }
+`;
+
+const FollowingButton = styled(Button)`
+  color: ${ColorPalette.WHITE};
+  font-weight: bold;
+  border: 1px solid ${ColorPalette.SKYBLUE};
+  background-color: ${ColorPalette.SKYBLUE};
+`;
+
+const UnfollowButton = styled(Button)`
+  color: ${ColorPalette.WHITE};
+  font-weight: bold;
+  border: 1px solid ${ColorPalette.MAGENTA};
+  background-color: ${ColorPalette.MAGENTA};
+`;
+
 interface ProfilePageParams {
   id: string;
 }
 
 const ProfilePage: React.FC = () => {
   const { currentUser } = useAuthSelector();
-  const { user } = useProfileSelector();
+  const { user, feed, totalCount } = useProfileSelector();
   const dispatch = useAppDispatch();
   const { id: paramId } = useParams<ProfilePageParams>();
 
   useEffect(() => {
     if (!user || user.user_id !== paramId) {
       dispatch(getUser(paramId));
+      dispatch(getUserFeed(paramId));
     }
-  }, []);
+  }, [paramId]);
+
+  // TO BE REMOVED (test output)
+  useEffect(() => {
+    console.log(feed);
+  }, [feed]);
 
   if (!user) {
     // TODO: 에러 띄우기? 또는 에러 페이지로 라우팅?
     return null;
   }
 
-  // MOCK-UP DATA
-  const tweetCount = 2;
   const isMyProfile = currentUser?.user_id === user.user_id;
+
+  const handleFollow = () => {
+    dispatch(followUser(user.user_id));
+  };
+
+  const handleUnfollow = () => {
+    dispatch(unfollowUser(user.user_id));
+  };
 
   return (
     <PageTemplate title={`${user.username} (@${user.user_id})`}>
@@ -76,12 +117,17 @@ const ProfilePage: React.FC = () => {
           <UserInfoContainer>
             <strong>{user.username}</strong>
             <TweetCount>
-              {`${tweetCount} ${tweetCount <= 1 ? 'Tweet' : 'Tweets'}`}
+              {`${totalCount} ${totalCount <= 1 ? 'Tweet' : 'Tweets'}`}
             </TweetCount>
           </UserInfoContainer>
         </ContentHeader>
         <ContentSection>
           <ProfileHeader />
+          {!isMyProfile && user.following_flag ? (
+            <UnfollowButton onClick={handleUnfollow}>Unfollow</UnfollowButton>
+          ) : (
+            <FollowButton onClick={handleFollow}>Follow</FollowButton>
+          )}
         </ContentSection>
         <ContentSection>
           <ProfileFeed />
