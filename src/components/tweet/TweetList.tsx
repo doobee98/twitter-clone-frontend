@@ -4,9 +4,7 @@ import { useAppDispatch, useHomeSelector } from 'hooks/redux';
 import { fetchFeed } from 'modules/home';
 import Icon from 'components/base/Icon';
 import { BasicType } from 'utils/iconUtils';
-import { AiOutlineConsoleSql } from 'react-icons/ai';
 import { ColorPalette } from '../../utils/colorUtils';
-import Tweet from '../../models/tweet';
 import TweetComponent from './TweetComponent';
 import useInfinityScroll from '../../hooks/useInfinityScroll';
 
@@ -44,7 +42,7 @@ const TweetList: React.FC = () => {
     setTimeout(() => setIsLoading(false), 2000);
   }, []);
 
-  // MAYBE TOBE REFACTORED
+  // InfinityScroll w/ Throttling
   const timer = useRef<boolean>(false);
   const setTimer = (inputBoolean: boolean) => {
     timer.current = inputBoolean;
