@@ -1,4 +1,5 @@
 import { AxiosPromise } from 'axios';
+import { Tweet, TweetList } from 'models/tweet';
 import User from 'models/user';
 import Api from './Api';
 import ApiBuilder from './ApiBuilder';
@@ -9,6 +10,8 @@ const usersApiPrefix = `${apiPrefix}/users`;
 class UsersApi extends Api {
   apiEndPoints = {
     USER: (id: string) => `${usersApiPrefix}/${id}`,
+    USER_FEED: (id: string) => `${usersApiPrefix}/${id}/feed`,
+    USER_FOLLOW: (id: string) => `${usersApiPrefix}/${id}/follow`,
   };
 
   private static _instance: UsersApi;
@@ -22,6 +25,32 @@ class UsersApi extends Api {
 
   getUser(id: string): AxiosPromise<User> {
     return ApiBuilder.create().get().url(this.apiEndPoints.USER(id)).build();
+  }
+
+  getUserFeed(
+    id: string,
+    offset: number,
+    count: number,
+  ): AxiosPromise<TweetList> {
+    return ApiBuilder.create()
+      .post()
+      .url(this.apiEndPoints.USER_FEED(id))
+      .data({ offset, count })
+      .build();
+  }
+
+  followUser(id: string): AxiosPromise<void> {
+    return ApiBuilder.create()
+      .post()
+      .url(this.apiEndPoints.USER_FOLLOW(id))
+      .build();
+  }
+
+  unfollowUser(id: string): AxiosPromise<void> {
+    return ApiBuilder.create()
+      .delete()
+      .url(this.apiEndPoints.USER_FOLLOW(id))
+      .build();
   }
 }
 
