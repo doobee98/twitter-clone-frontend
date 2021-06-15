@@ -101,20 +101,30 @@ const ProfileTooltipContianer = styled.div`
 
 interface ProfileTooltipProps {
   isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   userid: string;
   username: string;
 }
 
 const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
-  const { isOpen, userid, username } = props;
+  const { isOpen, setIsOpen, userid, username } = props;
   const [isHoverActive, setIsHoverActive] = useState(false);
+  const [timer, setTimer] = useState<NodeJS.Timeout>();
 
   const openProfile = () => {
     setIsHoverActive(true);
   };
 
   const closeProfile = () => {
-    setIsHoverActive(false);
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    const newTimer = setTimeout(() => {
+      setIsOpen(false);
+      setIsHoverActive(false);
+    }, 500);
+    setTimer(newTimer);
   };
 
   return (

@@ -96,6 +96,7 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
       </TweetMainTopContainer>
       <ProfileTooltip
         isOpen={isOpen}
+        setIsOpen={setIsOpen}
         userid={tweet.user}
         username={tweet.user}
       />

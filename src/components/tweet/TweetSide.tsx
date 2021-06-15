@@ -29,7 +29,7 @@ interface TweetSideProps {
 const TweetSide: React.FC<TweetSideProps> = (props) => {
   const { tweet } = props;
   const [isOpen, setIsOpen] = useState(false);
-  const [timer, setTimer] = useState<NodeJS.Timeout | undefined>();
+  const [timer, setTimer] = useState<NodeJS.Timeout>();
 
   const openProfileTooltip = () => {
     if (timer) {
@@ -59,6 +59,7 @@ const TweetSide: React.FC<TweetSideProps> = (props) => {
         </TweetProfileWrapper>
         <ProfileTooltip
           isOpen={isOpen}
+          setIsOpen={setIsOpen}
           userid={tweet.user}
           username={tweet.user}
         />
