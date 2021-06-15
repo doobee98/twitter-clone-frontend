@@ -2,10 +2,23 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useAppDispatch, useHomeSelector } from 'hooks/redux';
 import { fetchFeed } from 'modules/home';
+import Icon from 'components/base/Icon';
+import { BasicType } from 'utils/iconUtils';
+import { AiOutlineConsoleSql } from 'react-icons/ai';
 import { ColorPalette } from '../../utils/colorUtils';
 import Tweet from '../../models/tweet';
 import TweetComponent from './TweetComponent';
 import useInfinityScroll from '../../hooks/useInfinityScroll';
+
+const ErrorContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 400px;
+`;
 
 const TweetListContainer = styled.div`
   border: 2px solid ${ColorPalette.SKYBLUE};
@@ -13,13 +26,23 @@ const TweetListContainer = styled.div`
 `;
 
 const TweetList: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const homeStore = useHomeSelector();
   const dispatch = useAppDispatch();
   const { feed } = homeStore;
 
   const handleFetchFeed = async () => {
-    dispatch(fetchFeed());
+    dispatch(fetchFeed()).then((res) => {
+      if (res.type.toString() === 'home/fetchFeed/rejected') setIsError(true);
+    });
   };
+
+  // INIT FETCH
+  useEffect(() => {
+    handleFetchFeed();
+    setTimeout(() => setIsLoading(false), 2000);
+  }, []);
 
   // MAYBE TOBE REFACTORED
   const timer = useRef<boolean>(false);
@@ -28,22 +51,21 @@ const TweetList: React.FC = () => {
   };
   useInfinityScroll(handleFetchFeed, timer, setTimer);
 
-  // TO BE REMOVED
-  useEffect(() => {
-    console.log(feed);
-  }, [feed]);
-
-  // INIT FETCH
-  useEffect(() => {
-    handleFetchFeed();
-  }, []);
-
   return (
-    <TweetListContainer>
-      {feed.map((tweet) => (
-        <TweetComponent key={tweet.tweet_id} tweet={tweet} />
-      ))}
-    </TweetListContainer>
+    <>
+      {isLoading || isError ? (
+        <ErrorContainer>
+          {(isLoading && <Icon iconType={BasicType.LOAD} iconSize={100} />) ||
+            (isError && <Icon iconType={BasicType.ALERT} iconSize={100} />)}
+        </ErrorContainer>
+      ) : (
+        <TweetListContainer>
+          {feed.map((tweet) => (
+            <TweetComponent key={tweet.tweet_id} tweet={tweet} />
+          ))}
+        </TweetListContainer>
+      )}
+    </>
   );
 };
 
