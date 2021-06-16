@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ColorPalette } from '../../utils/colorUtils';
-import TweetModel from '../../models/tweet';
+import Tweet from '../../models/tweet';
 import TweetSide from './TweetSide';
 import TweetMain from './TweetMain';
 
@@ -18,7 +18,7 @@ const TweetContainer = styled.div`
 `;
 
 interface TweetComponentProps {
-  tweet: TweetModel;
+  tweet: Tweet;
 }
 
 const TweetComponent: React.FC<TweetComponentProps> = (props) => {

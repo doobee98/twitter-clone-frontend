@@ -1,9 +1,10 @@
-import React, { MouseEvent, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { setTimeout } from 'timers';
 import { ColorPalette } from '../../utils/colorUtils';
-import TweetModel from '../../models/tweet';
 import ProfileTooltip from '../base/ProfileTooltip';
+import Tweet from '../../models/tweet';
+import getTweetedTimeGap from '../../utils/getTweetedTimeGap';
 
 const TweetMainTopItem = styled.div`
   width: auto;
@@ -44,7 +45,7 @@ const TestButton = styled.div`
 `;
 
 interface TweetMainTopProps {
-  tweet: TweetModel;
+  tweet: Tweet;
 }
 
 const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
@@ -75,6 +76,8 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
     console.log(isOpen);
   };
 
+  const elapsed = getTweetedTimeGap(tweet.tweeted_at);
+
   return (
     <>
       <TestButton onClick={printOpen}>test</TestButton>
@@ -84,10 +87,10 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
             onMouseEnter={openProfileTooltip}
             onMouseLeave={closeProfileTooltip}
           >
-            {tweet.user}
+            {tweet.writer_id}
           </TweetMainTopUsername>
           <TweetMainTopUseridTweetedAt>
-            @{tweet.key} - tweetedAt
+            @USERID - {elapsed}
           </TweetMainTopUseridTweetedAt>
         </TweetMainTopLeftContainer>
         <TweetMainTopRightContainer>
@@ -97,8 +100,8 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
       <ProfileTooltip
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        userid={tweet.user}
-        username={tweet.user}
+        userid={tweet.writer_id}
+        username="USERNAME"
       />
     </>
   );

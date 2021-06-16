@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import ProfileTooltip from 'components/base/ProfileTooltip';
 import styled from 'styled-components';
-import TweetModel from '../../models/tweet';
 import Profile from '../base/Profile';
+import Tweet from '../../models/tweet';
 
 const TweetProfileWrapper = styled.div`
   display: flex;
@@ -23,7 +23,7 @@ const TweetSideContainer = styled.div`
 `;
 
 interface TweetSideProps {
-  tweet: TweetModel;
+  tweet: Tweet;
 }
 
 const TweetSide: React.FC<TweetSideProps> = (props) => {
@@ -55,13 +55,13 @@ const TweetSide: React.FC<TweetSideProps> = (props) => {
           onMouseEnter={openProfileTooltip}
           onMouseLeave={closeProfileTooltip}
         >
-          <Profile userid={tweet.user} username={tweet.user} />
+          <Profile userid={tweet.writer_id} username={tweet.writer_id} />
         </TweetProfileWrapper>
         <ProfileTooltip
           isOpen={isOpen}
           setIsOpen={setIsOpen}
-          userid={tweet.user}
-          username={tweet.user}
+          userid={tweet.writer_id}
+          username="USERNAME"
         />
       </TweetSideContainer>
     </>

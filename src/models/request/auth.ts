@@ -1,10 +1,10 @@
 export interface LoginRequest {
-  id: string;
+  user_id: string;
   password: string;
 }
 
 export interface SignUpRequest {
-  id: string;
-  username: string;
+  user_id: string;
   password: string;
+  username: string;
 }

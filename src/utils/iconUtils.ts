@@ -14,6 +14,8 @@ import {
   FiRepeat,
   FiHeart,
   FiShare,
+  FiAlertTriangle,
+  FiLoader,
 } from 'react-icons/fi';
 import { HiHashtag, HiOutlineHashtag } from 'react-icons/hi';
 import { MdMail, MdMailOutline } from 'react-icons/md';
@@ -59,6 +61,9 @@ export enum BasicType {
   RETWEET = 'basic-retweet',
   LIKE = 'basic-like',
   SHARE = 'basic-share',
+
+  ALERT = 'basic-alert',
+  LOAD = 'basic-load',
 }
 
 export enum HighlightType {
@@ -95,6 +100,9 @@ const basicRecord = {
   [BasicType.RETWEET]: FiRepeat,
   [BasicType.LIKE]: FiHeart,
   [BasicType.SHARE]: FiShare,
+
+  [BasicType.ALERT]: FiAlertTriangle,
+  [BasicType.LOAD]: FiLoader,
 };
 
 // [Icon when highlighted state, Icon when basic state]
