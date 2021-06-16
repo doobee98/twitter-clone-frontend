@@ -112,6 +112,7 @@ const TweetPostContent: React.FC = () => {
   const [file, setFile] = useState('');
   const [isUploaded, setIsUploaded] = useState(false);
   const [tweetContent, onChangeTweetContent, setTweetContent] = useInput('');
+  const [hasTweetContent, setHasTweetContent] = useState(false);
   const dispatch = useAppDispatch();
 
   const permissions = [
@@ -154,6 +155,10 @@ const TweetPostContent: React.FC = () => {
     setIsWritingStarted(false);
   };
 
+  useEffect(() => {
+    setHasTweetContent(tweetContent.length > 0);
+  }, [tweetContent]);
+
   const handleCreateTweet = async () => {
     dispatch(createTweet({ content: tweetContent }));
     clearTweetPost();
@@ -191,7 +196,9 @@ const TweetPostContent: React.FC = () => {
       <TweetPostToolBarWrapper>
         <TweetPostToolBar handleImgInput={handleImgInput} />
         <ButtonWrapper>
-          <TweetButton onClick={handleCreateTweet}> Tweet </TweetButton>
+          <TweetButton onClick={handleCreateTweet} disabled={!hasTweetContent}>
+            Tweet
+          </TweetButton>
         </ButtonWrapper>
       </TweetPostToolBarWrapper>
     </TweetPostContentContainer>
