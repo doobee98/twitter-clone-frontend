@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import TweetModel from '../../models/tweet';
+import Tweet from '../../models/tweet';
 
 const TweetProfileWrapper = styled.div`
   display: flex;
@@ -26,7 +26,7 @@ const TweetSideContainer = styled.div`
 `;
 
 interface TweetSideProps {
-  tweet: TweetModel;
+  tweet: Tweet;
 }
 
 const TweetSide: React.FC<TweetSideProps> = (props) => {

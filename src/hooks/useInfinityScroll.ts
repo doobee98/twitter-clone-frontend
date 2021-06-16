@@ -1,22 +1,26 @@
-import React, { useEffect } from 'react';
-import TweetModel from '../models/tweet';
+import React, { useEffect, useRef } from 'react';
+import Tweet from '../models/tweet';
 
 const useInfinityScroll = (
-  defaultTweets: TweetModel[],
-  tweets: TweetModel[],
-  setTweets: React.Dispatch<React.SetStateAction<TweetModel[]>>,
+  scrollFunction: () => Promise<any>,
+  timer: React.MutableRefObject<boolean>,
+  setTimer: (inputBoolean: boolean) => void,
 ) => {
   const infScroll = () => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
-    if (tweets.length >= defaultTweets.length) {
+    // THROTTLING
+    // it there is timer, do not execute.:
+    if (timer.current) {
       return;
     }
 
-    if (scrollTop + clientHeight === scrollHeight) {
-      const newTweets: TweetModel[] = [...tweets, defaultTweets[tweets.length]];
-
-      setTweets(newTweets);
+    if (scrollTop + clientHeight >= scrollHeight * 0.8) {
+      setTimer(true);
+      setTimeout(() => {
+        scrollFunction();
+        setTimer(false);
+      }, 2000);
     }
   };
 
