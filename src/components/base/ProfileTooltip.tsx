@@ -29,24 +29,12 @@ const FollowButton = styled(Button)`
   }
 `;
 
-interface ProfileTooltipUserProps {
-  usertype: 'userid' | 'username';
-}
+const ProfileTooltipUserId = styled(ProfileTooltipItemWrapper)`
+  color: ${ColorPalette.GRAY_76};
+`;
 
-const ProfileTooltipUser = styled(
-  ProfileTooltipItemWrapper,
-)<ProfileTooltipUserProps>`
-  ${(props) =>
-    props.usertype === 'username' &&
-    css`
-      font-weight: bold;
-    `};
-
-  ${(props) =>
-    props.usertype === 'userid' &&
-    css`
-      color: ${ColorPalette.GRAY_76};
-    `};
+const ProfileTooltipUserName = styled(ProfileTooltipItemWrapper)`
+  font-weight: bold;
 `;
 
 const ProfileTooltipFollowItemContainer = styled(ProfileTooltipItemWrapper)`
@@ -64,19 +52,23 @@ const ProfileTooltipFollowItemWrapper = styled.div`
 `;
 
 interface ProfileTooltipFollowItemProps {
-  isNumber?: boolean;
+  isBold?: boolean;
+  isGrey?: boolean;
 }
 
 const ProfileTooltipFollowItem = styled.div<ProfileTooltipFollowItemProps>`
   margin-right: 2px;
   ${(props) =>
-    props.isNumber
-      ? css`
-          font-weight: bold;
-        `
-      : css`
-          color: ${ColorPalette.GRAY_76};
-        `};
+    props.isBold &&
+    css`
+      font-weight: bold;
+    `};
+
+  ${(props) =>
+    props.isGrey &&
+    css`
+      color: ${ColorPalette.GRAY_76};
+    `}
 `;
 
 const ProfileTooltipWhoFollowed = styled(ProfileTooltipItemWrapper)`
@@ -142,22 +134,24 @@ const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
             <Profile userid={userid} username={username} />
             <FollowButton>{tempFollowButton}</FollowButton>
           </ProfileTooltipHeader>
-          <ProfileTooltipUser usertype="username">
-            {username}
-          </ProfileTooltipUser>
-          <ProfileTooltipUser usertype="userid">@{userid}</ProfileTooltipUser>
+          <ProfileTooltipUserName>{username}</ProfileTooltipUserName>
+          <ProfileTooltipUserId>@{userid}</ProfileTooltipUserId>
           <ProfileTooltipItemWrapper>
             bio djklfasf sadlkfjsadkl asdfsafasdfafdsfas
             aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
           </ProfileTooltipItemWrapper>
           <ProfileTooltipFollowItemContainer>
             <ProfileTooltipFollowItemWrapper>
-              <ProfileTooltipFollowItem isNumber>130</ProfileTooltipFollowItem>
-              <ProfileTooltipFollowItem>Following</ProfileTooltipFollowItem>
+              <ProfileTooltipFollowItem isBold>130</ProfileTooltipFollowItem>
+              <ProfileTooltipFollowItem isGrey>
+                Following
+              </ProfileTooltipFollowItem>
             </ProfileTooltipFollowItemWrapper>
             <ProfileTooltipFollowItemWrapper>
-              <ProfileTooltipFollowItem isNumber>1203</ProfileTooltipFollowItem>
-              <ProfileTooltipFollowItem>Followers</ProfileTooltipFollowItem>
+              <ProfileTooltipFollowItem isBold>1203</ProfileTooltipFollowItem>
+              <ProfileTooltipFollowItem isGrey>
+                Followers
+              </ProfileTooltipFollowItem>
             </ProfileTooltipFollowItemWrapper>
           </ProfileTooltipFollowItemContainer>
           <ProfileTooltipWhoFollowed>
