@@ -37,7 +37,9 @@ export const getUserFeed = createAsyncThunk(
 export const profile = createSlice({
   name,
   initialState,
-  reducers: {},
+  reducers: {
+    clearProfileState: () => initialState,
+  },
   extraReducers: {
     [getUserFeed.fulfilled.type]: (state, action) => {
       const { totalCount, data: newFeed } = action.payload;
@@ -54,3 +56,4 @@ export const profile = createSlice({
 });
 
 export default profile.reducer;
+export const { clearProfileState } = profile.actions;

@@ -5,7 +5,7 @@ import ExploreSideBar from 'components/base/ExploreSideBar';
 import PageTemplate from 'components/base/PageTemplate';
 import ProfileMain from 'components/profile/ProfileMain';
 import { useAppDispatch, useUserSelector } from 'hooks/redux';
-import { getUserFeed } from 'modules/profile';
+import { clearProfileState, getUserFeed } from 'modules/profile';
 import { fetchUser } from 'modules/userRecord';
 
 interface ProfilePageParams {
@@ -27,6 +27,7 @@ const ProfilePage: React.FC = () => {
   };
 
   useEffect(() => {
+    dispatch(clearProfileState());
     initialFetch(paramId);
   }, [paramId]);
 
