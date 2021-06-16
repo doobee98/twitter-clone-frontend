@@ -127,6 +127,10 @@ const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
     setTimer(newTimer);
   };
 
+  // TO BE REMOVED
+  // NEED USER API
+  const tempFollowButton = 'Follow';
+
   return (
     <>
       {(isOpen || isHoverActive) && (
@@ -136,7 +140,7 @@ const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
         >
           <ProfileTooltipHeader>
             <Profile userid={userid} username={username} />
-            <FollowButton>Follow</FollowButton>
+            <FollowButton>{tempFollowButton}</FollowButton>
           </ProfileTooltipHeader>
           <ProfileTooltipUser usertype="username">
             {username}

@@ -35,7 +35,7 @@ const TweetSide: React.FC<TweetSideProps> = (props) => {
     if (timer) {
       clearTimeout(timer);
     }
-    const newTimer = setTimeout(() => setIsOpen(true), 800);
+    const newTimer = setTimeout(() => setIsOpen(true), 500);
     setTimer(newTimer);
   };
 
