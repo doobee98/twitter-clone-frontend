@@ -19,9 +19,6 @@ const ProfilePage: React.FC = () => {
   const [initLoading, setInitLoading] = useState(false);
 
   const initialFetch = async (id: string) => {
-    if (initLoading) {
-      await setInitLoading(false);
-    }
     await Promise.all([dispatch(fetchUser(id)), dispatch(getUserFeed(id))]);
     setInitLoading(true);
   };
@@ -31,14 +28,10 @@ const ProfilePage: React.FC = () => {
     initialFetch(paramId);
   }, [paramId]);
 
-  if (!initLoading) {
-    return null;
-  }
-
   return (
     <PageTemplate title={`${username} (@${paramId})`}>
       <ContentTemplate>
-        <ProfileMain userId={paramId} />
+        {initLoading && <ProfileMain userId={paramId} />}
       </ContentTemplate>
       {/* <ContentTemplate width="300px" hideBorder>
         <ContentHeader hideBorder>
