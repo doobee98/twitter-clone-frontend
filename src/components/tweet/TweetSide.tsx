@@ -59,12 +59,7 @@ const TweetSide: React.FC<TweetSideProps> = (props) => {
         >
           <Profile userid={tweet.writer_id} username={user.username} />
         </TweetProfileWrapper>
-        <ProfileTooltip
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          userid={tweet.writer_id}
-          username={user.username}
-        />
+        <ProfileTooltip isOpen={isOpen} setIsOpen={setIsOpen} user={user} />
       </TweetSideContainer>
     </>
   );
