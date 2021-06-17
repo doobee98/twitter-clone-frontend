@@ -68,14 +68,13 @@ const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
     // TODO
   };
 
-  const handleLike = async () => {
+  const handleLike = () => {
+    // TODO
     if (tweet.like_flag) {
-      await dispatch(dislikeTweet(tweet.tweet_id));
+      dispatch(dislikeTweet(tweet.tweet_id));
     } else {
-      await dispatch(likeTweet(tweet.tweet_id));
+      dispatch(likeTweet(tweet.tweet_id));
     }
-
-    console.log(tweet);
   };
 
   const handleShare = () => {
