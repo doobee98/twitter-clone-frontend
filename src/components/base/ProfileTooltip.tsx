@@ -36,6 +36,11 @@ const ProfileTooltipUserId = styled(ProfileTooltipItemWrapper)`
 
 const ProfileTooltipUserName = styled(ProfileTooltipItemWrapper)`
   font-weight: bold;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `;
 
 const ProfileTooltipFollowItemContainer = styled(ProfileTooltipItemWrapper)`

@@ -20,6 +20,11 @@ const TweetMainTopItem = styled.div`
 
 const TweetMainTopUsername = styled(TweetMainTopItem)`
   font-weight: bold;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `;
 
 const TweetMainTopUseridTweetedAt = styled(TweetMainTopItem)`
