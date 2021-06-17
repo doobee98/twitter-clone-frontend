@@ -5,6 +5,10 @@ import { BasicType } from 'utils/iconUtils';
 import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
 import TweetPostToolBar from './TweetPostToolBar';
+import TweetPostText from './TweetPostText';
+import useInput from '../../hooks/useInput';
+import { useAppDispatch } from '../../hooks/redux';
+import { createTweet } from '../../modules/home';
 
 const TweetPostContentContainer = styled.div`
   float: left;
@@ -14,27 +18,6 @@ const TweetPostContentContainer = styled.div`
 
 const TweetPostTextAreaWrapper = styled.div`
   height: auto;
-`;
-
-interface TweetPostTextAreaProps {
-  height: string;
-}
-
-const TweetPostTextArea = styled.textarea<TweetPostTextAreaProps>`
-  width: 100%;
-  min-height: 56px;
-  line-height: 1.35em;
-  padding: 12px 0px;
-
-  resize: none;
-  border: none;
-
-  font-size: 20px;
-
-  ${(props) =>
-    css`
-      height: ${props.height};
-    `}
 `;
 
 interface TweetPostMediaWrapperProps {
@@ -99,13 +82,38 @@ const TweetPostToolBarWrapper = styled.div`
   height: 52px;
 `;
 
+const ButtonWrapper = styled.div`
+  float: left;
+  align-items: center;
+  justify-content: center;
+  width: 15%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  shape-outside: inset(calc(100% - 100px) 0 0);
+`;
+
+const TweetButton = styled(Button)`
+  float: right;
+  width: 70px;
+  color: ${ColorPalette.WHITE};
+  background-color: ${ColorPalette.SKYBLUE};
+  font-size: 16px;
+  font-weight: bold;
+
+  &:hover {
+    background-color: ${ColorPalette.SKYBLUE_DARK};
+  }
+`;
+
 const TweetPostContent: React.FC = () => {
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [textAreaHeight, setTextAreaHeight] = useState('auto');
-  const [currentValue, setCurrentValue] = useState('');
   const [isWritingStarted, setIsWritingStarted] = useState(false);
+  const [textAreaHeight, setTextAreaHeight] = useState('auto');
   const [file, setFile] = useState('');
   const [isUploaded, setIsUploaded] = useState(false);
+  const [tweetContent, onChangeTweetContent, setTweetContent] = useInput('');
+  const [hasTweetContent, setHasTweetContent] = useState(false);
+  const dispatch = useAppDispatch();
 
   const permissions = [
     {
@@ -124,26 +132,13 @@ const TweetPostContent: React.FC = () => {
       iconType: BasicType.FRIENDS,
     },
   ];
-
   const [permissionIndex, setPermissionIndex] = useState(0);
-
-  useEffect(() => {
-    setTextAreaHeight(`${textAreaRef.current?.scrollHeight}px`);
-  }, [currentValue]);
-
-  const handleClick = () => {
-    setIsWritingStarted(true);
-  };
-
-  const handleValueChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setTextAreaHeight('auto');
-    setCurrentValue(event.target.value);
-  };
 
   const changePermission = () => {
     setPermissionIndex((permissionIndex + 1) % permissions.length);
   };
 
+  //   Not work
   const handleImgInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setFile(URL.createObjectURL(e.target.files[0]) || '');
@@ -152,18 +147,33 @@ const TweetPostContent: React.FC = () => {
     }
   };
 
+  const clearTweetPost = () => {
+    setTweetContent('');
+    setTextAreaHeight('0px');
+    setFile('');
+    setIsUploaded(false);
+    setIsWritingStarted(false);
+  };
+
+  useEffect(() => {
+    setHasTweetContent(tweetContent.length > 0);
+  }, [tweetContent]);
+
+  const handleCreateTweet = async () => {
+    dispatch(createTweet({ content: tweetContent }));
+    clearTweetPost();
+  };
+
   return (
     <TweetPostContentContainer>
       <TweetPostTextAreaWrapper>
-        <TweetPostTextArea
-          ref={textAreaRef}
-          height={textAreaHeight}
-          value={currentValue}
-          placeholder="What's happening?"
-          rows={1}
-          defaultValue=""
-          onClick={handleClick}
-          onChange={handleValueChange}
+        <TweetPostText
+          tweetContent={tweetContent}
+          textAreaHeight={textAreaHeight}
+          onChangeTweetContent={onChangeTweetContent}
+          setIsWritingStarted={setIsWritingStarted}
+          setTextAreaHeight={setTextAreaHeight}
+          clearTweetPost={clearTweetPost}
         />
       </TweetPostTextAreaWrapper>
       <TweetPostMediaWrapper isUploaded={isUploaded}>
@@ -185,6 +195,11 @@ const TweetPostContent: React.FC = () => {
       </TweetPostPermissionWrapper>
       <TweetPostToolBarWrapper>
         <TweetPostToolBar handleImgInput={handleImgInput} />
+        <ButtonWrapper>
+          <TweetButton onClick={handleCreateTweet} disabled={!hasTweetContent}>
+            Tweet
+          </TweetButton>
+        </ButtonWrapper>
       </TweetPostToolBarWrapper>
     </TweetPostContentContainer>
   );
