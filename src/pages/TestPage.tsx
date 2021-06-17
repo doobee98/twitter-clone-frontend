@@ -4,9 +4,17 @@ import useInput from 'hooks/useInput';
 import Button from 'components/base/Button';
 import { useAppDispatch, useAuthSelector, useHomeSelector } from 'hooks/redux';
 import { login, logout, signup } from 'modules/auth';
-import { createTweet, deleteTweet, fetchFeed } from 'modules/home';
+import {
+  createTweet,
+  deleteTweet,
+  dislikeTweet,
+  fetchFeed,
+  likeTweet,
+} from 'modules/home';
+import Tweet from 'models/tweet';
 
-const TestPage: React.FC = () => {
+// TODO: SignUpPage 따로 만들것
+const LoginPage: React.FC = () => {
   const [id, onChangeId] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [username, onChangeUsername] = useInput('');
@@ -53,6 +61,15 @@ const TestPage: React.FC = () => {
 
   const handleFetchFeed = async () => {
     dispatch(fetchFeed());
+  };
+
+  const toggleLikeTweet = async (tweet: Tweet) => {
+    console.log(tweet);
+    if (tweet.like_flag) {
+      dispatch(dislikeTweet(tweet.tweet_id));
+    } else {
+      dispatch(likeTweet(tweet.tweet_id));
+    }
   };
 
   useEffect(() => {
@@ -105,6 +122,9 @@ const TestPage: React.FC = () => {
               {tweet.writer_id} {tweet.tweet_id}
             </div>
             <div>{tweet.content}</div>
+            <Button onClick={() => toggleLikeTweet(tweet)}>
+              {tweet.like_flag ? '좋아요 취소' : '좋아요'}
+            </Button>
             <br />
           </React.Fragment>
         ))}
@@ -113,4 +133,4 @@ const TestPage: React.FC = () => {
   );
 };
 
-export default TestPage;
+export default LoginPage;
