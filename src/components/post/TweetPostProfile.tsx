@@ -4,6 +4,7 @@ import { ColorPalette } from 'utils/colorUtils';
 
 const TweetProfileWrapper = styled.div`
   width: 10%;
+  min-width: 50px;
   height: 100px;
 `;
 

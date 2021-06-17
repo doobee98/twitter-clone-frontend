@@ -94,7 +94,7 @@ const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
     <>
       {isOpened && (
         <PopupBackground>
-          <Modal width={width} isLocked>
+          <Modal width={width}>
             <div ref={popup}>
               <PostPopupModalHeader onClose={() => closePopup()} />
               <PostPopupModalContent onCreateTweet={() => closePopup()} />
