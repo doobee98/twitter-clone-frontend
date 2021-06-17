@@ -20,7 +20,7 @@ const ErrorContainer = styled.div`
 
 const TweetListContainer = styled.div`
   border: 2px solid ${ColorPalette.SKYBLUE};
-  margin: 20px;
+  margin: 10px;
 `;
 
 const TweetList: React.FC = () => {

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { setTimeout } from 'timers';
-import { ColorPalette } from '../../utils/colorUtils';
+import Icon from 'components/base/Icon';
+import { BasicType } from 'utils/iconUtils';
+import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
 import ProfileTooltip from '../base/ProfileTooltip';
 import Tweet from '../../models/tweet';
 import getTweetedTimeGap from '../../utils/getTweetedTimeGap';
@@ -30,6 +32,29 @@ const TweetMainTopRightContainer = styled.div`
   display: inline-block;
 `;
 
+const HoverIcon = styled(Icon)`
+  width: 30px;
+  height: 30px;
+  border-radius: 9999px;
+`;
+interface HoverAreaProps {
+  highlightColor: string;
+}
+
+const HoverArea = styled.div<HoverAreaProps>`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  &:hover {
+    color: ${(props) => props.highlightColor};
+
+    ${HoverIcon} {
+      background-color: ${(props) => hexToRgbA(props.highlightColor, 0.1)};
+    }
+  }
+`;
+
 const TweetMainTopContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -46,6 +71,7 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
   const { tweet } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout | undefined>();
+  const [isMore, setIsMore] = useState(false);
 
   const openProfileTooltip = () => {
     if (timer) {
@@ -62,6 +88,10 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
 
     const newTimer = setTimeout(() => setIsOpen(false), 500);
     setTimer(newTimer);
+  };
+
+  const handleMore = () => {
+    setIsMore(!isMore);
   };
 
   const elapsed = getTweetedTimeGap(tweet.tweeted_at);
@@ -81,7 +111,11 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
           </TweetMainTopUseridTweetedAt>
         </TweetMainTopLeftContainer>
         <TweetMainTopRightContainer>
-          <TweetMainTopItem>more</TweetMainTopItem>
+          <TweetMainTopItem onClick={handleMore}>
+            <HoverArea highlightColor={ColorPalette.SKYBLUE}>
+              <HoverIcon iconType={BasicType.MORE} />
+            </HoverArea>
+          </TweetMainTopItem>
         </TweetMainTopRightContainer>
       </TweetMainTopContainer>
       <ProfileTooltip

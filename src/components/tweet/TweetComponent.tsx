@@ -9,8 +9,8 @@ const TweetContainer = styled.div`
   display: flex;
 
   padding: 2px 2px 4px;
-  border: 2px solid;
-  margin: 1px 10px 5px;
+  border-bottom: 0.5px solid ${ColorPalette.GRAY_E6};
+  border-colapse;
 
   &:hover {
     color: ${ColorPalette.SKYBLUE};
