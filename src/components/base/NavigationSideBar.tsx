@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useAppDispatch, useAuthSelector } from 'hooks/redux';
+import { useAppDispatch, useAuthSelector, useModalOpen } from 'hooks/redux';
 import { login, logout } from 'modules/auth';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType, HighlightType } from 'utils/iconUtils';
+import { openPostModal } from 'modules/modal';
 import NavItem from './NavItem';
 import Button from './Button';
 import Icon from './Icon';
@@ -82,6 +83,13 @@ const NavigationSideBar: React.FC = () => {
   const dispatch = useAppDispatch();
   const { currentUser } = authStore;
 
+  const modalStore = useModalOpen();
+  const dispatchPopup = useAppDispatch();
+
+  const openPopup = () => {
+    dispatchPopup(openPostModal());
+  };
+
   // [TODO: NEED TO BE REMOVED] test for login button
   const fetchLogin = () => {
     const loginRequest = {
@@ -127,7 +135,7 @@ const NavigationSideBar: React.FC = () => {
           </NavItem>
           <NavItem iconType={BasicType.MORE_CIRCLE}>More</NavItem>
         </NavList>
-        <TweetButton>Tweet</TweetButton>
+        <TweetButton onClick={openPopup}>Tweet</TweetButton>
       </TopContainer>
       <BottomContainer>
         <ToBeRemovedWrapper>
