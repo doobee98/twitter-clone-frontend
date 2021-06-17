@@ -60,24 +60,24 @@ const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
   const popup = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
 
-  const initTooltip = async () => {
+  const initLock = async () => {
     document.body.style.paddingRight = ` ${
       window.innerWidth - document.documentElement.clientWidth
     }px`;
     document.body.style.overflow = 'hidden';
   };
 
-  const finishTooltip = () => {
+  const finishLock = () => {
     document.body.style.overflow = 'unset';
     document.body.style.paddingRight = ` ${0}px`;
   };
 
   useEffect(() => {
-    initTooltip();
+    initLock();
   }, []);
 
   const closePopup = () => {
-    finishTooltip();
+    finishLock();
     dispatch(closePostModal());
   };
 
