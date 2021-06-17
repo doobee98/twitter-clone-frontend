@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useAppDispatch, useAuthSelector, useModalOpen } from 'hooks/redux';
-import { login, logout } from 'modules/auth';
+import { useAppDispatch, useAuthSelector } from 'hooks/redux';
+import { logout } from 'modules/auth';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType, HighlightType } from 'utils/iconUtils';
 import { openPostModal } from 'modules/modal';
@@ -82,20 +82,10 @@ const NavigationSideBar: React.FC = () => {
   const authStore = useAuthSelector();
   const dispatch = useAppDispatch();
   const { currentUser } = authStore;
-
   const dispatchPopup = useAppDispatch();
 
   const openPopup = () => {
     dispatchPopup(openPostModal());
-  };
-
-  // [TODO: NEED TO BE REMOVED] test for login button
-  const fetchLogin = () => {
-    const loginRequest = {
-      id: '',
-      password: '',
-    };
-    dispatch(login(loginRequest));
   };
 
   // [TODO: NEED TO BE REMOVED] test for logout button
@@ -138,9 +128,6 @@ const NavigationSideBar: React.FC = () => {
       </TopContainer>
       <BottomContainer>
         <ToBeRemovedWrapper>
-          <button type="button" onClick={fetchLogin}>
-            로그인
-          </button>
           <button type="button" onClick={fetchLogout}>
             로그아웃
           </button>
@@ -149,9 +136,9 @@ const NavigationSideBar: React.FC = () => {
           <UserButton>
             <UserButtonTextArea>
               <Username>{currentUser.username}</Username>
-              <UserId>@{currentUser.id}</UserId>
+              <UserId>@{currentUser.user_id}</UserId>
             </UserButtonTextArea>
-            <Icon iconType={BasicType.MORE} size={20} />
+            <Icon iconType={BasicType.MORE} iconSize={20} />
           </UserButton>
         )}
       </BottomContainer>

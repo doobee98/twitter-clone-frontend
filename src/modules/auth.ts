@@ -1,6 +1,10 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import AuthApi from 'apis/AuthApi';
+import storage, { AUTH_TOKEN_NAME } from 'utils/storage';
 import User from '../models/user';
 import { LoginRequest, SignUpRequest } from '../models/request/auth';
+
+const name = 'auth';
 
 interface AuthState {
   currentUser?: User;
@@ -8,34 +12,114 @@ interface AuthState {
 
 const initialState: AuthState = {};
 
-// [TODO: NEED TO BE REMOVED] default user login data for test
-const defaultCurrentUser: User = {
-  id: 'doobee98',
-  username: '이두섭',
-  following_num: 20,
-  follower_num: 2,
-};
+export const login = createAsyncThunk(
+  `${name}/login`,
+  async (loginRequest: LoginRequest, thunkAPI) => {
+    try {
+      const { user_id, password } = loginRequest;
+      const response = await AuthApi.instance.login(user_id, password);
+      const { data: user, headers } = response;
+      storage.setItem(AUTH_TOKEN_NAME, headers.authorization);
+      return user as User;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const logout = createAsyncThunk(
+  `${name}/logout`,
+  async (_, thunkAPI) => {
+    try {
+      const response = await AuthApi.instance.logout();
+      storage.removeItem(AUTH_TOKEN_NAME);
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const info = createAsyncThunk(`${name}/info`, async (_, thunkAPI) => {
+  try {
+    const response = await AuthApi.instance.info();
+    return response.data as User;
+  } catch (error) {
+    if (!error.response) {
+      throw error;
+    }
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
+
+export const signup = createAsyncThunk(
+  `${name}/signup`,
+  async (signupRequest: SignUpRequest, thunkAPI) => {
+    try {
+      const { user_id, password, username } = signupRequest;
+      const response = await AuthApi.instance.signup(
+        user_id,
+        password,
+        username,
+      );
+      return response.data as User;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
 
 export const auth = createSlice({
-  name: 'auth',
+  name,
   initialState,
-  reducers: {
-    login: (state, action: PayloadAction<LoginRequest>) => ({
-      currentUser: { ...defaultCurrentUser },
-    }),
-    logout: () => ({
-      currentUser: undefined,
-    }),
-    signup: (state, action: PayloadAction<SignUpRequest>) => ({
-      currentUser: {
-        id: action.payload.id,
-        username: action.payload.username,
-        following_num: 0,
-        follower_num: 0,
-      },
-    }),
+  reducers: {},
+  extraReducers: {
+    [login.fulfilled.type]: (state, action) => {
+      const user = action.payload;
+      return { currentUser: user };
+    },
+    [login.rejected.type]: (state, error) => {
+      console.log(error.payload);
+      window.alert(error.payload.msg);
+      return state;
+    },
+    [logout.fulfilled.type]: () => {
+      return {
+        currentUser: undefined,
+      };
+    },
+    [logout.rejected.type]: (state, error) => {
+      console.log(error.payload);
+      window.alert(error.payload.msg);
+      return state;
+    },
+    [info.fulfilled.type]: (state, action) => {
+      const user = action.payload;
+      return { currentUser: user };
+    },
+    [info.rejected.type]: (state, error) => {
+      console.log(error.payload);
+      storage.removeItem(AUTH_TOKEN_NAME);
+      return state;
+    },
+    [signup.fulfilled.type]: (state, action) => {
+      window.alert(`${action.payload.user_id}님 회원가입 완료!`);
+      return state;
+    },
+    [signup.rejected.type]: (state, error) => {
+      console.log(error.payload);
+      return state;
+    },
   },
 });
 
-export const { login, logout, signup } = auth.actions;
 export default auth.reducer;

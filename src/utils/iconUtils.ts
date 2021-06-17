@@ -1,5 +1,11 @@
 import { IconType } from 'react-icons';
-import { BsBell, BsBellFill, BsPerson, BsPersonFill } from 'react-icons/bs';
+import {
+  BsBell,
+  BsBellFill,
+  BsPerson,
+  BsPersonFill,
+  BsFillPeopleFill,
+} from 'react-icons/bs';
 import { CgMoreO } from 'react-icons/cg';
 import { FaBookmark, FaRegBookmark, FaTwitter } from 'react-icons/fa';
 import {
@@ -8,6 +14,8 @@ import {
   FiRepeat,
   FiHeart,
   FiShare,
+  FiAlertTriangle,
+  FiLoader,
 } from 'react-icons/fi';
 import { HiHashtag, HiOutlineHashtag } from 'react-icons/hi';
 import { MdMail, MdMailOutline, MdClose } from 'react-icons/md';
@@ -18,13 +26,13 @@ import {
   RiFileList2Line,
   RiBarChartHorizontalFill,
   RiEarthLine,
-  RiEarthFill,
 } from 'react-icons/ri';
 import {
   AiOutlinePicture,
   AiOutlineGif,
   AiOutlineSchedule,
 } from 'react-icons/ai';
+import { BiAt } from 'react-icons/bi';
 import { VscSmiley } from 'react-icons/vsc';
 import { isEnumType } from 'utils';
 
@@ -38,11 +46,15 @@ export enum BasicType {
   MORE_CIRCLE = 'basic-more-circle',
   MORE = 'basic-more',
 
+  // tweet-post icons
   MEDIA = 'basic-media',
   GIF = 'basic-gif',
   POLL = 'basic-poll',
   EMOJI = 'basic-emoji',
   SCHEDULE = 'basic-schedule',
+  EARTH = 'basic-earth',
+  FRIENDS = 'basic-friends',
+  AT = 'basic-at',
 
   // tweet-list Bottom icons
   REPLY = 'basic-reply',
@@ -52,6 +64,8 @@ export enum BasicType {
 
   // modal icons
   CLOSE = 'basic-close',
+  ALERT = 'basic-alert',
+  LOAD = 'basic-load',
 }
 
 export enum HighlightType {
@@ -62,7 +76,6 @@ export enum HighlightType {
   BOOKMARKS = 'highlight-bookmarks',
   LISTS = 'highlight-lists',
   PROFILE = 'highlight-profile',
-  EARTH = 'highlight-earth',
 }
 
 /* 
@@ -74,11 +87,16 @@ const basicRecord = {
   [BasicType.MORE_CIRCLE]: CgMoreO,
   [BasicType.MORE]: FiMoreHorizontal,
 
+  // tweet-post icons
   [BasicType.MEDIA]: AiOutlinePicture,
   [BasicType.GIF]: AiOutlineGif,
   [BasicType.POLL]: RiBarChartHorizontalFill,
   [BasicType.EMOJI]: VscSmiley,
   [BasicType.SCHEDULE]: AiOutlineSchedule,
+
+  [BasicType.FRIENDS]: BsFillPeopleFill,
+  [BasicType.AT]: BiAt,
+  [BasicType.EARTH]: RiEarthLine,
 
   // tweet-list Bottom icons
   [BasicType.REPLY]: FiMessageSquare,
@@ -88,6 +106,8 @@ const basicRecord = {
 
   // modal icons
   [BasicType.CLOSE]: MdClose,
+  [BasicType.ALERT]: FiAlertTriangle,
+  [BasicType.LOAD]: FiLoader,
 };
 
 // [Icon when highlighted state, Icon when basic state]
@@ -99,7 +119,6 @@ const highlightRecord = {
   [HighlightType.BOOKMARKS]: [FaBookmark, FaRegBookmark],
   [HighlightType.LISTS]: [RiFileList2Fill, RiFileList2Line],
   [HighlightType.PROFILE]: [BsPersonFill, BsPerson],
-  [HighlightType.EARTH]: [RiEarthFill, RiEarthLine],
 };
 
 type IgetIconType = {

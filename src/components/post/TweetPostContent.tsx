@@ -1,9 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { ColorPalette } from 'utils/colorUtils';
-import { HighlightType } from 'utils/iconUtils';
-import NavItem from '../base/NavItem';
+import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
+import { BasicType } from 'utils/iconUtils';
+import Button from 'components/base/Button';
+import Icon from 'components/base/Icon';
 import TweetPostToolBar from './TweetPostToolBar';
+import TweetPostText from './TweetPostText';
+import useInput from '../../hooks/useInput';
+import { useAppDispatch } from '../../hooks/redux';
+import { createTweet } from '../../modules/home';
 
 const TweetPostContentContainer = styled.div`
   float: left;
@@ -11,25 +16,30 @@ const TweetPostContentContainer = styled.div`
   width: 90%;
 `;
 
-interface TweetPostTextWrapperProps {
-  height: string;
+const TweetPostTextAreaWrapper = styled.div`
+  height: auto;
+`;
+
+interface TweetPostMediaWrapperProps {
+  isUploaded: boolean;
 }
 
-const TweetPostTextWrapper = styled.textarea<TweetPostTextWrapperProps>`
-  width: 100%;
-  min-height: 56px;
-  line-height: 1.35em;
-  padding: 12px 0px;
-
-  resize: none;
-  border: none;
-
-  font-size: 20px;
+const TweetPostMediaWrapper = styled.div<TweetPostMediaWrapperProps>`
+  margin-bottom: 15px;
+  height: 300px;
+  display: none;
 
   ${(props) =>
+    props.isUploaded &&
     css`
-      height: ${props.height};
+      display: block;
     `}
+`;
+
+const TweetPostImgPreview = styled.img`
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
 `;
 
 interface TweetPostPermissionWrapperProps {
@@ -49,20 +59,20 @@ const TweetPostPermissionWrapper = styled.div<TweetPostPermissionWrapperProps>`
     `}
 `;
 
-const PermissionButton = styled(NavItem)`
+const PermissionButton = styled(Button)`
   color: ${ColorPalette.SKYBLUE};
+  margin: 0px;
+  padding: 2px 5px;
 
-  & button {
-    margin: 0px;
-    padding: 0px;
-    padding-right: 8px;
+  &:hover {
+    background-color: ${hexToRgbA(ColorPalette.SKYBLUE, 0.1)};
   }
+`;
 
-  & div {
-    margin: 0px;
-    margin-left: 6.5px;
-    font-size: 13px;
-  }
+const PermissionButtonText = styled.div`
+  margin-left: 6.5px;
+  font-size: 13px;
+  font-weight: bold;
 `;
 
 const TweetPostToolBarWrapper = styled.div`
@@ -72,44 +82,124 @@ const TweetPostToolBarWrapper = styled.div`
   height: 52px;
 `;
 
+const ButtonWrapper = styled.div`
+  float: left;
+  align-items: center;
+  justify-content: center;
+  width: 15%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  shape-outside: inset(calc(100% - 100px) 0 0);
+`;
+
+const TweetButton = styled(Button)`
+  float: right;
+  width: 70px;
+  color: ${ColorPalette.WHITE};
+  background-color: ${ColorPalette.SKYBLUE};
+  font-size: 16px;
+  font-weight: bold;
+
+  &:hover {
+    background-color: ${ColorPalette.SKYBLUE_DARK};
+  }
+`;
+
 const TweetPostContent: React.FC = () => {
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [textAreaHeight, setTextareaHeight] = useState('56px');
-  const [currentValue, setCurrentValue] = useState('');
   const [isWritingStarted, setIsWritingStarted] = useState(false);
+  const [textAreaHeight, setTextAreaHeight] = useState('auto');
+  const [file, setFile] = useState('');
+  const [isUploaded, setIsUploaded] = useState(false);
+  const [tweetContent, onChangeTweetContent, setTweetContent] = useInput('');
+  const [hasTweetContent, setHasTweetContent] = useState(false);
+  const dispatch = useAppDispatch();
+
+  const permissions = [
+    {
+      id: 0,
+      description: 'Everyone can reply',
+      iconType: BasicType.EARTH,
+    },
+    {
+      id: 1,
+      description: 'Only people you mention can reply',
+      iconType: BasicType.AT,
+    },
+    {
+      id: 2,
+      description: 'People you follow can reply',
+      iconType: BasicType.FRIENDS,
+    },
+  ];
+  const [permissionIndex, setPermissionIndex] = useState(0);
+
+  const changePermission = () => {
+    setPermissionIndex((permissionIndex + 1) % permissions.length);
+  };
+
+  //   Not work
+  const handleImgInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(URL.createObjectURL(e.target.files[0]) || '');
+      setIsUploaded(true);
+      setIsWritingStarted(true);
+    }
+  };
+
+  const clearTweetPost = () => {
+    setTweetContent('');
+    setTextAreaHeight('0px');
+    setFile('');
+    setIsUploaded(false);
+    setIsWritingStarted(false);
+  };
 
   useEffect(() => {
-    if (textAreaRef.current) {
-      setTextareaHeight(`${textAreaRef.current.scrollHeight}px`);
-    }
-  }, [currentValue]);
+    setHasTweetContent(tweetContent.length > 0);
+  }, [tweetContent]);
 
-  const handleClick = () => {
-    setIsWritingStarted(true);
+  const handleCreateTweet = async () => {
+    dispatch(createTweet({ content: tweetContent }));
+    clearTweetPost();
   };
 
   return (
     <TweetPostContentContainer>
-      <TweetPostTextWrapper
-        ref={textAreaRef}
-        height={textAreaHeight}
-        value={currentValue}
-        placeholder="What's happening?"
-        rows={1}
-        defaultValue=""
-        onClick={handleClick}
-        onChange={(e) => {
-          setCurrentValue(e.target.value);
-        }}
-      />
-      <TweetPostPermissionWrapper isWritingStarted={isWritingStarted}>
-        {/* TODO: permission에 따라 내용 바뀌도록 */}
-        <PermissionButton iconType={HighlightType.EARTH}>
-          Everyone can reply
+      <TweetPostTextAreaWrapper>
+        <TweetPostText
+          tweetContent={tweetContent}
+          textAreaHeight={textAreaHeight}
+          onChangeTweetContent={onChangeTweetContent}
+          setIsWritingStarted={setIsWritingStarted}
+          setTextAreaHeight={setTextAreaHeight}
+          clearTweetPost={clearTweetPost}
+        />
+      </TweetPostTextAreaWrapper>
+      <TweetPostMediaWrapper isUploaded={isUploaded}>
+        {file && <TweetPostImgPreview src={file} alt="input_img" />}
+      </TweetPostMediaWrapper>
+      <TweetPostPermissionWrapper
+        isWritingStarted={isWritingStarted}
+        onClick={changePermission}
+      >
+        <PermissionButton>
+          <Icon
+            iconType={permissions[permissionIndex].iconType}
+            iconSize={25}
+          />
+          <PermissionButtonText>
+            {permissions[permissionIndex].description}
+          </PermissionButtonText>
         </PermissionButton>
       </TweetPostPermissionWrapper>
       <TweetPostToolBarWrapper>
-        <TweetPostToolBar />
+        <TweetPostToolBar handleImgInput={handleImgInput} />
+        <ButtonWrapper>
+          <TweetButton onClick={handleCreateTweet} disabled={!hasTweetContent}>
+            Tweet
+          </TweetButton>
+        </ButtonWrapper>
       </TweetPostToolBarWrapper>
     </TweetPostContentContainer>
   );
