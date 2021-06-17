@@ -31,15 +31,18 @@ const TweetList: React.FC = () => {
   const { feed } = homeStore;
 
   const handleFetchFeed = async () => {
-    dispatch(fetchFeed()).then((res) => {
-      if (res.type.toString() === 'home/fetchFeed/rejected') setIsError(true);
-    });
+    const res = await dispatch(fetchFeed());
+
+    if (res.type.toString() === 'home/fetchFeed/rejected') {
+      setIsError(true);
+    }
   };
 
   // INIT FETCH
+  const LOADING_TIMER = 2000;
   useEffect(() => {
     handleFetchFeed();
-    setTimeout(() => setIsLoading(false), 2000);
+    setTimeout(() => setIsLoading(false), LOADING_TIMER);
   }, []);
 
   // InfinityScroll w/ Throttling
@@ -58,7 +61,7 @@ const TweetList: React.FC = () => {
         </ErrorContainer>
       ) : (
         <TweetListContainer>
-          {feed.map((tweet) => (
+          {feed.map((tweet, index) => (
             <TweetComponent key={tweet.tweet_id} tweet={tweet} />
           ))}
         </TweetListContainer>
