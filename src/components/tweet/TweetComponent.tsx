@@ -17,6 +17,7 @@ const TweetContainer = styled.div`
 
   &:hover {
     color: ${ColorPalette.SKYBLUE};
+    background-color: ${ColorPalette.GRAY_E6};
   }
 `;
 

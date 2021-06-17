@@ -6,6 +6,8 @@ import Tweet from '../../models/tweet';
 const TweetMainContentWrapper = styled.div`
   padding: 1px;
   margin: 1px;
+
+  white-space: pre-line;
 `;
 
 const TweetMainImageWrapper = styled.div`
