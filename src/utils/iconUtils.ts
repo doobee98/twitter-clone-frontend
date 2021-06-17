@@ -30,6 +30,8 @@ import {
   RiFileList2Line,
   RiBarChartHorizontalFill,
   RiEarthLine,
+  RiHeartLine,
+  RiHeartFill,
 } from 'react-icons/ri';
 import {
   AiOutlinePicture,
@@ -81,6 +83,7 @@ export enum HighlightType {
   BOOKMARKS = 'highlight-bookmarks',
   LISTS = 'highlight-lists',
   PROFILE = 'highlight-profile',
+  LIKE = 'highlight-like',
 }
 
 /* 
@@ -106,7 +109,7 @@ const basicRecord = {
   // tweet-list Bottom icons
   [BasicType.REPLY]: FiMessageSquare,
   [BasicType.RETWEET]: FiRepeat,
-  [BasicType.LIKE]: FiHeart,
+  [BasicType.LIKE]: RiHeartLine,
   [BasicType.SHARE]: FiShare,
 
   [BasicType.ALERT]: FiAlertTriangle,
@@ -123,6 +126,7 @@ const highlightRecord = {
   [HighlightType.BOOKMARKS]: [FaBookmark, FaRegBookmark],
   [HighlightType.LISTS]: [RiFileList2Fill, RiFileList2Line],
   [HighlightType.PROFILE]: [BsPersonFill, BsPerson],
+  [HighlightType.LIKE]: [RiHeartLine, RiHeartFill],
 };
 
 type IgetIconType = {
