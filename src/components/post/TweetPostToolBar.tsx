@@ -1,74 +1,38 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { ColorPalette } from '../../utils/colorUtils';
+import Icon from 'components/base/Icon';
+import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
 import { BasicType } from '../../utils/iconUtils';
 import Button from '../base/Button';
-import NavItem from '../base/NavItem';
 
 const ToolBarContainer = styled.div`
-  height: 100%;
   width: 100%;
-  display: flex;
-  align-items: flex-end;
-`;
-
-const ToolWrapper = styled.div`
-  float: left;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: flex-end;
-
-  cursor: pointer;
-`;
-
-const ToolIcon = styled(NavItem)`
-  align-items: center;
-  justify-content: center;
-
-  & button {
-    width: 40px;
-    height: 40px;
-    padding: 0px;
-    margin: 0px;
-  }
-
-  & svg {
-    width: 30px;
-    height: 30px;
-  }
-
-  color: ${ColorPalette.SKYBLUE};
-`;
-
-const ButtonWrapper = styled.div`
-  float: left;
-  align-items: center;
-  justify-content: center;
-  width: 15%;
   height: 100%;
   display: flex;
-  align-items: flex-end;
-  shape-outside: inset(calc(100% - 100px) 0 0);
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const ToolIconList = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+const ToolIconButton = styled(Button)`
+  width: 40px;
+  height: 40px;
+  margin: 0px;
+  padding: 0px;
+  color: ${ColorPalette.SKYBLUE};
+
+  &:hover {
+    background-color: ${hexToRgbA(ColorPalette.SKYBLUE, 0.1)};
+  }
 `;
 
 const HiddenInput = styled.input`
   display: none;
-`;
-
-const TweetButton = styled(Button)`
-  float: right;
-  width: 70px;
-  color: ${ColorPalette.WHITE};
-  background-color: ${ColorPalette.SKYBLUE};
-  font-size: 16px;
-  font-weight: bold;
-
-  &:hover {
-    background-color: ${ColorPalette.SKYBLUE_DARK};
-  }
 `;
 
 interface TweetPostToolBarProps {
@@ -78,42 +42,41 @@ interface TweetPostToolBarProps {
 const TweetPostToolBar = (props: TweetPostToolBarProps) => {
   const { handleImgInput } = props;
 
-  const hiddenFileInput = useRef<HTMLInputElement>(null);
+  const hiddenFileInputRef = useRef<HTMLInputElement>(null);
+
+  const openMediaFileInput = () => {
+    if (hiddenFileInputRef.current) {
+      hiddenFileInputRef.current.click();
+    }
+  };
 
   return (
     <>
       <ToolBarContainer>
-        <ToolWrapper
-          onClick={() => {
-            if (hiddenFileInput.current) {
-              hiddenFileInput.current.click();
-            }
-          }}
-        >
-          <ToolIcon iconType={BasicType.MEDIA} />
-          <HiddenInput
-            type="file"
-            accept="image/jpg,image/png,image/jpeg"
-            ref={hiddenFileInput}
-            onChange={handleImgInput}
-          />
-        </ToolWrapper>
-        <ToolWrapper>
-          <ToolIcon iconType={BasicType.GIF} />
-        </ToolWrapper>
-        <ToolWrapper>
-          <ToolIcon iconType={BasicType.POLL} />
-        </ToolWrapper>
-        <ToolWrapper>
-          <ToolIcon iconType={BasicType.EMOJI} />
-        </ToolWrapper>
-        <ToolWrapper>
-          <ToolIcon iconType={BasicType.SCHEDULE} />
-        </ToolWrapper>
+        <ToolIconList>
+          <ToolIconButton onClick={openMediaFileInput}>
+            <Icon iconType={BasicType.MEDIA} iconSize={20} />
+          </ToolIconButton>
+          <ToolIconButton>
+            <Icon iconType={BasicType.GIF} iconSize={20} />
+          </ToolIconButton>
+          <ToolIconButton>
+            <Icon iconType={BasicType.POLL} iconSize={20} />
+          </ToolIconButton>
+          <ToolIconButton>
+            <Icon iconType={BasicType.EMOJI} iconSize={20} />
+          </ToolIconButton>
+          <ToolIconButton>
+            <Icon iconType={BasicType.SCHEDULE} iconSize={20} />
+          </ToolIconButton>
+        </ToolIconList>
       </ToolBarContainer>
-      <ButtonWrapper>
-        <TweetButton> Tweet </TweetButton>
-      </ButtonWrapper>
+      <HiddenInput
+        type="file"
+        accept="image/jpg,image/png,image/jpeg"
+        ref={hiddenFileInputRef}
+        onChange={handleImgInput}
+      />
     </>
   );
 };

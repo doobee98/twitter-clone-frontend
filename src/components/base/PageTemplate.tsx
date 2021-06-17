@@ -1,7 +1,5 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import useTitle from 'hooks/useTitle';
-import { ColorPalette } from 'utils/colorUtils';
-import ExploreSideBar from './ExploreSideBar';
 import NavigationSideBar from './NavigationSideBar';
 
 const PageTemplateContainer = styled.div`
@@ -11,7 +9,7 @@ const PageTemplateContainer = styled.div`
   align-items: flex-start;
 `;
 
-const LeftSideBarWrapper = styled.div`
+const NavigationSideBarWrapper = styled.div`
   position: sticky;
   top: 0;
   padding: 0 12px;
@@ -25,22 +23,7 @@ const LeftSideBarWrapper = styled.div`
   flex-direction: row-reverse;
 `;
 
-interface ContentWrapperProps {
-  width?: string;
-}
-
-const ContentWrapper = styled.main<ContentWrapperProps>`
-  min-height: 100%;
-  border-left: 1px solid ${ColorPalette.GRAY_E6};
-  border-right: 1px solid ${ColorPalette.GRAY_E6};
-
-  ${(props) =>
-    css`
-      width: ${props.width ?? '598px'};
-    `}
-`;
-
-const RightSideBarWrapper = styled.div`
+const ContentWrapper = styled.main`
   position: relative;
   margin-right: 10px;
   flex-basis: auto;
@@ -52,23 +35,19 @@ const RightSideBarWrapper = styled.div`
 
 interface PageTemplateProps {
   title: string;
-  contentWidth?: string;
 }
 
 const PageTemplate: React.FC<PageTemplateProps> = (props) => {
-  const { children, title, contentWidth } = props;
+  const { children, title } = props;
 
   useTitle(`${title} / Twitter-Clone`);
 
   return (
     <PageTemplateContainer>
-      <LeftSideBarWrapper>
+      <NavigationSideBarWrapper>
         <NavigationSideBar />
-      </LeftSideBarWrapper>
-      <ContentWrapper width={contentWidth}>{children}</ContentWrapper>
-      <RightSideBarWrapper>
-        <ExploreSideBar />
-      </RightSideBarWrapper>
+      </NavigationSideBarWrapper>
+      <ContentWrapper>{children}</ContentWrapper>
     </PageTemplateContainer>
   );
 };
