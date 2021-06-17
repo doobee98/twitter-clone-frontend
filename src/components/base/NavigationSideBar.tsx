@@ -83,7 +83,6 @@ const NavigationSideBar: React.FC = () => {
   const dispatch = useAppDispatch();
   const { currentUser } = authStore;
 
-  const modalStore = useModalOpen();
   const dispatchPopup = useAppDispatch();
 
   const openPopup = () => {

@@ -82,7 +82,7 @@ const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
   };
 
   useClickOutside(popup, () => {
-    dispatch(closePostModal());
+    closePopup();
   });
 
   return (
@@ -90,10 +90,11 @@ const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
       {isOpened && (
         <PopupBackground>
           <Modal width={width} isLocked>
-            <PostPopupModalHeader onClose={() => closePopup()} />
-            <PostPopupModalContent />
+            <div ref={popup}>
+              <PostPopupModalHeader onClose={() => closePopup()} />
+              <PostPopupModalContent />
+            </div>
           </Modal>
-          <div ref={popup} />
         </PopupBackground>
       )}
     </>

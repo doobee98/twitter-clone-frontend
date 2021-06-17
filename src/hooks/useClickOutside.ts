@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 const useClickOutside = (
   ref: React.RefObject<HTMLElement>,
-  onClickOutside: () => void,
+  onClickOutside: (e: React.MouseEvent<HTMLElement>) => void,
   exceptRef?: React.RefObject<HTMLElement>,
 ): void => {
   useEffect(() => {
@@ -12,7 +12,7 @@ const useClickOutside = (
         !ref.current.contains(event.target as Node) &&
         !exceptRef?.current?.contains(event.target as Node)
       ) {
-        onClickOutside();
+        onClickOutside(event);
       }
     };
 
