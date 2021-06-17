@@ -6,9 +6,10 @@ import { useEffect, useRef } from 'react';
 import { useAppDispatch } from 'hooks/redux';
 import { closePostModal } from 'modules/modal';
 import useClickOutside from 'hooks/useClickOutside';
-import NavItem from '../base/NavItem';
 import Modal from './Modal';
 import PopupBackground from './PopupBackground';
+import Button from '../base/Button';
+import Icon from '../base/Icon';
 
 const PostPopupModalHeaderWrapper = styled.div`
   border-bottom: 1px solid ${hexToRgbA(ColorPalette.BLACK, 0.2)};
@@ -16,9 +17,15 @@ const PostPopupModalHeaderWrapper = styled.div`
   height: 50px;
 `;
 
-const CloseButton = styled(NavItem)`
-  color: ${ColorPalette.SKYBLUE};
+const CloseButton = styled(Button)`
   width: 40px;
+  height: 40px;
+  margin: 8px;
+  color: ${ColorPalette.SKYBLUE};
+
+  &:hover {
+    background-color: ${hexToRgbA(ColorPalette.SKYBLUE, 0.1)};
+  }
 `;
 
 interface PostPopupModalHeaderProps {
@@ -29,7 +36,9 @@ const PostPopupModalHeader: React.FC<PostPopupModalHeaderProps> = (props) => {
   const { onClose } = props;
   return (
     <PostPopupModalHeaderWrapper onClick={onClose}>
-      <CloseButton iconType={BasicType.CLOSE} />
+      <CloseButton>
+        <Icon iconType={BasicType.CLOSE} iconSize={20} />
+      </CloseButton>
     </PostPopupModalHeaderWrapper>
   );
 };
@@ -90,19 +99,19 @@ const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
     closePopup();
   });
 
+  if (!isOpened) {
+    return null;
+  }
+
   return (
-    <>
-      {isOpened && (
-        <PopupBackground>
-          <Modal width={width}>
-            <div ref={popup}>
-              <PostPopupModalHeader onClose={() => closePopup()} />
-              <PostPopupModalContent onCreateTweet={() => closePopup()} />
-            </div>
-          </Modal>
-        </PopupBackground>
-      )}
-    </>
+    <PopupBackground>
+      <Modal width={width}>
+        <div ref={popup}>
+          <PostPopupModalHeader onClose={() => closePopup()} />
+          <PostPopupModalContent onCreateTweet={() => closePopup()} />
+        </div>
+      </Modal>
+    </PopupBackground>
   );
 };
 
