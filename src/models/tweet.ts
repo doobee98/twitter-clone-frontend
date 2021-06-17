@@ -11,3 +11,8 @@ export default interface Tweet {
   retweet_count: number;
   like_count: number;
 }
+
+export interface TweetList {
+  totalCount: number;
+  data: Tweet[];
+}
