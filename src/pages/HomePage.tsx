@@ -4,13 +4,12 @@ import styled from 'styled-components';
 import PageTemplate from 'components/base/PageTemplate';
 import TweetList from 'components/tweet/TweetList';
 import TweetPost from 'components/post/TweetPost';
-import PostPopupModal from 'components/modal/PostPopupModal';
 import ContentTemplate, {
   ContentHeader,
   ContentSection,
 } from 'components/base/ContentTemplate';
 import { ColorPalette } from 'utils/colorUtils';
-import { useAuthSelector, useModalOpen } from 'hooks/redux';
+import { useAuthSelector } from 'hooks/redux';
 
 const SpaceSection = styled(ContentSection)`
   background-color: ${ColorPalette.GRAY_F9};
@@ -20,8 +19,6 @@ const SpaceSection = styled(ContentSection)`
 const HomePage: React.FC = () => {
   const authStore = useAuthSelector();
   const { currentUser } = authStore;
-  const modalStore = useModalOpen();
-  const { isOpenedPostModal } = modalStore;
 
   if (!currentUser) {
     return <Redirect to="/login" />;
@@ -47,7 +44,6 @@ const HomePage: React.FC = () => {
         <ExploreSideBar />
       </ContentTemplate> */}
       </PageTemplate>
-      <PostPopupModal isOpened={isOpenedPostModal} width={600} />
     </>
   );
 };
