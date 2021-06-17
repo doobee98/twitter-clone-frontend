@@ -7,6 +7,7 @@ import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
 import ProfileTooltip from '../base/ProfileTooltip';
 import Tweet from '../../models/tweet';
 import getTweetedTimeGap from '../../utils/getTweetedTimeGap';
+import TweetMoreDropdown from './TweetMoreDropdown';
 
 const TweetMainTopItem = styled.div`
   width: auto;
@@ -30,6 +31,12 @@ const TweetMainTopLeftContainer = styled.div`
 
 const TweetMainTopRightContainer = styled.div`
   display: inline-block;
+`;
+
+const TweetMainTopMore = styled(TweetMainTopItem)`
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const HoverIcon = styled(Icon)`
@@ -111,11 +118,14 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
           </TweetMainTopUseridTweetedAt>
         </TweetMainTopLeftContainer>
         <TweetMainTopRightContainer>
-          <TweetMainTopItem onClick={handleMore}>
+          <TweetMainTopMore onClick={handleMore}>
             <HoverArea highlightColor={ColorPalette.SKYBLUE}>
-              <HoverIcon iconType={BasicType.MORE} />
+              <HoverIcon
+                iconType={isMore ? BasicType.CANCEL : BasicType.MORE}
+              />
             </HoverArea>
-          </TweetMainTopItem>
+          </TweetMainTopMore>
+          {isMore && <TweetMoreDropdown tweet={tweet} />}
         </TweetMainTopRightContainer>
       </TweetMainTopContainer>
       <ProfileTooltip
