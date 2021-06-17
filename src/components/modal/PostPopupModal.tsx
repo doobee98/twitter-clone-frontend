@@ -41,10 +41,15 @@ const PostPopupModalContentWrapper = styled.div`
   }
 `;
 
-const PostPopupModalContent: React.FC = () => {
+interface PostPopupModalContentProps {
+  onCreateTweet: () => void;
+}
+
+const PostPopupModalContent: React.FC<PostPopupModalContentProps> = (props) => {
+  const { onCreateTweet } = props;
   return (
     <PostPopupModalContentWrapper>
-      <TweetPost />
+      <TweetPost onCreateTweet={onCreateTweet} />
     </PostPopupModalContentWrapper>
   );
 };
@@ -64,11 +69,11 @@ const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
     document.body.style.paddingRight = ` ${
       window.innerWidth - document.documentElement.clientWidth
     }px`;
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflowY = 'hidden';
   };
 
   const finishLock = () => {
-    document.body.style.overflow = 'unset';
+    document.body.style.overflowY = 'unset';
     document.body.style.paddingRight = ` ${0}px`;
   };
 
@@ -92,7 +97,7 @@ const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
           <Modal width={width} isLocked>
             <div ref={popup}>
               <PostPopupModalHeader onClose={() => closePopup()} />
-              <PostPopupModalContent />
+              <PostPopupModalContent onCreateTweet={() => closePopup()} />
             </div>
           </Modal>
         </PopupBackground>
