@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { setTimeout } from 'timers';
 import Icon from 'components/base/Icon';
 import { BasicType } from 'utils/iconUtils';
+import User from 'models/user';
 import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
 import ProfileTooltip from '../base/ProfileTooltip';
 import Tweet from '../../models/tweet';
@@ -72,10 +73,11 @@ const TweetMainTopContainer = styled.div`
 
 interface TweetMainTopProps {
   tweet: Tweet;
+  user: User;
 }
 
 const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
-  const { tweet } = props;
+  const { tweet, user } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout | undefined>();
   const [isMore, setIsMore] = useState(false);
@@ -111,7 +113,7 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
             onMouseEnter={openProfileTooltip}
             onMouseLeave={closeProfileTooltip}
           >
-            USERNAME
+            {user.username}
           </TweetMainTopUsername>
           <TweetMainTopUseridTweetedAt>
             @{tweet.writer_id} - {elapsed}
@@ -132,7 +134,7 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         userid={tweet.writer_id}
-        username="USERNAME"
+        username={user.username}
       />
     </>
   );

@@ -2,6 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
+import User from 'models/user';
+import { useAppDispatch } from 'hooks/redux';
+import { dislikeTweet, likeTweet } from 'modules/home';
 import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
 import Tweet from '../../models/tweet';
 import { BasicType } from '../../utils/iconUtils';
@@ -50,10 +53,12 @@ const HoverText = styled.div`
 
 interface TweetMainBottomProps {
   tweet: Tweet;
+  user: User;
 }
 
 const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
-  const { tweet } = props;
+  const { tweet, user } = props;
+  const dispatch = useAppDispatch();
 
   const handleReply = () => {
     // TODO
@@ -63,8 +68,14 @@ const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
     // TODO
   };
 
-  const handleLike = () => {
-    // TODO
+  const handleLike = async () => {
+    if (tweet.like_flag) {
+      await dispatch(dislikeTweet(tweet.tweet_id));
+    } else {
+      await dispatch(likeTweet(tweet.tweet_id));
+    }
+
+    console.log(tweet);
   };
 
   const handleShare = () => {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ProfileTooltip from 'components/base/ProfileTooltip';
 import styled from 'styled-components';
+import User from 'models/user';
 import Profile from '../base/Profile';
 import Tweet from '../../models/tweet';
 
@@ -24,10 +25,11 @@ const TweetSideContainer = styled.div`
 
 interface TweetSideProps {
   tweet: Tweet;
+  user: User;
 }
 
 const TweetSide: React.FC<TweetSideProps> = (props) => {
-  const { tweet } = props;
+  const { tweet, user } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
 
@@ -55,13 +57,13 @@ const TweetSide: React.FC<TweetSideProps> = (props) => {
           onMouseEnter={openProfileTooltip}
           onMouseLeave={closeProfileTooltip}
         >
-          <Profile userid={tweet.writer_id} username={tweet.writer_id} />
+          <Profile userid={tweet.writer_id} username={user.username} />
         </TweetProfileWrapper>
         <ProfileTooltip
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           userid={tweet.writer_id}
-          username="USERNAME"
+          username={user.username}
         />
       </TweetSideContainer>
     </>
