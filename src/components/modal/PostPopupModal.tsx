@@ -73,11 +73,11 @@ const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
   };
 
   useEffect(() => {
-    initLock();
-  }, []);
+    if (isOpened) initLock();
+    else finishLock();
+  }, [isOpened]);
 
   const closePopup = () => {
-    finishLock();
     dispatch(closePostModal());
   };
 
