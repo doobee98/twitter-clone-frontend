@@ -1,116 +1,30 @@
-import React, { useEffect } from 'react';
-import AuthApi from 'apis/AuthApi';
-import useInput from 'hooks/useInput';
-import Button from 'components/base/Button';
-import { useAppDispatch, useAuthSelector, useHomeSelector } from 'hooks/redux';
-import { login, logout, signup } from 'modules/auth';
-import { createTweet, deleteTweet, fetchFeed } from 'modules/home';
+import React from 'react';
+import { Redirect } from 'react-router-dom';
+import styled from 'styled-components';
+import LoginMain from 'components/login/LoginMain';
+import { useAuthSelector } from 'hooks/redux';
+import useTitle from 'hooks/useTitle';
 
-// TODO: SignUpPage 따로 만들것
+const LoginPageWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+`;
+
 const LoginPage: React.FC = () => {
-  const [id, onChangeId] = useInput('');
-  const [password, onChangePassword] = useInput('');
-  const [username, onChangeUsername] = useInput('');
-  const [tweetId, onChangeTweetId] = useInput('');
-  const [tweetContent, onChangeTweetContent] = useInput('');
-
   const authStore = useAuthSelector();
-  const homeStore = useHomeSelector();
-  const dispatch = useAppDispatch();
-
   const { currentUser } = authStore;
-  const { feed } = homeStore;
 
-  const handleLogin = async () => {
-    return dispatch(login({ user_id: id, password }));
-  };
+  useTitle('Login / Twitter-Clone');
 
-  const handleLogout = async () => {
-    return dispatch(logout());
-  };
-
-  const handleSignup = async () => {
-    return dispatch(signup({ user_id: id, password, username }));
-  };
-
-  const handleCurrentUser = async () => {
-    AuthApi.instance
-      .checkCurrentUser()
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-        console.log(error.response);
-      });
-  };
-
-  const handleCreateTweet = async () => {
-    dispatch(createTweet({ content: tweetContent }));
-  };
-
-  const handleDeleteTweet = async () => {
-    dispatch(deleteTweet(tweetId));
-  };
-
-  const handleFetchFeed = async () => {
-    dispatch(fetchFeed());
-  };
-
-  useEffect(() => {
-    handleFetchFeed();
-  }, []);
-
-  useEffect(() => {
-    console.log(feed);
-  }, [feed]);
+  if (currentUser) {
+    return <Redirect to="/home" />;
+  }
 
   return (
-    <>
-      <div>로그인 된 유저: {currentUser ? currentUser.user_id : '없음'}</div>
-      <div>
-        ID:
-        <input type="text" value={id} onChange={onChangeId} />
-      </div>
-      <div>
-        Password:
-        <input type="password" value={password} onChange={onChangePassword} />
-      </div>
-      <div>
-        Username:
-        <input type="text" value={username} onChange={onChangeUsername} />
-      </div>
-      <Button onClick={handleLogin}>로그인</Button>
-      <Button onClick={handleLogout}>로그아웃</Button>
-      <Button onClick={handleSignup}>회원가입</Button>
-      <Button onClick={handleCurrentUser}>로그인상태</Button>
-      <br />
-      <div>
-        작성할 트윗 내용:
-        <input
-          type="text"
-          value={tweetContent}
-          onChange={onChangeTweetContent}
-        />
-      </div>
-      <div>
-        삭제할 트윗 아이디:
-        <input type="text" value={tweetId} onChange={onChangeTweetId} />
-      </div>
-      <Button onClick={handleCreateTweet}>트윗작성</Button>
-      <Button onClick={handleDeleteTweet}>트윗삭제</Button>
-      <Button onClick={handleFetchFeed}>피드 더 받기</Button>
-      <>
-        {feed.map((tweet) => (
-          <React.Fragment key={tweet.tweet_id}>
-            <div>
-              {tweet.writer_id} {tweet.tweet_id}
-            </div>
-            <div>{tweet.content}</div>
-            <br />
-          </React.Fragment>
-        ))}
-      </>
-    </>
+    <LoginPageWrapper>
+      <LoginMain />
+    </LoginPageWrapper>
   );
 };
 

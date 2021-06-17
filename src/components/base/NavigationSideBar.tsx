@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useAppDispatch, useAuthSelector } from 'hooks/redux';
-import { login, logout } from 'modules/auth';
+import { logout } from 'modules/auth';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType, HighlightType } from 'utils/iconUtils';
 import NavItem from './NavItem';
@@ -82,15 +82,6 @@ const NavigationSideBar: React.FC = () => {
   const dispatch = useAppDispatch();
   const { currentUser } = authStore;
 
-  // [TODO: NEED TO BE REMOVED] test for login button
-  const fetchLogin = () => {
-    const loginRequest = {
-      user_id: '',
-      password: '',
-    };
-    dispatch(login(loginRequest));
-  };
-
   // [TODO: NEED TO BE REMOVED] test for logout button
   const fetchLogout = () => {
     dispatch(logout());
@@ -131,9 +122,6 @@ const NavigationSideBar: React.FC = () => {
       </TopContainer>
       <BottomContainer>
         <ToBeRemovedWrapper>
-          <button type="button" onClick={fetchLogin}>
-            로그인
-          </button>
           <button type="button" onClick={fetchLogout}>
             로그아웃
           </button>

@@ -19,7 +19,8 @@ export const login = createAsyncThunk(
       const { user_id, password } = loginRequest;
       const response = await AuthApi.instance.login(user_id, password);
       const { data: user, headers } = response;
-      return [user as User, headers.authorization];
+      storage.setItem(AUTH_TOKEN_NAME, headers.authorization);
+      return user as User;
     } catch (error) {
       if (!error.response) {
         throw error;
@@ -83,12 +84,12 @@ export const auth = createSlice({
   reducers: {},
   extraReducers: {
     [login.fulfilled.type]: (state, action) => {
-      const [user, token] = action.payload;
-      storage.setItem(AUTH_TOKEN_NAME, token);
+      const user = action.payload;
       return { currentUser: user };
     },
     [login.rejected.type]: (state, error) => {
       console.log(error.payload);
+      window.alert(error.payload.msg);
       return state;
     },
     [logout.fulfilled.type]: () => {
@@ -98,6 +99,7 @@ export const auth = createSlice({
     },
     [logout.rejected.type]: (state, error) => {
       console.log(error.payload);
+      window.alert(error.payload.msg);
       return state;
     },
     [info.fulfilled.type]: (state, action) => {
