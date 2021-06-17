@@ -2,8 +2,13 @@ import styled from 'styled-components';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
 import TweetPost from 'components/post/TweetPost';
+import { useEffect, useRef } from 'react';
+import { useAppDispatch } from 'hooks/redux';
+import { closePostModal } from 'modules/modal';
+import useClickOutside from 'hooks/useClickOutside';
 import NavItem from '../base/NavItem';
-import Modal from '../base/Modal';
+import Modal from './Modal';
+import PopupBackground from './PopupBackground';
 
 const PostPopupModalHeaderWrapper = styled.div`
   border-bottom: 1px solid ${hexToRgbA(ColorPalette.BLACK, 0.2)};
@@ -47,28 +52,50 @@ const PostPopupModalContent: React.FC = () => {
 interface PostPopupModalProps {
   width: number;
   isOpened: boolean;
-  setIsOpened: React.Dispatch<React.SetStateAction<boolean>>;
   className?: string;
 }
 
 const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
-  const { isOpened, width, setIsOpened } = props;
+  const { isOpened, width } = props;
+  const popup = useRef<HTMLDivElement>(null);
+  const dispatch = useAppDispatch();
+
+  const initTooltip = async () => {
+    document.body.style.paddingRight = ` ${
+      window.innerWidth - document.documentElement.clientWidth
+    }px`;
+    document.body.style.overflow = 'hidden';
+  };
+
+  const finishTooltip = () => {
+    document.body.style.overflow = 'unset';
+    document.body.style.paddingRight = ` ${0}px`;
+  };
+
+  useEffect(() => {
+    initTooltip();
+  }, []);
 
   const closePopup = () => {
-    setIsOpened(false);
+    finishTooltip();
+    dispatch(closePostModal());
   };
+
+  useClickOutside(popup, () => {
+    dispatch(closePostModal());
+  });
 
   return (
     <>
-      <Modal
-        width={width}
-        isLocked
-        isOpened={isOpened}
-        setIsOpened={setIsOpened}
-      >
-        <PostPopupModalHeader onClose={() => closePopup()} />
-        <PostPopupModalContent />
-      </Modal>
+      {isOpened && (
+        <PopupBackground>
+          <Modal width={width} isLocked>
+            <PostPopupModalHeader onClose={() => closePopup()} />
+            <PostPopupModalContent />
+          </Modal>
+          <div ref={popup} />
+        </PopupBackground>
+      )}
     </>
   );
 };
