@@ -65,7 +65,7 @@ const TweetPostText: React.FC<TweetPostTextProps> = (props) => {
       ref={textAreaRef}
       height={textAreaHeight}
       value={tweetContent}
-      rows={1 ?? initialRows}
+      rows={initialRows ?? 1}
       placeholder="What's happening?"
       onClick={handleClick}
       onChange={onTweetTextChange}
