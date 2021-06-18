@@ -1,5 +1,5 @@
 import { useAppDispatch } from 'hooks/redux';
-import { createTweet } from 'modules/home';
+import { createTweet, replyTweet } from 'modules/home';
 import React from 'react';
 import styled from 'styled-components';
 import TweetPostContent from './TweetPostContent';
@@ -12,15 +12,20 @@ const TweetPostContainer = styled.div`
 `;
 
 interface TweetPostProps {
+  original_tweet_id?: string;
   onCreatePost?: () => void;
 }
 
 const TweetPost: React.FC<TweetPostProps> = (props) => {
-  const { onCreatePost } = props;
+  const { original_tweet_id, onCreatePost } = props;
   const dispatch = useAppDispatch();
 
   const handlePost = async (tweetContent: string) => {
-    dispatch(createTweet({ content: tweetContent }));
+    dispatch(
+      !original_tweet_id
+        ? createTweet({ content: tweetContent })
+        : replyTweet({ original_tweet_id, content: tweetContent }),
+    );
     if (onCreatePost) onCreatePost();
   };
 
