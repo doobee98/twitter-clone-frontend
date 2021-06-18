@@ -4,7 +4,7 @@ import { BasicType } from 'utils/iconUtils';
 import TweetPost from 'components/post/TweetPost';
 import { useEffect, useRef } from 'react';
 import { useAppDispatch, useModalOpen } from 'hooks/redux';
-import { closeReplyModal, openReplyModal } from 'modules/modal';
+import { closeReplyModal } from 'modules/modal';
 import useClickOutside from 'hooks/useClickOutside';
 import TweetDescription from 'components/tweet/TweetDescription';
 import Tweet from 'models/tweet';

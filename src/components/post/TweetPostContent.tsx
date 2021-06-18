@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
@@ -7,7 +7,6 @@ import Icon from 'components/base/Icon';
 import TweetPostToolBar from './TweetPostToolBar';
 import TweetPostText from './TweetPostText';
 import useInput from '../../hooks/useInput';
-import { useAppDispatch } from '../../hooks/redux';
 
 const TweetPostContentContainer = styled.div`
   float: left;

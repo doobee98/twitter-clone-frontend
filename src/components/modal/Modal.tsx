@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
 
@@ -22,7 +22,7 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = (props) => {
-  const { className, children } = props;
+  const { children } = props;
 
   return (
     <ModalContainer top={window.pageYOffset + 100}>{children}</ModalContainer>
