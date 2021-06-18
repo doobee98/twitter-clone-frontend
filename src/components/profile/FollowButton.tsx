@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import Button from 'components/base/Button';
-import { useAppDispatch } from 'hooks/redux';
+import { useRootDispatch } from 'hooks/redux';
 import { followUser, unfollowUser } from 'modules/userRecord';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import User from 'models/user';
@@ -38,7 +38,7 @@ interface FollowButtonProps {
 
 const FollowButton: React.FC<FollowButtonProps> = (props) => {
   const { user } = props;
-  const dispatch = useAppDispatch();
+  const dispatch = useRootDispatch();
   const [isHover, setIsHover] = useState(false);
 
   if (!user) {

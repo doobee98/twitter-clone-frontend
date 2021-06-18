@@ -1,8 +1,8 @@
-import { useAppSelector } from 'hooks/redux';
+import { useRootSelector } from 'hooks/redux';
 import { useEffect } from 'react';
 
 const ProfileFeed: React.FC = () => {
-  const feed = useAppSelector((state) => state.profile.feed);
+  const feed = useRootSelector((state) => state.profile.feed);
 
   // TO BE REMOVED (test output)
   useEffect(() => {

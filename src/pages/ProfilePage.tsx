@@ -4,7 +4,7 @@ import ContentTemplate from 'components/base/ContentTemplate';
 import ExploreSideBar from 'components/base/ExploreSideBar';
 import PageTemplate from 'components/base/PageTemplate';
 import ProfileMain from 'components/profile/ProfileMain';
-import { useAppDispatch, useUserSelector } from 'hooks/redux';
+import { useRootDispatch, useUserSelector } from 'hooks/redux';
 import { clearProfileState, getUserFeed } from 'modules/profile';
 import { fetchUser } from 'modules/userRecord';
 
@@ -15,7 +15,7 @@ interface ProfilePageParams {
 const ProfilePage: React.FC = () => {
   const { id: paramId } = useParams<ProfilePageParams>();
   const username = useUserSelector(paramId, (user) => user?.username);
-  const dispatch = useAppDispatch();
+  const dispatch = useRootDispatch();
   const [initLoading, setInitLoading] = useState(false);
 
   const initialFetch = async (id: string) => {

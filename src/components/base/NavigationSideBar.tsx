@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useAppDispatch, useAuthSelector } from 'hooks/redux';
+import { useRootDispatch, useAuthSelector } from 'hooks/redux';
 import { logout } from 'modules/auth';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType, HighlightType } from 'utils/iconUtils';
@@ -80,9 +80,9 @@ const ToBeRemovedWrapper = styled(React.Fragment)``;
 
 const NavigationSideBar: React.FC = () => {
   const authStore = useAuthSelector();
-  const dispatch = useAppDispatch();
+  const dispatch = useRootDispatch();
   const { currentUser } = authStore;
-  const dispatchPopup = useAppDispatch();
+  const dispatchPopup = useRootDispatch();
 
   const openPopup = () => {
     dispatchPopup(openPostModal());

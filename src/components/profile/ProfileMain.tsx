@@ -4,7 +4,7 @@ import Button from 'components/base/Button';
 import { ContentHeader, ContentSection } from 'components/base/ContentTemplate';
 import Icon from 'components/base/Icon';
 import {
-  useAppSelector,
+  useRootSelector,
   useAuthSelector,
   useProfileSelector,
   useUserSelector,
@@ -44,7 +44,7 @@ const ProfileMain: React.FC<ProfileMainProps> = (props) => {
   const { userId } = props;
   const { currentUser } = useAuthSelector();
   const user = useUserSelector(userId);
-  const totalCount = useAppSelector((state) => state.profile.totalCount);
+  const totalCount = useRootSelector((state) => state.profile.totalCount);
 
   if (!user) {
     return null;

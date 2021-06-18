@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import AuthApi from 'apis/AuthApi';
 import useInput from 'hooks/useInput';
 import Button from 'components/base/Button';
-import { useAppDispatch, useAuthSelector, useHomeSelector } from 'hooks/redux';
+import { useRootDispatch, useAuthSelector, useHomeSelector } from 'hooks/redux';
 import { login, logout, signup } from 'modules/auth';
 import {
   createTweet,
@@ -23,7 +23,7 @@ const LoginPage: React.FC = () => {
 
   const authStore = useAuthSelector();
   const homeStore = useHomeSelector();
-  const dispatch = useAppDispatch();
+  const dispatch = useRootDispatch();
 
   const { currentUser } = authStore;
   const { feed } = homeStore;

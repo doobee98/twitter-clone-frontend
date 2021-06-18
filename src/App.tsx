@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
-import { useAppDispatch } from 'hooks/redux';
+import { useRootDispatch } from 'hooks/redux';
 import { info } from 'modules/auth';
 import storage, { AUTH_TOKEN_NAME } from 'utils/storage';
 import HomePage from './pages/HomePage';
@@ -61,7 +61,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App: React.FC = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useRootDispatch();
 
   const [initialLoading, setInitialLoading] = useState(false);
 
