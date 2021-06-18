@@ -5,6 +5,7 @@ import { normalize } from 'styled-normalize';
 import { useAppDispatch } from 'hooks/redux';
 import { info } from 'modules/auth';
 import storage, { AUTH_TOKEN_NAME } from 'utils/storage';
+import NotImplementedPage from 'pages/NotImplementedPage';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import TestPage from './pages/TestPage';
@@ -88,9 +89,14 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Switch>
           <Route path="/" exact render={() => <Redirect to="/home" />} />
-          <Route path="/home" component={HomePage} />
-          <Route path="/login" component={LoginPage} />
           <Route path="/test" component={TestPage} />
+          <Route path="/login" component={LoginPage} />
+          <Route path="/home" component={HomePage} />
+          <Route path="/explore" component={NotImplementedPage} />
+          <Route path="/notifications" component={NotImplementedPage} />
+          <Route path="/messages" component={NotImplementedPage} />
+          <Route path="/bookmarks" component={NotImplementedPage} />
+          <Route path="/lists" component={NotImplementedPage} />
           <Route path="/:id" component={ProfilePage} />
         </Switch>
       </BrowserRouter>
