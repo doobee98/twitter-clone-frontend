@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import AuthApi from 'apis/AuthApi';
 import storage, { AUTH_TOKEN_NAME } from 'utils/storage';
@@ -85,39 +86,32 @@ export const auth = createSlice({
   extraReducers: {
     [login.fulfilled.type]: (state, action) => {
       const user = action.payload;
-      return { currentUser: user };
+      state.currentUser = user;
     },
     [login.rejected.type]: (state, error) => {
       console.log(error.payload);
       window.alert(error.payload.msg);
-      return state;
     },
-    [logout.fulfilled.type]: () => {
-      return {
-        currentUser: undefined,
-      };
+    [logout.fulfilled.type]: (state) => {
+      state.currentUser = undefined;
     },
     [logout.rejected.type]: (state, error) => {
       console.log(error.payload);
       window.alert(error.payload.msg);
-      return state;
     },
     [info.fulfilled.type]: (state, action) => {
       const user = action.payload;
-      return { currentUser: user };
+      state.currentUser = user;
     },
     [info.rejected.type]: (state, error) => {
       console.log(error.payload);
       storage.removeItem(AUTH_TOKEN_NAME);
-      return state;
     },
     [signup.fulfilled.type]: (state, action) => {
       window.alert(`${action.payload.user_id}님 회원가입 완료!`);
-      return state;
     },
     [signup.rejected.type]: (state, error) => {
       console.log(error.payload);
-      return state;
     },
   },
 });

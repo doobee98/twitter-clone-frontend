@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import TweetsApi from 'apis/TweetsApi';
 import Tweet from '../models/tweet';
@@ -104,69 +105,46 @@ export const home = createSlice({
   extraReducers: {
     [fetchFeed.fulfilled.type]: (state, action) => {
       const newFeed = action.payload;
-      return {
-        feed: [...state.feed, ...newFeed],
-      };
+      state.feed = [...state.feed, ...newFeed];
     },
     [fetchFeed.rejected.type]: (state, error) => {
       console.log(error.payload);
-      return state;
     },
     [createTweet.fulfilled.type]: (state, action) => {
       const newTweet = action.payload;
-      return {
-        feed: [newTweet, ...state.feed],
-      };
+      state.feed = [newTweet, ...state.feed];
     },
     [createTweet.rejected.type]: (state, error) => {
       console.log(error.payload);
-      return state;
     },
     [deleteTweet.fulfilled.type]: (state, action) => {
       const deletedTweetId = action.payload;
-      return {
-        feed: state.feed.filter((tweet) => tweet.tweet_id !== deletedTweetId),
-      };
+      state.feed = state.feed.filter(
+        (tweet) => tweet.tweet_id !== deletedTweetId,
+      );
     },
     [deleteTweet.rejected.type]: (state, error) => {
       console.log(error.payload);
-      return state;
-    },
-    [deleteTweet.fulfilled.type]: (state, action) => {
-      const deletedTweetId = action.payload;
-      return {
-        feed: state.feed.filter((tweet) => tweet.tweet_id !== deletedTweetId),
-      };
-    },
-    [deleteTweet.rejected.type]: (state, error) => {
-      console.log(error.payload);
-      return state;
     },
     [likeTweet.fulfilled.type]: (state, action) => {
       const tweetId = action.payload;
-      return {
-        feed: state.feed.map((tweet) => ({
-          ...tweet,
-          like_flag: tweet.tweet_id === tweetId ? true : tweet.like_flag,
-        })),
-      };
+      const tweetIndex = state.feed.findIndex(
+        (tweet) => tweet.tweet_id === tweetId,
+      );
+      state.feed[tweetIndex].like_flag = true;
     },
     [likeTweet.rejected.type]: (state, error) => {
       console.log(error.payload);
-      return state;
     },
     [dislikeTweet.fulfilled.type]: (state, action) => {
       const tweetId = action.payload;
-      return {
-        feed: state.feed.map((tweet) => ({
-          ...tweet,
-          like_flag: tweet.tweet_id === tweetId ? false : tweet.like_flag,
-        })),
-      };
+      const tweetIndex = state.feed.findIndex(
+        (tweet) => tweet.tweet_id === tweetId,
+      );
+      state.feed[tweetIndex].like_flag = false;
     },
     [dislikeTweet.rejected.type]: (state, error) => {
       console.log(error.payload);
-      return state;
     },
   },
 });

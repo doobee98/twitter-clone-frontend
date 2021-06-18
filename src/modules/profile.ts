@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import UsersApi from 'apis/UsersApi';
 import Tweet from 'models/tweet';
@@ -43,14 +44,11 @@ export const profile = createSlice({
   extraReducers: {
     [getUserFeed.fulfilled.type]: (state, action) => {
       const { totalCount, data: newFeed } = action.payload;
-      return {
-        feed: [...state.feed, ...newFeed],
-        totalCount,
-      };
+      state.feed = [...state.feed, ...newFeed];
+      state.totalCount = totalCount;
     },
     [getUserFeed.rejected.type]: (state, error) => {
       console.log(error.payload);
-      return state;
     },
   },
 });
