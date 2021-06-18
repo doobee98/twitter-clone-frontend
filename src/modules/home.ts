@@ -14,27 +14,24 @@ const initialState: HomeState = {
   feed: [],
 };
 
-export const fetchFeed = createAsyncThunk(
-  'home/fetchFeed',
-  async (_, thunkAPI) => {
-    try {
-      const rootState = thunkAPI.getState() as any;
-      const { feed } = rootState.home as HomeState;
-      const response = await TweetsApi.instance.getFeed(
-        feed.length + 1,
-        HOMEPAGE_FEED_INITIAL_COUNT,
-      );
-      return response.data;
-    } catch (error) {
-      if (!error.response) {
-        throw error;
-      }
-      return thunkAPI.rejectWithValue(error.response.data);
+const fetchFeed = createAsyncThunk('home/fetchFeed', async (_, thunkAPI) => {
+  try {
+    const rootState = thunkAPI.getState() as any;
+    const { feed } = rootState.home as HomeState;
+    const response = await TweetsApi.instance.getFeed(
+      feed.length + 1,
+      HOMEPAGE_FEED_INITIAL_COUNT,
+    );
+    return response.data;
+  } catch (error) {
+    if (!error.response) {
+      throw error;
     }
-  },
-);
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
 
-export const createTweet = createAsyncThunk(
+const createTweet = createAsyncThunk(
   'home/createTweet',
   async (tweetCreateRequest: TweetCreateRequest, thunkAPI) => {
     try {
@@ -53,7 +50,7 @@ export const createTweet = createAsyncThunk(
   },
 );
 
-export const deleteTweet = createAsyncThunk(
+const deleteTweet = createAsyncThunk(
   'tweets/deleteTweet',
   async (tweetId: string, thunkAPI) => {
     try {
@@ -68,7 +65,7 @@ export const deleteTweet = createAsyncThunk(
   },
 );
 
-export const likeTweet = createAsyncThunk(
+const likeTweet = createAsyncThunk(
   'tweets/likeTweet',
   async (tweetId: string, thunkAPI) => {
     try {
@@ -83,7 +80,7 @@ export const likeTweet = createAsyncThunk(
   },
 );
 
-export const dislikeTweet = createAsyncThunk(
+const dislikeTweet = createAsyncThunk(
   'tweets/dislikeTweet',
   async (tweetId: string, thunkAPI) => {
     try {
@@ -149,4 +146,11 @@ export const home = createSlice({
   },
 });
 
+export const homeActions = {
+  fetchFeed,
+  createTweet,
+  deleteTweet,
+  likeTweet,
+  dislikeTweet,
+};
 export default home.reducer;

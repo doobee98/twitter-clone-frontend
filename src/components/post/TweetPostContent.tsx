@@ -8,7 +8,7 @@ import TweetPostToolBar from './TweetPostToolBar';
 import TweetPostText from './TweetPostText';
 import useInput from '../../hooks/useInput';
 import { useRootDispatch } from '../../hooks/redux';
-import { createTweet } from '../../modules/home';
+import { homeActions } from '../../modules/home';
 
 const TweetPostContentContainer = styled.div`
   float: left;
@@ -166,7 +166,7 @@ const TweetPostContent: React.FC<TweetPostContentProps> = (props) => {
   }, [tweetContent]);
 
   const handleCreateTweet = async () => {
-    dispatch(createTweet({ content: tweetContent }));
+    dispatch(homeActions.createTweet({ content: tweetContent }));
     clearTweetPost();
     if (onCreateTweet) onCreateTweet();
   };

@@ -4,13 +4,7 @@ import useInput from 'hooks/useInput';
 import Button from 'components/base/Button';
 import { useRootDispatch, useAuthSelector, useHomeSelector } from 'hooks/redux';
 import { authActions } from 'modules/auth';
-import {
-  createTweet,
-  deleteTweet,
-  dislikeTweet,
-  fetchFeed,
-  likeTweet,
-} from 'modules/home';
+import { homeActions } from 'modules/home';
 import Tweet from 'models/tweet';
 
 // TODO: SignUpPage 따로 만들것
@@ -49,23 +43,23 @@ const LoginPage: React.FC = () => {
   };
 
   const handleCreateTweet = async () => {
-    dispatch(createTweet({ content: tweetContent }));
+    dispatch(homeActions.createTweet({ content: tweetContent }));
   };
 
   const handleDeleteTweet = async () => {
-    dispatch(deleteTweet(tweetId));
+    dispatch(homeActions.deleteTweet(tweetId));
   };
 
   const handleFetchFeed = async () => {
-    dispatch(fetchFeed());
+    dispatch(homeActions.fetchFeed());
   };
 
   const toggleLikeTweet = async (tweet: Tweet) => {
     console.log(tweet);
     if (tweet.like_flag) {
-      dispatch(dislikeTweet(tweet.tweet_id));
+      dispatch(homeActions.dislikeTweet(tweet.tweet_id));
     } else {
-      dispatch(likeTweet(tweet.tweet_id));
+      dispatch(homeActions.likeTweet(tweet.tweet_id));
     }
   };
 

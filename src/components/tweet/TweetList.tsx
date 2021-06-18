@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useRootDispatch, useHomeSelector } from 'hooks/redux';
-import { fetchFeed } from 'modules/home';
+import { homeActions } from 'modules/home';
 import Icon from 'components/base/Icon';
 import { BasicType } from 'utils/iconUtils';
 import { ColorPalette } from '../../utils/colorUtils';
@@ -30,7 +30,7 @@ const TweetList: React.FC = () => {
   const dispatch = useRootDispatch();
 
   const handleFetchFeed = async () => {
-    dispatch(fetchFeed()).then((res) => {
+    dispatch(homeActions.fetchFeed()).then((res) => {
       if (res.type.toString() === 'home/fetchFeed/rejected') setIsError(true);
     });
   };
