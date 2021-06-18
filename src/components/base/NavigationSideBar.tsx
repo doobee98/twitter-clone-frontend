@@ -4,7 +4,7 @@ import { useRootDispatch, useAuthSelector } from 'hooks/redux';
 import { authActions } from 'modules/auth';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType, HighlightType } from 'utils/iconUtils';
-import { openPostModal } from 'modules/modal';
+import { modalActions } from 'modules/modal';
 import NavItem from './NavItem';
 import Button from './Button';
 import Icon from './Icon';
@@ -84,7 +84,7 @@ const NavigationSideBar: React.FC = () => {
   const dispatchPopup = useRootDispatch();
 
   const openPopup = () => {
-    dispatchPopup(openPostModal());
+    dispatchPopup(modalActions.openPostModal());
   };
 
   // [TODO: NEED TO BE REMOVED] test for logout button

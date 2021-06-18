@@ -4,7 +4,7 @@ import { BasicType } from 'utils/iconUtils';
 import TweetPost from 'components/post/TweetPost';
 import { useEffect, useRef } from 'react';
 import { useRootDispatch } from 'hooks/redux';
-import { closePostModal } from 'modules/modal';
+import { modalActions } from 'modules/modal';
 import useClickOutside from 'hooks/useClickOutside';
 import Modal from './Modal';
 import PopupBackground from './PopupBackground';
@@ -92,7 +92,7 @@ const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
   }, [isOpened]);
 
   const closePopup = () => {
-    dispatch(closePostModal());
+    dispatch(modalActions.closePostModal());
   };
 
   useClickOutside(popup, () => {
