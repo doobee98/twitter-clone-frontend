@@ -14,7 +14,7 @@ export interface ProfileState {
 
 const initialState: ProfileState = { feed: [], totalCount: 0 };
 
-export const getUserFeed = createAsyncThunk(
+const getUserFeed = createAsyncThunk(
   `${name}/getUserFeed`,
   async (userId: string, thunkAPI) => {
     try {
@@ -53,5 +53,5 @@ export const profile = createSlice({
   },
 });
 
+export const profileActions = { getUserFeed, ...profile.actions };
 export default profile.reducer;
-export const { clearProfileState } = profile.actions;
