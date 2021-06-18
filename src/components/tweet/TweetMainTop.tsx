@@ -4,6 +4,7 @@ import { setTimeout } from 'timers';
 import Icon from 'components/base/Icon';
 import { BasicType } from 'utils/iconUtils';
 import User from 'models/user';
+import { useHistory } from 'react-router-dom';
 import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
 import ProfileTooltip from '../base/ProfileTooltip';
 import Tweet from '../../models/tweet';
@@ -86,6 +87,7 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout | undefined>();
   const [isMore, setIsMore] = useState(false);
+  const history = useHistory();
 
   const openProfileTooltip = () => {
     if (timer) {
@@ -108,6 +110,10 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
     setIsMore(!isMore);
   };
 
+  const goToProfilePage = () => {
+    history.push(user.user_id);
+  };
+
   const elapsed = getTweetedTimeGap(tweet.tweeted_at);
 
   return (
@@ -117,6 +123,7 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
           <TweetMainTopUsername
             onMouseEnter={openProfileTooltip}
             onMouseLeave={closeProfileTooltip}
+            onClick={goToProfilePage}
           >
             {user.username}
           </TweetMainTopUsername>

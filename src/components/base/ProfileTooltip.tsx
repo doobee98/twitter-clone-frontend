@@ -3,6 +3,7 @@ import Button from 'components/base/Button';
 import styled, { css } from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
 import User from 'models/user';
+import { useHistory } from 'react-router-dom';
 import Profile from './Profile';
 
 const ProfileTooltipItemWrapper = styled.div`
@@ -107,6 +108,7 @@ const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
   const { isOpen, setIsOpen, user } = props;
   const [isHoverActive, setIsHoverActive] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
+  const history = useHistory();
 
   const openProfile = () => {
     setIsHoverActive(true);
@@ -124,6 +126,10 @@ const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
     setTimer(newTimer);
   };
 
+  const goToProfilePage = () => {
+    history.push(`/${user.user_id}`);
+  };
+
   // TO BE REMOVED
   // NEED USER API
   const tempFollowButton = 'Follow';
@@ -139,7 +145,9 @@ const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
             <Profile userid={user.user_id} username={user.username} />
             <FollowButton>{tempFollowButton}</FollowButton>
           </ProfileTooltipHeader>
-          <ProfileTooltipUserName>{user.username}</ProfileTooltipUserName>
+          <ProfileTooltipUserName onClick={goToProfilePage}>
+            {user.username}
+          </ProfileTooltipUserName>
           <ProfileTooltipUserId>@{user.user_id}</ProfileTooltipUserId>
           <ProfileTooltipItemWrapper>
             {user.bio ? user.bio : 'there is no bio'}
