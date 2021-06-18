@@ -9,7 +9,7 @@ export type UserRecordState = Record<string, User>;
 
 const initialState: UserRecordState = {};
 
-export const fetchUser = createAsyncThunk(
+const fetchUser = createAsyncThunk(
   `${name}/fetchUser`,
   async (userId: string, thunkAPI) => {
     try {
@@ -24,7 +24,7 @@ export const fetchUser = createAsyncThunk(
   },
 );
 
-export const getUser = createAsyncThunk(
+const getUser = createAsyncThunk(
   `${name}/getUser`,
   async (userId: string, thunkAPI) => {
     try {
@@ -49,7 +49,7 @@ export const getUser = createAsyncThunk(
   },
 );
 
-export const followUser = createAsyncThunk(
+const followUser = createAsyncThunk(
   `${name}/followUser`,
   async (userId: string, thunkAPI) => {
     try {
@@ -64,7 +64,7 @@ export const followUser = createAsyncThunk(
   },
 );
 
-export const unfollowUser = createAsyncThunk(
+const unfollowUser = createAsyncThunk(
   `${name}/unfollowUser`,
   async (userId: string, thunkAPI) => {
     try {
@@ -121,5 +121,11 @@ export const userRecord = createSlice({
   },
 });
 
+export const userRecordActions = {
+  fetchUser,
+  getUser,
+  followUser,
+  unfollowUser,
+  ...userRecord.actions,
+};
 export default userRecord.reducer;
-export const { clearUserRecord } = userRecord.actions;

@@ -6,7 +6,7 @@ import PageTemplate from 'components/base/PageTemplate';
 import ProfileMain from 'components/profile/ProfileMain';
 import { useRootDispatch, useUserRecordSelector } from 'hooks/redux';
 import { profileActions } from 'modules/profile';
-import { fetchUser } from 'modules/userRecord';
+import { userRecordActions } from 'modules/userRecord';
 
 interface ProfilePageParams {
   id: string;
@@ -20,7 +20,7 @@ const ProfilePage: React.FC = () => {
 
   const initialFetch = async (id: string) => {
     await Promise.all([
-      dispatch(fetchUser(id)),
+      dispatch(userRecordActions.fetchUser(id)),
       dispatch(profileActions.getUserFeed(id)),
     ]);
     setInitLoading(true);
