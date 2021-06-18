@@ -22,7 +22,7 @@ import {
   HiOutlineArrowLeft,
   HiOutlineHashtag,
 } from 'react-icons/hi';
-import { MdMail, MdMailOutline, MdClose } from 'react-icons/md';
+import { MdMail, MdMailOutline, MdClose, MdError } from 'react-icons/md';
 import {
   RiHome4Line,
   RiHome4Fill,
@@ -50,6 +50,8 @@ export enum BasicType {
   MORE_CIRCLE = 'basic-more-circle',
   MORE = 'basic-more',
   LEFT_ARROW = 'basic-left-arrow',
+
+  ERROR = 'basic-error',
 
   // tweet-post icons
   MEDIA = 'basic-media',
@@ -92,6 +94,8 @@ const basicRecord = {
   [BasicType.MORE_CIRCLE]: CgMoreO,
   [BasicType.MORE]: FiMoreHorizontal,
   [BasicType.LEFT_ARROW]: HiOutlineArrowLeft,
+
+  [BasicType.ERROR]: MdError,
 
   // tweet-post icons
   [BasicType.MEDIA]: AiOutlinePicture,
