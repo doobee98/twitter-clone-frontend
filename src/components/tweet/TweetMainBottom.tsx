@@ -5,6 +5,8 @@ import Icon from 'components/base/Icon';
 import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
 import Tweet from '../../models/tweet';
 import { BasicType } from '../../utils/iconUtils';
+import { openReplyModal } from '../../modules/modal';
+import { useAppDispatch } from '../../hooks/redux';
 
 const TweetMainBottomContainer = styled.div`
   display: flex;
@@ -55,8 +57,11 @@ interface TweetMainBottomProps {
 const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
   const { tweet } = props;
 
+  const dispatchPopup = useAppDispatch();
+
   const handleReply = () => {
     // TODO
+    dispatchPopup(openReplyModal(tweet));
   };
 
   const handleRetweet = () => {
