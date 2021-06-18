@@ -3,7 +3,7 @@ import AuthApi from 'apis/AuthApi';
 import useInput from 'hooks/useInput';
 import Button from 'components/base/Button';
 import { useRootDispatch, useAuthSelector, useHomeSelector } from 'hooks/redux';
-import { login, logout, signup } from 'modules/auth';
+import { authActions } from 'modules/auth';
 import {
   createTweet,
   deleteTweet,
@@ -26,15 +26,15 @@ const LoginPage: React.FC = () => {
   const dispatch = useRootDispatch();
 
   const handleLogin = async () => {
-    return dispatch(login({ user_id: id, password }));
+    return dispatch(authActions.login({ user_id: id, password }));
   };
 
   const handleLogout = async () => {
-    return dispatch(logout());
+    return dispatch(authActions.logout());
   };
 
   const handleSignup = async () => {
-    return dispatch(signup({ user_id: id, password, username }));
+    return dispatch(authActions.signup({ user_id: id, password, username }));
   };
 
   const handleCurrentUser = async () => {

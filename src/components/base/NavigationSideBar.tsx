@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useRootDispatch, useAuthSelector } from 'hooks/redux';
-import { logout } from 'modules/auth';
+import { authActions } from 'modules/auth';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType, HighlightType } from 'utils/iconUtils';
 import { openPostModal } from 'modules/modal';
@@ -89,7 +89,7 @@ const NavigationSideBar: React.FC = () => {
 
   // [TODO: NEED TO BE REMOVED] test for logout button
   const fetchLogout = () => {
-    dispatch(logout());
+    dispatch(authActions.logout());
   };
 
   return (

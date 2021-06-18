@@ -4,7 +4,7 @@ import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
 import { useRootDispatch } from 'hooks/redux';
 import useInput from 'hooks/useInput';
-import { login } from 'modules/auth';
+import { authActions } from 'modules/auth';
 import { ColorPalette } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
 
@@ -76,7 +76,7 @@ const LoginMain: React.FC = () => {
   const dispatch = useRootDispatch();
 
   const fetchLogin = async () => {
-    const result = await dispatch(login({ user_id: id, password }));
+    const result = await dispatch(authActions.login({ user_id: id, password }));
 
     if (result.type === 'auth/login/fulfilled') {
       history.push('/home');

@@ -13,7 +13,7 @@ export interface AuthState {
 
 const initialState: AuthState = {};
 
-export const login = createAsyncThunk(
+const login = createAsyncThunk(
   `${name}/login`,
   async (loginRequest: LoginRequest, thunkAPI) => {
     try {
@@ -31,23 +31,20 @@ export const login = createAsyncThunk(
   },
 );
 
-export const logout = createAsyncThunk(
-  `${name}/logout`,
-  async (_, thunkAPI) => {
-    try {
-      const response = await AuthApi.instance.logout();
-      storage.removeItem(AUTH_TOKEN_NAME);
-      return response.data;
-    } catch (error) {
-      if (!error.response) {
-        throw error;
-      }
-      return thunkAPI.rejectWithValue(error.response.data);
+const logout = createAsyncThunk(`${name}/logout`, async (_, thunkAPI) => {
+  try {
+    const response = await AuthApi.instance.logout();
+    storage.removeItem(AUTH_TOKEN_NAME);
+    return response.data;
+  } catch (error) {
+    if (!error.response) {
+      throw error;
     }
-  },
-);
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
 
-export const info = createAsyncThunk(`${name}/info`, async (_, thunkAPI) => {
+const info = createAsyncThunk(`${name}/info`, async (_, thunkAPI) => {
   try {
     const response = await AuthApi.instance.info();
     return response.data as User;
@@ -59,7 +56,7 @@ export const info = createAsyncThunk(`${name}/info`, async (_, thunkAPI) => {
   }
 });
 
-export const signup = createAsyncThunk(
+const signup = createAsyncThunk(
   `${name}/signup`,
   async (signupRequest: SignUpRequest, thunkAPI) => {
     try {
@@ -116,4 +113,5 @@ export const auth = createSlice({
   },
 });
 
+export const authActions = { login, logout, info, signup };
 export default auth.reducer;
