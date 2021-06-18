@@ -4,7 +4,9 @@ import styled, { css } from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
 import User from 'models/user';
 import { useHistory } from 'react-router-dom';
+import { useAuthSelector, useUserSelector } from 'hooks/redux';
 import Profile from './Profile';
+import FollowButton from '../profile/FollowButton';
 
 const ProfileTooltipItemWrapper = styled.div`
   display: flex;
@@ -19,16 +21,6 @@ const ProfileTooltipItemWrapper = styled.div`
 
 const ProfileTooltipHeader = styled(ProfileTooltipItemWrapper)`
   justify-content: space-between;
-`;
-
-const FollowButton = styled(Button)`
-  color: ${ColorPalette.WHITE};
-  background-color: ${ColorPalette.SKYBLUE};
-  font-weight: bold;
-
-  &:hover {
-    background-color: ${ColorPalette.SKYBLUE_DARK};
-  }
 `;
 
 const ProfileTooltipUserId = styled(ProfileTooltipItemWrapper)`
@@ -101,11 +93,13 @@ const ProfileTooltipContianer = styled.div`
 interface ProfileTooltipProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  user: User;
+  userId: string;
 }
 
 const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
-  const { isOpen, setIsOpen, user } = props;
+  const { isOpen, setIsOpen, userId } = props;
+  const { currentUser } = useAuthSelector();
+  const user = useUserSelector(userId);
   const [isHoverActive, setIsHoverActive] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
   const history = useHistory();
@@ -126,13 +120,15 @@ const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
     setTimer(newTimer);
   };
 
+  if (!user) {
+    return null;
+  }
+
   const goToProfilePage = () => {
     history.push(`/${user.user_id}`);
   };
 
-  // TO BE REMOVED
-  // NEED USER API
-  const tempFollowButton = 'Follow';
+  const isMyProfile = currentUser?.user_id === user.user_id;
 
   return (
     <>
@@ -143,7 +139,7 @@ const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
         >
           <ProfileTooltipHeader>
             <Profile userid={user.user_id} username={user.username} />
-            <FollowButton>{tempFollowButton}</FollowButton>
+            {!isMyProfile && <FollowButton user={user} />}
           </ProfileTooltipHeader>
           <ProfileTooltipUserName onClick={goToProfilePage}>
             {user.username}

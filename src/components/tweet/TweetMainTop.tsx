@@ -142,7 +142,11 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
           {isMore && <TweetMoreDropdown tweet={tweet} />}
         </TweetMainTopRightContainer>
       </TweetMainTopContainer>
-      <ProfileTooltip isOpen={isOpen} setIsOpen={setIsOpen} user={user} />
+      <ProfileTooltip
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        userId={user.user_id}
+      />
     </>
   );
 };
