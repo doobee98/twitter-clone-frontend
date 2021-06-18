@@ -57,7 +57,7 @@ const TweetSide: React.FC<TweetSideProps> = (props) => {
           onMouseEnter={openProfileTooltip}
           onMouseLeave={closeProfileTooltip}
         >
-          <Profile userid={tweet.writer_id} username={user.username} />
+          <Profile userid={tweet.writer_id} username={tweet.writer_name} />
         </TweetProfileWrapper>
         <ProfileTooltip isOpen={isOpen} setIsOpen={setIsOpen} user={user} />
       </TweetSideContainer>

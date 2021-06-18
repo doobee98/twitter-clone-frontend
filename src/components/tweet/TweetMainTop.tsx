@@ -125,7 +125,7 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
             onMouseLeave={closeProfileTooltip}
             onClick={goToProfilePage}
           >
-            {user.username}
+            {tweet.writer_name}
           </TweetMainTopUsername>
           <TweetMainTopUseridTweetedAt>
             @{tweet.writer_id} - {elapsed}

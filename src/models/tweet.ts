@@ -3,6 +3,7 @@ export default interface Tweet {
   tweet_id: string;
   tweeted_at: string;
   writer_id: string;
+  writer_name: string;
 
   content: string;
   image_src_list?: string[];
