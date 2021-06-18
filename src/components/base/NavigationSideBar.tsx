@@ -4,6 +4,7 @@ import { useAppDispatch, useAuthSelector } from 'hooks/redux';
 import { logout } from 'modules/auth';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType, HighlightType } from 'utils/iconUtils';
+import { openPostModal } from 'modules/modal';
 import NavItem from './NavItem';
 import Button from './Button';
 import Icon from './Icon';
@@ -81,6 +82,11 @@ const NavigationSideBar: React.FC = () => {
   const authStore = useAuthSelector();
   const dispatch = useAppDispatch();
   const { currentUser } = authStore;
+  const dispatchPopup = useAppDispatch();
+
+  const openPopup = () => {
+    dispatchPopup(openPostModal());
+  };
 
   // [TODO: NEED TO BE REMOVED] test for logout button
   const fetchLogout = () => {
@@ -118,7 +124,7 @@ const NavigationSideBar: React.FC = () => {
           </NavItem>
           <NavItem iconType={BasicType.MORE_CIRCLE}>More</NavItem>
         </NavList>
-        <TweetButton>Tweet</TweetButton>
+        <TweetButton onClick={openPopup}>Tweet</TweetButton>
       </TopContainer>
       <BottomContainer>
         <ToBeRemovedWrapper>

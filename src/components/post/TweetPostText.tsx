@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-import useInput from '../../hooks/useInput';
 
 interface TweetPostTextAreaProps {
   height: string;

@@ -9,11 +9,16 @@ const TweetPostContainer = styled.div`
   width: 100%;
 `;
 
-const TweetPost: React.FC = () => {
+interface TweetPostProps {
+  onCreateTweet?: () => void;
+}
+
+const TweetPost: React.FC<TweetPostProps> = (props) => {
+  const { onCreateTweet } = props;
   return (
     <TweetPostContainer>
       <TweetPostProfile />
-      <TweetPostContent />
+      <TweetPostContent onCreateTweet={onCreateTweet} />
     </TweetPostContainer>
   );
 };

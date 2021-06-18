@@ -106,7 +106,13 @@ const TweetButton = styled(Button)`
   }
 `;
 
-const TweetPostContent: React.FC = () => {
+interface TweetPostContentProps {
+  onCreateTweet?: () => void;
+}
+
+const TweetPostContent: React.FC<TweetPostContentProps> = (props) => {
+  const { onCreateTweet } = props;
+
   const [isWritingStarted, setIsWritingStarted] = useState(false);
   const [textAreaHeight, setTextAreaHeight] = useState('auto');
   const [file, setFile] = useState('');
@@ -162,6 +168,7 @@ const TweetPostContent: React.FC = () => {
   const handleCreateTweet = async () => {
     dispatch(createTweet({ content: tweetContent }));
     clearTweetPost();
+    if (onCreateTweet) onCreateTweet();
   };
 
   return (
