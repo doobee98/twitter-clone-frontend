@@ -58,7 +58,7 @@ const PostPopupModalContent: React.FC<PostPopupModalContentProps> = (props) => {
   const { onCreateTweet } = props;
   return (
     <PostPopupModalContentWrapper>
-      <TweetPost onCreateTweet={onCreateTweet} />
+      <TweetPost onCreatePost={onCreateTweet} />
     </PostPopupModalContentWrapper>
   );
 };
