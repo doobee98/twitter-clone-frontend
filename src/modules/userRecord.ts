@@ -5,11 +5,9 @@ import User from '../models/user';
 
 const name = 'userRecord';
 
-export interface UserRecordState {
-  userRecord: Record<string, User>;
-}
+export type UserRecordState = Record<string, User>;
 
-const initialState: UserRecordState = { userRecord: {} };
+const initialState: UserRecordState = {};
 
 export const fetchUser = createAsyncThunk(
   `${name}/fetchUser`,
@@ -31,7 +29,7 @@ export const getUser = createAsyncThunk(
   async (userId: string, thunkAPI) => {
     try {
       const rootState = thunkAPI.getState() as any;
-      const { userRecord } = rootState.userRecord as UserRecordState;
+      const userRecord = rootState.userRecord as UserRecordState;
 
       if (userId in userRecord) {
         return userRecord[userId];
@@ -86,13 +84,13 @@ export const userRecord = createSlice({
   initialState,
   reducers: {
     clearUserRecord: (state, action) => {
-      state.userRecord = {};
+      state = {};
     },
   },
   extraReducers: {
     [fetchUser.fulfilled.type]: (state, action) => {
       const user: User = action.payload;
-      state.userRecord[user.user_id] = user;
+      state[user.user_id] = user;
     },
     [fetchUser.rejected.type]: (state, error) => {
       console.log(error.payload);
@@ -100,7 +98,7 @@ export const userRecord = createSlice({
     },
     [getUser.fulfilled.type]: (state, action) => {
       const user: User = action.payload;
-      state.userRecord[user.user_id] = user;
+      state[user.user_id] = user;
     },
     [getUser.rejected.type]: (state, error) => {
       console.log(error.payload);
@@ -108,14 +106,14 @@ export const userRecord = createSlice({
     },
     [followUser.fulfilled.type]: (state, action) => {
       const userId = action.payload;
-      state.userRecord[userId].following_flag = true;
+      state[userId].following_flag = true;
     },
     [followUser.rejected.type]: (state, error) => {
       console.log(error.payload);
     },
     [unfollowUser.fulfilled.type]: (state, action) => {
       const userId = action.payload;
-      state.userRecord[userId].following_flag = false;
+      state[userId].following_flag = false;
     },
     [unfollowUser.rejected.type]: (state, error) => {
       console.log(error.payload);

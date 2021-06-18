@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { useAppDispatch, useHomeSelector } from 'hooks/redux';
+import { useRootDispatch, useHomeSelector } from 'hooks/redux';
 import { fetchFeed } from 'modules/home';
 import Icon from 'components/base/Icon';
 import { BasicType } from 'utils/iconUtils';
@@ -26,9 +26,8 @@ const TweetListContainer = styled.div`
 const TweetList: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const homeStore = useHomeSelector();
-  const dispatch = useAppDispatch();
-  const { feed } = homeStore;
+  const feed = useHomeSelector((state) => state.feed);
+  const dispatch = useRootDispatch();
 
   const handleFetchFeed = async () => {
     dispatch(fetchFeed()).then((res) => {

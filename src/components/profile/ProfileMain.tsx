@@ -1,13 +1,11 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
 import Button from 'components/base/Button';
 import { ContentHeader, ContentSection } from 'components/base/ContentTemplate';
 import Icon from 'components/base/Icon';
 import {
-  useRootSelector,
   useAuthSelector,
   useProfileSelector,
-  useUserSelector,
+  useUserRecordSelector,
 } from 'hooks/redux';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
@@ -42,9 +40,9 @@ interface ProfileMainProps {
 
 const ProfileMain: React.FC<ProfileMainProps> = (props) => {
   const { userId } = props;
-  const { currentUser } = useAuthSelector();
-  const user = useUserSelector(userId);
-  const totalCount = useRootSelector((state) => state.profile.totalCount);
+  const currentUser = useAuthSelector((state) => state.currentUser);
+  const totalCount = useProfileSelector((state) => state.totalCount);
+  const user = useUserRecordSelector((record) => record[userId]);
 
   if (!user) {
     return null;

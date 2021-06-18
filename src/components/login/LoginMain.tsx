@@ -2,7 +2,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
-import { useAppDispatch } from 'hooks/redux';
+import { useRootDispatch } from 'hooks/redux';
 import useInput from 'hooks/useInput';
 import { login } from 'modules/auth';
 import { ColorPalette } from 'utils/colorUtils';
@@ -73,7 +73,7 @@ const LoginMain: React.FC = () => {
   const [password, onChangePassword] = useInput('');
 
   const history = useHistory();
-  const dispatch = useAppDispatch();
+  const dispatch = useRootDispatch();
 
   const fetchLogin = async () => {
     const result = await dispatch(login({ user_id: id, password }));

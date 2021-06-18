@@ -6,7 +6,7 @@ import { LoginRequest, SignUpRequest } from '../models/request/auth';
 
 const name = 'auth';
 
-interface AuthState {
+export interface AuthState {
   currentUser?: User;
 }
 

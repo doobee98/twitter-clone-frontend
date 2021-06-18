@@ -21,12 +21,9 @@ const LoginPage: React.FC = () => {
   const [tweetId, onChangeTweetId] = useInput('');
   const [tweetContent, onChangeTweetContent] = useInput('');
 
-  const authStore = useAuthSelector();
-  const homeStore = useHomeSelector();
+  const currentUser = useAuthSelector((state) => state.currentUser);
+  const feed = useHomeSelector((state) => state.feed);
   const dispatch = useRootDispatch();
-
-  const { currentUser } = authStore;
-  const { feed } = homeStore;
 
   const handleLogin = async () => {
     return dispatch(login({ user_id: id, password }));

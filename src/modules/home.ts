@@ -5,7 +5,7 @@ import { TweetCreateRequest } from '../models/request/tweets';
 
 const HOMEPAGE_FEED_INITIAL_COUNT = 10;
 
-interface HomeState {
+export interface HomeState {
   feed: Tweet[];
 }
 

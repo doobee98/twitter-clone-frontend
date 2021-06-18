@@ -17,8 +17,7 @@ const SpaceSection = styled(ContentSection)`
 `;
 
 const HomePage: React.FC = () => {
-  const authStore = useAuthSelector();
-  const { currentUser } = authStore;
+  const currentUser = useAuthSelector((state) => state.currentUser);
 
   if (!currentUser) {
     return <Redirect to="/login" />;

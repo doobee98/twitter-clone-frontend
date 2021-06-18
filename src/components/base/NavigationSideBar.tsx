@@ -79,9 +79,8 @@ const BottomContainer = styled.div`
 const ToBeRemovedWrapper = styled(React.Fragment)``;
 
 const NavigationSideBar: React.FC = () => {
-  const authStore = useAuthSelector();
+  const currentUser = useAuthSelector((state) => state.currentUser);
   const dispatch = useRootDispatch();
-  const { currentUser } = authStore;
   const dispatchPopup = useRootDispatch();
 
   const openPopup = () => {

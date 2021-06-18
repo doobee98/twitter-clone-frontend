@@ -7,7 +7,7 @@ import Icon from 'components/base/Icon';
 import TweetPostToolBar from './TweetPostToolBar';
 import TweetPostText from './TweetPostText';
 import useInput from '../../hooks/useInput';
-import { useAppDispatch } from '../../hooks/redux';
+import { useRootDispatch } from '../../hooks/redux';
 import { createTweet } from '../../modules/home';
 
 const TweetPostContentContainer = styled.div`
@@ -119,7 +119,7 @@ const TweetPostContent: React.FC<TweetPostContentProps> = (props) => {
   const [isUploaded, setIsUploaded] = useState(false);
   const [tweetContent, onChangeTweetContent, setTweetContent] = useInput('');
   const [hasTweetContent, setHasTweetContent] = useState(false);
-  const dispatch = useAppDispatch();
+  const dispatch = useRootDispatch();
 
   const permissions = [
     {

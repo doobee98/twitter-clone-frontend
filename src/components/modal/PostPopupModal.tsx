@@ -3,7 +3,7 @@ import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
 import TweetPost from 'components/post/TweetPost';
 import { useEffect, useRef } from 'react';
-import { useAppDispatch } from 'hooks/redux';
+import { useRootDispatch } from 'hooks/redux';
 import { closePostModal } from 'modules/modal';
 import useClickOutside from 'hooks/useClickOutside';
 import Modal from './Modal';
@@ -72,7 +72,7 @@ interface PostPopupModalProps {
 const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
   const { isOpened, width } = props;
   const popup = useRef<HTMLDivElement>(null);
-  const dispatch = useAppDispatch();
+  const dispatch = useRootDispatch();
 
   const initLock = async () => {
     document.body.style.paddingRight = ` ${
