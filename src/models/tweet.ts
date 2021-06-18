@@ -14,3 +14,8 @@ export default interface Tweet {
   like_flag: boolean;
   reply_id?: string;
 }
+
+export interface TweetList {
+  totalCount: number;
+  data: Tweet[];
+}

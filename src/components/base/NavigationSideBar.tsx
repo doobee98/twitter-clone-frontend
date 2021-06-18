@@ -118,8 +118,10 @@ const NavigationSideBar: React.FC = () => {
           <NavItem iconType={HighlightType.LISTS} link="/lists">
             Lists
           </NavItem>
-          {/* TODO: need to change routing '/:user_id' */}
-          <NavItem iconType={HighlightType.PROFILE} link="/profile">
+          <NavItem
+            iconType={HighlightType.PROFILE}
+            link={currentUser ? `/${currentUser.user_id}` : '/'}
+          >
             Profile
           </NavItem>
           <NavItem iconType={BasicType.MORE_CIRCLE}>More</NavItem>

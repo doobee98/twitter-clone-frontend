@@ -9,4 +9,6 @@ export default interface User {
   bio?: string;
   website?: string;
   location?: string;
+
+  following_flag?: boolean;
 }

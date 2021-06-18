@@ -6,6 +6,10 @@ const useTitle = (newTitle?: string) => {
   const [title, setTitle] = useState(newTitle ?? defaultTitle);
 
   useEffect(() => {
+    setTitle(newTitle ?? defaultTitle);
+  }, [newTitle]);
+
+  useEffect(() => {
     const $title = document.querySelector('title') as HTMLTitleElement;
     $title.innerText = title;
   }, [title]);
