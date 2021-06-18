@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import TweetsApi from 'apis/TweetsApi';
-import { Tweet } from '../models/tweet';
+import Tweet from '../models/tweet';
 import { TweetCreateRequest } from '../models/request/tweets';
 
 const HOMEPAGE_FEED_INITIAL_COUNT = 10;

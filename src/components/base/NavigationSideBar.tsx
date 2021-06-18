@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useAppDispatch, useAuthSelector } from 'hooks/redux';
-import { login, logout } from 'modules/auth';
+import { logout } from 'modules/auth';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType, HighlightType } from 'utils/iconUtils';
+import { openPostModal } from 'modules/modal';
 import NavItem from './NavItem';
 import Button from './Button';
 import Icon from './Icon';
@@ -81,14 +82,10 @@ const NavigationSideBar: React.FC = () => {
   const authStore = useAuthSelector();
   const dispatch = useAppDispatch();
   const { currentUser } = authStore;
+  const dispatchPopup = useAppDispatch();
 
-  // [TODO: NEED TO BE REMOVED] test for login button
-  const fetchLogin = () => {
-    const loginRequest = {
-      user_id: '',
-      password: '',
-    };
-    dispatch(login(loginRequest));
+  const openPopup = () => {
+    dispatchPopup(openPostModal());
   };
 
   // [TODO: NEED TO BE REMOVED] test for logout button
@@ -121,19 +118,18 @@ const NavigationSideBar: React.FC = () => {
           <NavItem iconType={HighlightType.LISTS} link="/lists">
             Lists
           </NavItem>
-          {/* TODO: need to change routing '/:user_id' */}
-          <NavItem iconType={HighlightType.PROFILE} link="/profile">
+          <NavItem
+            iconType={HighlightType.PROFILE}
+            link={currentUser ? `/${currentUser.user_id}` : '/'}
+          >
             Profile
           </NavItem>
           <NavItem iconType={BasicType.MORE_CIRCLE}>More</NavItem>
         </NavList>
-        <TweetButton>Tweet</TweetButton>
+        <TweetButton onClick={openPopup}>Tweet</TweetButton>
       </TopContainer>
       <BottomContainer>
         <ToBeRemovedWrapper>
-          <button type="button" onClick={fetchLogin}>
-            로그인
-          </button>
           <button type="button" onClick={fetchLogout}>
             로그아웃
           </button>
