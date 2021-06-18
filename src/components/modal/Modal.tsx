@@ -4,7 +4,6 @@ import { ColorPalette } from 'utils/colorUtils';
 
 interface ModalContainerProps {
   top: number;
-  width: number;
 }
 
 const ModalContainer = styled.div<ModalContainerProps>`
@@ -19,17 +18,14 @@ const ModalContainer = styled.div<ModalContainerProps>`
 
 interface ModalProps {
   position?: [number, number];
-  width: number;
   className?: string;
 }
 
 const Modal: React.FC<ModalProps> = (props) => {
-  const { width, className, children } = props;
+  const { className, children } = props;
 
   return (
-    <ModalContainer top={window.pageYOffset + 100} width={width}>
-      {children}
-    </ModalContainer>
+    <ModalContainer top={window.pageYOffset + 100}>{children}</ModalContainer>
   );
 };
 

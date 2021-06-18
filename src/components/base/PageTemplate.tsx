@@ -53,7 +53,7 @@ const PageTemplate: React.FC<PageTemplateProps> = (props) => {
         <NavigationSideBar />
       </NavigationSideBarWrapper>
       <ContentWrapper>{children}</ContentWrapper>
-      <PostPopupModal isOpened={isOpenedPostModal} width={600} />
+      <PostPopupModal isOpened={isOpenedPostModal} />
     </PageTemplateContainer>
   );
 };

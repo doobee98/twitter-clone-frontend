@@ -64,13 +64,12 @@ const PostPopupModalContent: React.FC<PostPopupModalContentProps> = (props) => {
 };
 
 interface PostPopupModalProps {
-  width: number;
   isOpened: boolean;
   className?: string;
 }
 
 const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
-  const { isOpened, width } = props;
+  const { isOpened } = props;
   const popup = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
 
@@ -105,7 +104,7 @@ const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
 
   return (
     <PopupBackground>
-      <Modal width={width}>
+      <Modal>
         <div ref={popup}>
           <PostPopupModalHeader onClose={() => closePopup()} />
           <PostPopupModalContent onCreateTweet={() => closePopup()} />
