@@ -1,7 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import TweetsApi from 'apis/TweetsApi';
 import Tweet from '../models/tweet';
-import { TweetCreateRequest } from '../models/request/tweets';
+import {
+  TweetCreateRequest,
+  ReplyCreateRequest,
+} from '../models/request/tweets';
 
 const HOMEPAGE_FEED_INITIAL_COUNT = 10;
 
@@ -97,6 +100,26 @@ export const dislikeTweet = createAsyncThunk(
   },
 );
 
+export const replyTweet = createAsyncThunk(
+  'home/replyTweet',
+  async (replyCreateRequest: ReplyCreateRequest, thunkAPI) => {
+    try {
+      const { original_tweet_id, content, image_src_list } = replyCreateRequest;
+      const response = await TweetsApi.instance.replyTweet(
+        original_tweet_id,
+        content,
+        image_src_list,
+      );
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export const home = createSlice({
   name: 'home',
   initialState,
@@ -165,6 +188,16 @@ export const home = createSlice({
       };
     },
     [dislikeTweet.rejected.type]: (state, error) => {
+      console.log(error.payload);
+      return state;
+    },
+    [replyTweet.fulfilled.type]: (state, action) => {
+      const newTweet = action.payload;
+      return {
+        feed: [newTweet, ...state.feed],
+      };
+    },
+    [replyTweet.rejected.type]: (state, error) => {
       console.log(error.payload);
       return state;
     },
