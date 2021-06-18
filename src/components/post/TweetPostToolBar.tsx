@@ -1,6 +1,6 @@
-import Icon from 'components/base/Icon';
 import React, { useRef } from 'react';
 import styled from 'styled-components';
+import Icon from 'components/base/Icon';
 import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
 import { BasicType } from '../../utils/iconUtils';
 import Button from '../base/Button';
@@ -28,21 +28,6 @@ const ToolIconButton = styled(Button)`
 
   &:hover {
     background-color: ${hexToRgbA(ColorPalette.SKYBLUE, 0.1)};
-  }
-`;
-
-const TweetButton = styled(Button)`
-  float: right;
-  width: 70px;
-  height: 40px;
-  color: ${ColorPalette.WHITE};
-  background-color: ${ColorPalette.SKYBLUE};
-  font-size: 16px;
-  font-weight: bold;
-  /* shape-outside: inset(calc(100% - 100px) 0 0); */
-
-  &:hover {
-    background-color: ${ColorPalette.SKYBLUE_DARK};
   }
 `;
 
@@ -85,7 +70,6 @@ const TweetPostToolBar = (props: TweetPostToolBarProps) => {
             <Icon iconType={BasicType.SCHEDULE} iconSize={20} />
           </ToolIconButton>
         </ToolIconList>
-        <TweetButton> Tweet </TweetButton>
       </ToolBarContainer>
       <HiddenInput
         type="file"

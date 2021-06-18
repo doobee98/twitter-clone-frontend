@@ -1,5 +1,5 @@
 import { AxiosPromise } from 'axios';
-import { Tweet } from 'models/tweet';
+import Tweet from 'models/tweet';
 import Api from './Api';
 import ApiBuilder from './ApiBuilder';
 
@@ -64,6 +64,32 @@ class TweetsApi extends Api {
       .post()
       .url(this.apiEndPoints.FEED)
       .data({ offset, count })
+      .build();
+  }
+
+  replyTweet(
+    original_tweet_id: string,
+    content: string,
+    image_src_list?: string[],
+  ): AxiosPromise<Tweet> {
+    return ApiBuilder.create()
+      .post()
+      .url(this.apiEndPoints.REPLY(original_tweet_id))
+      .data({ content, image_src_list })
+      .build();
+  }
+
+  likeTweet(tweet_id: string): AxiosPromise<void> {
+    return ApiBuilder.create()
+      .post()
+      .url(this.apiEndPoints.TWEET_LIKE(tweet_id))
+      .build();
+  }
+
+  dislikeTweet(tweet_id: string): AxiosPromise<void> {
+    return ApiBuilder.create()
+      .delete()
+      .url(this.apiEndPoints.TWEET_LIKE(tweet_id))
       .build();
   }
 }

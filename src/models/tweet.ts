@@ -1,13 +1,4 @@
-export default interface TweetModel {
-  key: number;
-  user: string;
-  text: string;
-  comments: number;
-  retweets: number;
-  likes: number;
-}
-
-export interface Tweet {
+export default interface Tweet {
   type: 'tweet' | 'retweet' | 'reply';
   tweet_id: string;
   tweeted_at: string;
@@ -19,6 +10,9 @@ export interface Tweet {
   reply_count: number;
   retweet_count: number;
   like_count: number;
+
+  like_flag: boolean;
+  reply_id?: string;
 }
 
 export interface TweetList {

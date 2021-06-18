@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import UsersApi from 'apis/UsersApi';
-import { Tweet } from 'models/tweet';
+import Tweet from 'models/tweet';
 
 const PROFILEPAGE_FEED_INITIAL_COUNT = 10;
 
