@@ -12,12 +12,13 @@ const TweetPostContainer = styled.div`
 `;
 
 interface TweetPostProps {
+  isReply?: boolean;
   originalTweetId?: string;
   onCreatePost?: () => void;
 }
 
 const TweetPost: React.FC<TweetPostProps> = (props) => {
-  const { originalTweetId, onCreatePost } = props;
+  const { isReply, originalTweetId, onCreatePost } = props;
   const dispatch = useAppDispatch();
 
   const handlePost = async (tweetContent: string) => {
@@ -35,7 +36,10 @@ const TweetPost: React.FC<TweetPostProps> = (props) => {
   return (
     <TweetPostContainer>
       <TweetPostProfile />
-      <TweetPostContent onPost={handlePost} />
+      <TweetPostContent
+        placeholder={!isReply ? "What's happening?" : 'Add another Tweet'}
+        onPost={handlePost}
+      />
     </TweetPostContainer>
   );
 };

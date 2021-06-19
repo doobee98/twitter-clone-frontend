@@ -105,11 +105,12 @@ const TweetButton = styled(Button)`
 `;
 
 interface TweetPostContentProps {
+  placeholder?: string;
   onPost: (content: string) => void;
 }
 
 const TweetPostContent: React.FC<TweetPostContentProps> = (props) => {
-  const { onPost } = props;
+  const { placeholder, onPost } = props;
 
   const [isWritingStarted, setIsWritingStarted] = useState(false);
   const [textAreaHeight, setTextAreaHeight] = useState('auto');
@@ -173,6 +174,7 @@ const TweetPostContent: React.FC<TweetPostContentProps> = (props) => {
         <TweetPostText
           tweetContent={tweetContent}
           textAreaHeight={textAreaHeight}
+          placeholder={placeholder}
           onChangeTweetContent={onChangeTweetContent}
           setIsWritingStarted={setIsWritingStarted}
           setTextAreaHeight={setTextAreaHeight}

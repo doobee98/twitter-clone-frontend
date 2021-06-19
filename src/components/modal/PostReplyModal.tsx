@@ -64,6 +64,7 @@ const ReplyPopupModalContent: React.FC<ReplyPopupModalContentProps> = (
   return (
     <ReplyPopupModalContentWrapper>
       <TweetPost
+        isReply
         originalTweetId={tweet.reply_id}
         onCreatePost={onCreateTweet}
       />
@@ -81,7 +82,7 @@ const ReplyPopupModal: React.FC<ReplyPopupModalProps> = (props) => {
   const popup = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
   const modalStore = useModalOpen();
-  const { originalTweet: tweet } = modalStore;
+  const { originalTweet } = modalStore;
 
   const initLock = async () => {
     document.body.style.paddingRight = ` ${
@@ -109,15 +110,15 @@ const ReplyPopupModal: React.FC<ReplyPopupModalProps> = (props) => {
   });
 
   if (!isOpened) return null;
-  if (!tweet) return null;
+  if (!originalTweet) return null;
   return (
     <PopupBackground>
       <Modal>
         <div ref={popup}>
           <ReplyPopupModalHeader onClose={() => closePopup()} />
-          <TweetDescription tweet={tweet} />
+          <TweetDescription tweet={originalTweet} />
           <ReplyPopupModalContent
-            tweet={tweet}
+            tweet={originalTweet}
             onCreateTweet={() => closePopup()}
           />
         </div>
