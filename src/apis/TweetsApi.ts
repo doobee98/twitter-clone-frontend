@@ -2,9 +2,9 @@ import { AxiosPromise } from 'axios';
 import Tweet from 'models/tweet';
 import Api from './Api';
 import ApiBuilder from './ApiBuilder';
+import config from '../config';
 
-const apiPrefix = 'http://localhost:8000/api';
-const tweetsApiPrefix = `${apiPrefix}/tweets`;
+const tweetsApiPrefix = `${config.apiHost}/tweets`;
 
 class TweetsApi extends Api {
   apiEndPoints = {
