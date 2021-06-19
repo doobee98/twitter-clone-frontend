@@ -6,7 +6,7 @@ const useInfinityScroll = (
   timer: React.MutableRefObject<boolean>,
   setTimer: (inputBoolean: boolean) => void,
 ) => {
-  const infScroll = () => {
+  const infScroll = async () => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
     // THROTTLING
@@ -17,10 +17,10 @@ const useInfinityScroll = (
 
     if (scrollTop + clientHeight >= scrollHeight * 0.8) {
       setTimer(true);
-      setTimeout(() => {
-        scrollFunction();
-        setTimer(false);
-      }, 2000);
+
+      await scrollFunction();
+
+      setTimeout(() => setTimer(false), 2000);
     }
   };
 
