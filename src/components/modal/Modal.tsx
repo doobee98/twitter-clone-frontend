@@ -12,7 +12,7 @@ const ModalContainer = styled.div<ModalContainerProps>`
   background-color: ${ColorPalette.WHITE};
   border-radius: 25px;
   top: ${(props) => props.top}px;
-  left: calc(50vw - ${(props) => props.width / 2}px);
+  left: calc(57vw - ${(props) => props.width / 2}px);
   width: ${(props) => props.width}px;
   min-width: 375px;
 `;
