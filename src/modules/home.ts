@@ -196,10 +196,14 @@ export const home = createSlice({
     },
     // TODO: reply can be changed
     [replyTweet.fulfilled.type]: (state, action) => {
-      const newTweet = action.payload;
-      return {
-        feed: [newTweet, ...state.feed],
-      };
+      const newReplyTweet = action.payload;
+      const tweetIndex = state.feed.findIndex(
+        (tweet) => tweet.tweet_id === newReplyTweet.reply_id,
+      );
+      if (tweetIndex !== -1) {
+        state.feed[tweetIndex].reply_count += 1;
+      }
+      state.feed = [newReplyTweet, ...state.feed];
     },
     [replyTweet.rejected.type]: (state, error) => {
       console.log(error.payload);
