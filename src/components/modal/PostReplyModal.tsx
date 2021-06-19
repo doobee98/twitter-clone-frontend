@@ -65,7 +65,7 @@ const ReplyPopupModalContent: React.FC<ReplyPopupModalContentProps> = (
     <ReplyPopupModalContentWrapper>
       <TweetPost
         isReply
-        originalTweetId={tweet.reply_id}
+        originalTweetId={tweet.tweet_id}
         onCreatePost={onCreateTweet}
       />
     </ReplyPopupModalContentWrapper>
