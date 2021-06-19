@@ -4,9 +4,11 @@ import { useAppDispatch, useHomeSelector } from 'hooks/redux';
 import { fetchFeed } from 'modules/home';
 import Icon from 'components/base/Icon';
 import { BasicType } from 'utils/iconUtils';
+import { fetchUser, getUser } from 'modules/userRecord';
 import { ColorPalette } from '../../utils/colorUtils';
 import TweetComponent from './TweetComponent';
 import useInfinityScroll from '../../hooks/useInfinityScroll';
+import Tweet from '../../models/tweet';
 
 const ErrorContainer = styled.div`
   display: flex;
@@ -20,7 +22,6 @@ const ErrorContainer = styled.div`
 
 const TweetListContainer = styled.div`
   border: 2px solid ${ColorPalette.SKYBLUE};
-  margin: 10px;
 `;
 
 const TweetList: React.FC = () => {
@@ -35,9 +36,14 @@ const TweetList: React.FC = () => {
 
     if (res.type.toString() === 'home/fetchFeed/rejected') {
       setIsError(true);
+      return;
     }
 
-    setIsLoading(false);
+    await setIsLoading(false);
+
+    const newFeed = (await res.payload) as Tweet[];
+
+    Promise.all(newFeed.map((tweet) => dispatch(getUser(tweet.writer_id))));
   };
 
   // INIT FETCH

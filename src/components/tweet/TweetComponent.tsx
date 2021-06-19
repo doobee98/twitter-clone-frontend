@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAppDispatch } from 'hooks/redux';
 import User from 'models/user';
-import { fetchUser } from 'modules/userRecord';
+import { fetchUser, getUser } from 'modules/userRecord';
 import { ColorPalette } from '../../utils/colorUtils';
 import Tweet from '../../models/tweet';
 import TweetSide from './TweetSide';
@@ -17,6 +17,7 @@ const TweetContainer = styled.div`
 
   &:hover {
     color: ${ColorPalette.SKYBLUE};
+    background-color: ${ColorPalette.GRAY_E6};
   }
 `;
 
@@ -25,28 +26,24 @@ interface TweetComponentProps {
 }
 
 const TweetComponent: React.FC<TweetComponentProps> = (props) => {
-  const { children, tweet } = props;
-  const [user, setUser] = useState<User>();
+  const { tweet } = props;
+
   const dispatch = useAppDispatch();
 
-  const initTweet = async () => {
-    const res = await dispatch(fetchUser(tweet.writer_id));
+  // const initTweet = async () => {
+  //   const res = await dispatch(getUser(tweet.writer_id));
 
-    await setUser(res.payload as User);
-  };
+  //   await setUser(res.payload as User);
+  // };
 
-  useEffect(() => {
-    initTweet();
-  }, []);
-
-  if (!user) {
-    return null;
-  }
+  // useEffect(() => {
+  //   initTweet();
+  // }, []);
 
   return (
     <TweetContainer>
-      <TweetSide tweet={tweet} user={user} />
-      <TweetMain tweet={tweet} user={user} />
+      <TweetSide tweet={tweet} />
+      <TweetMain tweet={tweet} />
     </TweetContainer>
   );
 };

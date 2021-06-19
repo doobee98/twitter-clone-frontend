@@ -19,17 +19,16 @@ const TweetMainContainer = styled.div`
 
 interface TweetMainProps {
   tweet: Tweet;
-  user: User;
 }
 
 const TweetMain: React.FC<TweetMainProps> = (props) => {
-  const { tweet, user } = props;
+  const { tweet } = props;
 
   return (
     <TweetMainContainer>
-      <TweetMainTop tweet={tweet} user={user} />
-      <TweetMainCenter tweet={tweet} user={user} />
-      <TweetMainBottom tweet={tweet} user={user} />
+      <TweetMainTop tweet={tweet} />
+      <TweetMainCenter tweet={tweet} />
+      <TweetMainBottom tweet={tweet} />
     </TweetMainContainer>
   );
 };

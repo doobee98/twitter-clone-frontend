@@ -4,6 +4,7 @@ import { setTimeout } from 'timers';
 import Icon from 'components/base/Icon';
 import { BasicType } from 'utils/iconUtils';
 import User from 'models/user';
+import { useHistory } from 'react-router-dom';
 import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
 import ProfileTooltip from '../base/ProfileTooltip';
 import Tweet from '../../models/tweet';
@@ -20,6 +21,11 @@ const TweetMainTopItem = styled.div`
 
 const TweetMainTopUsername = styled(TweetMainTopItem)`
   font-weight: bold;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `;
 
 const TweetMainTopUseridTweetedAt = styled(TweetMainTopItem)`
@@ -74,14 +80,14 @@ const TweetMainTopContainer = styled.div`
 
 interface TweetMainTopProps {
   tweet: Tweet;
-  user: User;
 }
 
 const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
-  const { tweet, user } = props;
+  const { tweet } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout | undefined>();
   const [isMore, setIsMore] = useState(false);
+  const history = useHistory();
 
   const openProfileTooltip = () => {
     if (timer) {
@@ -104,6 +110,10 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
     setIsMore(!isMore);
   };
 
+  const goToProfilePage = () => {
+    history.push(`/${tweet.writer_id}`);
+  };
+
   const elapsed = getTweetedTimeGap(tweet.tweeted_at);
 
   return (
@@ -113,8 +123,9 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
           <TweetMainTopUsername
             onMouseEnter={openProfileTooltip}
             onMouseLeave={closeProfileTooltip}
+            onClick={goToProfilePage}
           >
-            {user.username}
+            {tweet.writer_name}
           </TweetMainTopUsername>
           <TweetMainTopUseridTweetedAt>
             @{tweet.writer_id} - {elapsed}
@@ -131,7 +142,11 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
           {isMore && <TweetMoreDropdown tweet={tweet} />}
         </TweetMainTopRightContainer>
       </TweetMainTopContainer>
-      <ProfileTooltip isOpen={isOpen} setIsOpen={setIsOpen} user={user} />
+      <ProfileTooltip
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        userId={tweet.writer_id}
+      />
     </>
   );
 };
