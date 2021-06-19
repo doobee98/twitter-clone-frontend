@@ -23,11 +23,10 @@ const TweetMainCenterContainer = styled.div`
 
 interface TweetMainCenterProps {
   tweet: Tweet;
-  user: User;
 }
 
 const TweetMainCenter: React.FC<TweetMainCenterProps> = (props) => {
-  const { children, tweet, user } = props;
+  const { tweet } = props;
 
   return (
     <TweetMainCenterContainer>

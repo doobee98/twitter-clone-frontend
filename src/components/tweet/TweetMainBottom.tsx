@@ -65,11 +65,10 @@ const HoverText = styled.div<HoverTextProps>`
 
 interface TweetMainBottomProps {
   tweet: Tweet;
-  user: User;
 }
 
 const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
-  const { tweet, user } = props;
+  const { tweet } = props;
   const [isLikeFlag, setIsLikeFlag] = useState<boolean>(tweet.like_flag);
   const dispatch = useAppDispatch();
 

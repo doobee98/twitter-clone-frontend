@@ -37,8 +37,6 @@ export const getUser = createAsyncThunk(
         return userRecord[userId];
       }
 
-      console.log('fetch');
-
       // fetchUser
       const response = await UsersApi.instance.getUser(userId);
       return response.data;

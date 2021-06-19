@@ -8,6 +8,7 @@ import { fetchUser, getUser } from 'modules/userRecord';
 import { ColorPalette } from '../../utils/colorUtils';
 import TweetComponent from './TweetComponent';
 import useInfinityScroll from '../../hooks/useInfinityScroll';
+import Tweet from '../../models/tweet';
 
 const ErrorContainer = styled.div`
   display: flex;
@@ -35,10 +36,14 @@ const TweetList: React.FC = () => {
 
     if (res.type.toString() === 'home/fetchFeed/rejected') {
       setIsError(true);
-    } else {
-      Promise.all(feed.map((tweet) => dispatch(getUser(tweet.writer_id))));
+      return;
     }
-    setIsLoading(false);
+
+    await setIsLoading(false);
+
+    const newFeed = (await res.payload) as Tweet[];
+
+    Promise.all(newFeed.map((tweet) => dispatch(getUser(tweet.writer_id))));
   };
 
   // INIT FETCH

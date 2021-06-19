@@ -80,11 +80,10 @@ const TweetMainTopContainer = styled.div`
 
 interface TweetMainTopProps {
   tweet: Tweet;
-  user: User;
 }
 
 const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
-  const { tweet, user } = props;
+  const { tweet } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout | undefined>();
   const [isMore, setIsMore] = useState(false);
@@ -146,7 +145,7 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
       <ProfileTooltip
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        userId={user.user_id}
+        userId={tweet.writer_id}
       />
     </>
   );
