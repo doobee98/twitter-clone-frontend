@@ -61,7 +61,7 @@ const TweetList: React.FC = () => {
         </ErrorContainer>
       ) : (
         <TweetListContainer>
-          {feed.map((tweet, index) => (
+          {feed.map((tweet) => (
             <TweetComponent key={tweet.tweet_id} tweet={tweet} />
           ))}
         </TweetListContainer>

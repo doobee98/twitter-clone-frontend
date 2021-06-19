@@ -10,17 +10,17 @@ const DropdownItemWrapper = styled.div`
 
   margin: 3px;
 
-  color: black;
+  color: ${ColorPalette.BLACK};
 
   &:hover {
     background-color: ${ColorPalette.GRAY_76};
-    color: black;
+    color: ${ColorPalette.BLACK};
     cursor: pointer;
   }
 `;
 
 interface DropdownItemsProps {
-  onClick?: () => any;
+  onClick?: () => void;
 }
 
 export const DropdownItem: React.FC<DropdownItemsProps> = (props) => {
@@ -42,14 +42,10 @@ const DropdownContainer = styled.div`
   border: 0.5px solid ${ColorPalette.GRAY_E6};
   border-radius: 2px;
 
-  background-color: white;
+  background-color: ${ColorPalette.WHITE};
 `;
 
-interface DropdownProps {
-  items?: string[];
-}
-
-const Dropdown: React.FC<DropdownProps> = (props) => {
+const Dropdown: React.FC = (props) => {
   const { children } = props;
   return <DropdownContainer>{children}</DropdownContainer>;
 };
