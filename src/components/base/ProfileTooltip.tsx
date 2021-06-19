@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from 'components/base/Button';
 import styled, { css } from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
+import User from 'models/user';
 import Profile from './Profile';
 
 const ProfileTooltipItemWrapper = styled.div`
@@ -12,7 +13,7 @@ const ProfileTooltipItemWrapper = styled.div`
 
   word-break: break-all;
   text-align: left;
-  color: black;
+  color: ${ColorPalette.BLACK};
 `;
 
 const ProfileTooltipHeader = styled(ProfileTooltipItemWrapper)`
@@ -86,7 +87,7 @@ const ProfileTooltipContianer = styled.div`
   border: 1px solid black;
   border-radius: 10px;
 
-  background-color: white;
+  background-color: ${ColorPalette.WHITE};
 
   cursor: default;
 `;
@@ -94,12 +95,11 @@ const ProfileTooltipContianer = styled.div`
 interface ProfileTooltipProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  userid: string;
-  username: string;
+  user: User;
 }
 
 const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
-  const { isOpen, setIsOpen, userid, username } = props;
+  const { isOpen, setIsOpen, user } = props;
   const [isHoverActive, setIsHoverActive] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
 
@@ -131,24 +131,27 @@ const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
           onMouseLeave={closeProfile}
         >
           <ProfileTooltipHeader>
-            <Profile userid={userid} username={username} />
+            <Profile userid={user.user_id} username={user.username} />
             <FollowButton>{tempFollowButton}</FollowButton>
           </ProfileTooltipHeader>
-          <ProfileTooltipUserName>{username}</ProfileTooltipUserName>
-          <ProfileTooltipUserId>@{userid}</ProfileTooltipUserId>
+          <ProfileTooltipUserName>{user.username}</ProfileTooltipUserName>
+          <ProfileTooltipUserId>@{user.user_id}</ProfileTooltipUserId>
           <ProfileTooltipItemWrapper>
-            bio djklfasf sadlkfjsadkl asdfsafasdfafdsfas
-            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            {user.bio ? user.bio : 'there is no bio'}
           </ProfileTooltipItemWrapper>
           <ProfileTooltipFollowItemContainer>
             <ProfileTooltipFollowItemWrapper>
-              <ProfileTooltipFollowItem isBold>130</ProfileTooltipFollowItem>
+              <ProfileTooltipFollowItem isBold>
+                {user.following_count}
+              </ProfileTooltipFollowItem>
               <ProfileTooltipFollowItem isGrey>
                 Following
               </ProfileTooltipFollowItem>
             </ProfileTooltipFollowItemWrapper>
             <ProfileTooltipFollowItemWrapper>
-              <ProfileTooltipFollowItem isBold>1203</ProfileTooltipFollowItem>
+              <ProfileTooltipFollowItem isBold>
+                {user.follower_count}
+              </ProfileTooltipFollowItem>
               <ProfileTooltipFollowItem isGrey>
                 Followers
               </ProfileTooltipFollowItem>

@@ -1,3 +1,4 @@
+import User from 'models/user';
 import React from 'react';
 import styled from 'styled-components';
 import Tweet from '../../models/tweet';
@@ -14,16 +15,17 @@ const TweetMainImageWrapper = styled.div`
   margin: 1px;
 `;
 
-interface TweetMainCenterProps {
-  tweet: Tweet;
-}
-
 const TweetMainCenterContainer = styled.div`
   margin: 1px;
 `;
 
+interface TweetMainCenterProps {
+  tweet: Tweet;
+  user: User;
+}
+
 const TweetMainCenter: React.FC<TweetMainCenterProps> = (props) => {
-  const { children, tweet } = props;
+  const { children, tweet, user } = props;
 
   return (
     <TweetMainCenterContainer>

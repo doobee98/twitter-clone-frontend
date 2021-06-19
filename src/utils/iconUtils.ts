@@ -36,6 +36,7 @@ import {
   AiOutlineGif,
   AiOutlineSchedule,
 } from 'react-icons/ai';
+import { GiCancel } from 'react-icons/gi';
 import { BiAt } from 'react-icons/bi';
 import { VscSmiley } from 'react-icons/vsc';
 import { isEnumType } from 'utils';
@@ -73,6 +74,7 @@ export enum BasicType {
   CLOSE = 'basic-close',
   ALERT = 'basic-alert',
   LOAD = 'basic-load',
+  CANCEL = 'basic-cancel',
 }
 
 export enum HighlightType {
@@ -118,6 +120,7 @@ const basicRecord = {
   [BasicType.CLOSE]: MdClose,
   [BasicType.ALERT]: FiAlertTriangle,
   [BasicType.LOAD]: FiLoader,
+  [BasicType.CANCEL]: GiCancel,
 };
 
 // [Icon when highlighted state, Icon when basic state]

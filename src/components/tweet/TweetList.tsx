@@ -20,7 +20,7 @@ const ErrorContainer = styled.div`
 
 const TweetListContainer = styled.div`
   border: 2px solid ${ColorPalette.SKYBLUE};
-  margin: 20px;
+  margin: 10px;
 `;
 
 const TweetList: React.FC = () => {
@@ -31,15 +31,18 @@ const TweetList: React.FC = () => {
   const { feed } = homeStore;
 
   const handleFetchFeed = async () => {
-    dispatch(fetchFeed()).then((res) => {
-      if (res.type.toString() === 'home/fetchFeed/rejected') setIsError(true);
-    });
+    const res = await dispatch(fetchFeed());
+
+    if (res.type.toString() === 'home/fetchFeed/rejected') {
+      setIsError(true);
+    }
+
+    setIsLoading(false);
   };
 
   // INIT FETCH
   useEffect(() => {
     handleFetchFeed();
-    setTimeout(() => setIsLoading(false), 2000);
   }, []);
 
   // InfinityScroll w/ Throttling
@@ -49,20 +52,29 @@ const TweetList: React.FC = () => {
   };
   useInfinityScroll(handleFetchFeed, timer, setTimer);
 
+  if (isLoading) {
+    return (
+      <ErrorContainer>
+        <Icon iconType={BasicType.LOAD} iconSize={100} />
+      </ErrorContainer>
+    );
+  }
+
+  if (isError) {
+    return (
+      <ErrorContainer>
+        <Icon iconType={BasicType.ALERT} iconSize={100} />
+      </ErrorContainer>
+    );
+  }
+
   return (
     <>
-      {isLoading || isError ? (
-        <ErrorContainer>
-          {(isLoading && <Icon iconType={BasicType.LOAD} iconSize={100} />) ||
-            (isError && <Icon iconType={BasicType.ALERT} iconSize={100} />)}
-        </ErrorContainer>
-      ) : (
-        <TweetListContainer>
-          {feed.map((tweet) => (
-            <TweetComponent key={tweet.tweet_id} tweet={tweet} />
-          ))}
-        </TweetListContainer>
-      )}
+      <TweetListContainer>
+        {feed.map((tweet) => (
+          <TweetComponent key={tweet.tweet_id} tweet={tweet} />
+        ))}
+      </TweetListContainer>
     </>
   );
 };
