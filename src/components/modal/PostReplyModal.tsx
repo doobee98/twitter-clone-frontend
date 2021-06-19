@@ -115,11 +115,11 @@ const ReplyPopupModal: React.FC<ReplyPopupModalProps> = (props) => {
     <PopupBackground>
       <Modal>
         <div ref={popup}>
-          <ReplyPopupModalHeader onClose={() => closePopup()} />
+          <ReplyPopupModalHeader onClose={closePopup} />
           <TweetDescription tweet={originalTweet} />
           <ReplyPopupModalContent
             tweet={originalTweet}
-            onCreateTweet={() => closePopup()}
+            onCreateTweet={closePopup}
           />
         </div>
       </Modal>
