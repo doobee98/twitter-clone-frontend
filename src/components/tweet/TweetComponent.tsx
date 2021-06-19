@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useAppDispatch } from 'hooks/redux';
 import User from 'models/user';
-import { fetchUser } from 'modules/userRecord';
+import { fetchUser, getUser } from 'modules/userRecord';
 import { ColorPalette } from '../../utils/colorUtils';
 import Tweet from '../../models/tweet';
 import TweetSide from './TweetSide';
@@ -31,7 +31,7 @@ const TweetComponent: React.FC<TweetComponentProps> = (props) => {
   const dispatch = useAppDispatch();
 
   const initTweet = async () => {
-    const res = await dispatch(fetchUser(tweet.writer_id));
+    const res = await dispatch(getUser(tweet.writer_id));
 
     await setUser(res.payload as User);
   };
