@@ -67,7 +67,6 @@ export enum BasicType {
   // tweet-list Bottom icons
   REPLY = 'basic-reply',
   RETWEET = 'basic-retweet',
-  LIKE = 'basic-like',
   SHARE = 'basic-share',
 
   // modal icons
@@ -112,7 +111,6 @@ const basicRecord = {
   // tweet-list Bottom icons
   [BasicType.REPLY]: FiMessageSquare,
   [BasicType.RETWEET]: FiRepeat,
-  [BasicType.LIKE]: RiHeartLine,
   [BasicType.SHARE]: FiShare,
 
   // modal icons
