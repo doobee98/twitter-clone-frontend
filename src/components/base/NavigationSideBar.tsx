@@ -31,6 +31,10 @@ const LogoNavItem = styled(NavItem)`
   width: 40px;
 `;
 
+const NotImplementedNavItem = styled(NavItem)`
+  color: ${ColorPalette.GRAY_96};
+`;
+
 const TweetButton = styled(Button)`
   width: 90%;
   margin: 20px 0;
@@ -101,30 +105,44 @@ const NavigationSideBar: React.FC = () => {
           <NavItem iconType={HighlightType.HOME} link="/home">
             Home
           </NavItem>
-          <NavItem iconType={HighlightType.EXPLORE} link="/explore">
+          <NotImplementedNavItem
+            iconType={HighlightType.EXPLORE}
+            link="/explore"
+          >
             Explore
-          </NavItem>
-          <NavItem iconType={HighlightType.NOTIFICATIONS} link="/notifications">
+          </NotImplementedNavItem>
+          <NotImplementedNavItem
+            iconType={HighlightType.NOTIFICATIONS}
+            link="/notifications"
+          >
             Notifications
-          </NavItem>
-          <NavItem iconType={HighlightType.MESSAGES} link="/messages">
+          </NotImplementedNavItem>
+          <NotImplementedNavItem
+            iconType={HighlightType.MESSAGES}
+            link="/messages"
+          >
             Messages
-          </NavItem>
+          </NotImplementedNavItem>
           {/* TODO: need to change routing '/i/bookmarks' */}
-          <NavItem iconType={HighlightType.BOOKMARKS} link="/bookmarks">
+          <NotImplementedNavItem
+            iconType={HighlightType.BOOKMARKS}
+            link="/bookmarks"
+          >
             Bookmarks
-          </NavItem>
+          </NotImplementedNavItem>
           {/* TODO: need to change routing '/:user_id/lists' */}
-          <NavItem iconType={HighlightType.LISTS} link="/lists">
+          <NotImplementedNavItem iconType={HighlightType.LISTS} link="/lists">
             Lists
-          </NavItem>
+          </NotImplementedNavItem>
           <NavItem
             iconType={HighlightType.PROFILE}
             link={currentUser ? `/${currentUser.user_id}` : '/'}
           >
             Profile
           </NavItem>
-          <NavItem iconType={BasicType.MORE_CIRCLE}>More</NavItem>
+          <NotImplementedNavItem iconType={BasicType.MORE_CIRCLE}>
+            More
+          </NotImplementedNavItem>
         </NavList>
         <TweetButton onClick={openPopup}>Tweet</TweetButton>
       </TopContainer>
