@@ -117,6 +117,9 @@ export const auth = createSlice({
     },
     [signup.rejected.type]: (state, error) => {
       console.log(error.payload);
+      if (error.payload.msg) {
+        window.alert(error.payload.msg);
+      }
       return state;
     },
   },
