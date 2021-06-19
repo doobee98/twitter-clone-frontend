@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import Button from 'components/base/Button';
 import styled, { css } from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
+import User from 'models/user';
+import { useHistory } from 'react-router-dom';
+import { useAuthSelector, useUserSelector } from 'hooks/redux';
 import Profile from './Profile';
+import FollowButton from '../profile/FollowButton';
 
 const ProfileTooltipItemWrapper = styled.div`
   display: flex;
@@ -12,21 +16,11 @@ const ProfileTooltipItemWrapper = styled.div`
 
   word-break: break-all;
   text-align: left;
-  color: black;
+  color: ${ColorPalette.BLACK};
 `;
 
 const ProfileTooltipHeader = styled(ProfileTooltipItemWrapper)`
   justify-content: space-between;
-`;
-
-const FollowButton = styled(Button)`
-  color: ${ColorPalette.WHITE};
-  background-color: ${ColorPalette.SKYBLUE};
-  font-weight: bold;
-
-  &:hover {
-    background-color: ${ColorPalette.SKYBLUE_DARK};
-  }
 `;
 
 const ProfileTooltipUserId = styled(ProfileTooltipItemWrapper)`
@@ -35,6 +29,11 @@ const ProfileTooltipUserId = styled(ProfileTooltipItemWrapper)`
 
 const ProfileTooltipUserName = styled(ProfileTooltipItemWrapper)`
   font-weight: bold;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `;
 
 const ProfileTooltipFollowItemContainer = styled(ProfileTooltipItemWrapper)`
@@ -86,7 +85,7 @@ const ProfileTooltipContianer = styled.div`
   border: 1px solid black;
   border-radius: 10px;
 
-  background-color: white;
+  background-color: ${ColorPalette.WHITE};
 
   cursor: default;
 `;
@@ -94,14 +93,16 @@ const ProfileTooltipContianer = styled.div`
 interface ProfileTooltipProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  userid: string;
-  username: string;
+  userId: string;
 }
 
 const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
-  const { isOpen, setIsOpen, userid, username } = props;
+  const { isOpen, setIsOpen, userId } = props;
+  const { currentUser } = useAuthSelector();
+  const user = useUserSelector(userId);
   const [isHoverActive, setIsHoverActive] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
+  const history = useHistory();
 
   const openProfile = () => {
     setIsHoverActive(true);
@@ -119,9 +120,15 @@ const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
     setTimer(newTimer);
   };
 
-  // TO BE REMOVED
-  // NEED USER API
-  const tempFollowButton = 'Follow';
+  if (!user) {
+    return null;
+  }
+
+  const goToProfilePage = () => {
+    history.push(`/${user.user_id}`);
+  };
+
+  const isMyProfile = currentUser?.user_id === user.user_id;
 
   return (
     <>
@@ -131,24 +138,29 @@ const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
           onMouseLeave={closeProfile}
         >
           <ProfileTooltipHeader>
-            <Profile userid={userid} username={username} />
-            <FollowButton>{tempFollowButton}</FollowButton>
+            <Profile userid={user.user_id} username={user.username} />
+            {!isMyProfile && <FollowButton user={user} />}
           </ProfileTooltipHeader>
-          <ProfileTooltipUserName>{username}</ProfileTooltipUserName>
-          <ProfileTooltipUserId>@{userid}</ProfileTooltipUserId>
+          <ProfileTooltipUserName onClick={goToProfilePage}>
+            {user.username}
+          </ProfileTooltipUserName>
+          <ProfileTooltipUserId>@{user.user_id}</ProfileTooltipUserId>
           <ProfileTooltipItemWrapper>
-            bio djklfasf sadlkfjsadkl asdfsafasdfafdsfas
-            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            {user.bio ? user.bio : 'there is no bio'}
           </ProfileTooltipItemWrapper>
           <ProfileTooltipFollowItemContainer>
             <ProfileTooltipFollowItemWrapper>
-              <ProfileTooltipFollowItem isBold>130</ProfileTooltipFollowItem>
+              <ProfileTooltipFollowItem isBold>
+                {user.following_count}
+              </ProfileTooltipFollowItem>
               <ProfileTooltipFollowItem isGrey>
                 Following
               </ProfileTooltipFollowItem>
             </ProfileTooltipFollowItemWrapper>
             <ProfileTooltipFollowItemWrapper>
-              <ProfileTooltipFollowItem isBold>1203</ProfileTooltipFollowItem>
+              <ProfileTooltipFollowItem isBold>
+                {user.follower_count}
+              </ProfileTooltipFollowItem>
               <ProfileTooltipFollowItem isGrey>
                 Followers
               </ProfileTooltipFollowItem>

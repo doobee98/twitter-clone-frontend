@@ -22,7 +22,7 @@ import {
   HiOutlineArrowLeft,
   HiOutlineHashtag,
 } from 'react-icons/hi';
-import { MdMail, MdMailOutline, MdClose } from 'react-icons/md';
+import { MdMail, MdMailOutline, MdClose, MdError } from 'react-icons/md';
 import {
   RiHome4Line,
   RiHome4Fill,
@@ -30,12 +30,15 @@ import {
   RiFileList2Line,
   RiBarChartHorizontalFill,
   RiEarthLine,
+  RiHeartLine,
+  RiHeartFill,
 } from 'react-icons/ri';
 import {
   AiOutlinePicture,
   AiOutlineGif,
   AiOutlineSchedule,
 } from 'react-icons/ai';
+import { GiCancel } from 'react-icons/gi';
 import { BiAt } from 'react-icons/bi';
 import { VscSmiley } from 'react-icons/vsc';
 import { isEnumType } from 'utils';
@@ -51,6 +54,8 @@ export enum BasicType {
   MORE = 'basic-more',
   LEFT_ARROW = 'basic-left-arrow',
 
+  ERROR = 'basic-error',
+
   // tweet-post icons
   MEDIA = 'basic-media',
   GIF = 'basic-gif',
@@ -64,13 +69,13 @@ export enum BasicType {
   // tweet-list Bottom icons
   REPLY = 'basic-reply',
   RETWEET = 'basic-retweet',
-  LIKE = 'basic-like',
   SHARE = 'basic-share',
 
   // modal icons
   CLOSE = 'basic-close',
   ALERT = 'basic-alert',
   LOAD = 'basic-load',
+  CANCEL = 'basic-cancel',
 }
 
 export enum HighlightType {
@@ -81,6 +86,7 @@ export enum HighlightType {
   BOOKMARKS = 'highlight-bookmarks',
   LISTS = 'highlight-lists',
   PROFILE = 'highlight-profile',
+  LIKE = 'highlight-like',
 }
 
 /* 
@@ -92,6 +98,8 @@ const basicRecord = {
   [BasicType.MORE_CIRCLE]: CgMoreO,
   [BasicType.MORE]: FiMoreHorizontal,
   [BasicType.LEFT_ARROW]: HiOutlineArrowLeft,
+
+  [BasicType.ERROR]: MdError,
 
   // tweet-post icons
   [BasicType.MEDIA]: AiOutlinePicture,
@@ -107,13 +115,13 @@ const basicRecord = {
   // tweet-list Bottom icons
   [BasicType.REPLY]: FiMessageSquare,
   [BasicType.RETWEET]: FiRepeat,
-  [BasicType.LIKE]: FiHeart,
   [BasicType.SHARE]: FiShare,
 
   // modal icons
   [BasicType.CLOSE]: MdClose,
   [BasicType.ALERT]: FiAlertTriangle,
   [BasicType.LOAD]: FiLoader,
+  [BasicType.CANCEL]: GiCancel,
 };
 
 // [Icon when highlighted state, Icon when basic state]
@@ -125,6 +133,7 @@ const highlightRecord = {
   [HighlightType.BOOKMARKS]: [FaBookmark, FaRegBookmark],
   [HighlightType.LISTS]: [RiFileList2Fill, RiFileList2Line],
   [HighlightType.PROFILE]: [BsPersonFill, BsPerson],
+  [HighlightType.LIKE]: [RiHeartLine, RiHeartFill],
 };
 
 type IgetIconType = {

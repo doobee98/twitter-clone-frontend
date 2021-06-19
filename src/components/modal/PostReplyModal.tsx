@@ -113,7 +113,7 @@ const ReplyPopupModal: React.FC<ReplyPopupModalProps> = (props) => {
   if (!originalTweet) return null;
   return (
     <PopupBackground>
-      <Modal>
+      <Modal width={600}>
         <div ref={popup}>
           <ReplyPopupModalHeader onClose={closePopup} />
           <TweetDescription tweet={originalTweet} />

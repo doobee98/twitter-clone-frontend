@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import TweetsApi from 'apis/TweetsApi';
 import Tweet from '../models/tweet';
@@ -167,12 +168,13 @@ export const home = createSlice({
     },
     [likeTweet.fulfilled.type]: (state, action) => {
       const tweetId = action.payload;
-      return {
-        feed: state.feed.map((tweet) => ({
-          ...tweet,
-          like_flag: tweet.tweet_id === tweetId ? true : tweet.like_flag,
-        })),
-      };
+      const tweetIndex = state.feed.findIndex(
+        (tweet) => tweet.tweet_id === tweetId,
+      );
+      if (tweetIndex !== -1) {
+        state.feed[tweetIndex].like_flag = true;
+        state.feed[tweetIndex].like_count += 1;
+      }
     },
     [likeTweet.rejected.type]: (state, error) => {
       console.log(error.payload);
@@ -180,12 +182,13 @@ export const home = createSlice({
     },
     [dislikeTweet.fulfilled.type]: (state, action) => {
       const tweetId = action.payload;
-      return {
-        feed: state.feed.map((tweet) => ({
-          ...tweet,
-          like_flag: tweet.tweet_id === tweetId ? false : tweet.like_flag,
-        })),
-      };
+      const tweetIndex = state.feed.findIndex(
+        (tweet) => tweet.tweet_id === tweetId,
+      );
+      if (tweetIndex !== -1) {
+        state.feed[tweetIndex].like_flag = false;
+        state.feed[tweetIndex].like_count -= 1;
+      }
     },
     [dislikeTweet.rejected.type]: (state, error) => {
       console.log(error.payload);

@@ -37,8 +37,6 @@ export const getUser = createAsyncThunk(
         return userRecord[userId];
       }
 
-      console.log('fetch');
-
       // fetchUser
       const response = await UsersApi.instance.getUser(userId);
       return response.data;
@@ -96,7 +94,7 @@ export const userRecord = createSlice({
     },
     [fetchUser.rejected.type]: (state, error) => {
       console.log(error.payload);
-      window.alert(error.payload.msg);
+      // window.alert(error.payload.msg);
     },
     [getUser.fulfilled.type]: (state, action) => {
       const user: User = action.payload;
@@ -104,7 +102,7 @@ export const userRecord = createSlice({
     },
     [getUser.rejected.type]: (state, error) => {
       console.log(error.payload);
-      window.alert(error.payload.msg);
+      // window.alert(error.payload.msg);
     },
     [followUser.fulfilled.type]: (state, action) => {
       const userId = action.payload;

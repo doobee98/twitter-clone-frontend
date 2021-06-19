@@ -5,12 +5,14 @@ import Tweet from 'models/tweet';
 interface ModalState {
   isOpenedPostModal: boolean;
   isOpenedReplyModal: boolean;
+  isOpenedSignupModal: boolean;
   originalTweet?: Tweet;
 }
 
 const initialState: ModalState = {
   isOpenedPostModal: false,
   isOpenedReplyModal: false,
+  isOpenedSignupModal: false,
 };
 
 export const modal = createSlice({
@@ -30,6 +32,12 @@ export const modal = createSlice({
     closeReplyModal: (state: ModalState, action: PayloadAction) => {
       state.isOpenedReplyModal = false;
     },
+    openSignupModal: (state: ModalState, action: PayloadAction) => {
+      state.isOpenedSignupModal = true;
+    },
+    closeSignupModal: (state: ModalState, action: PayloadAction) => {
+      state.isOpenedSignupModal = false;
+    },
   },
   extraReducers: {},
 });
@@ -39,5 +47,7 @@ export const {
   closePostModal,
   openReplyModal,
   closeReplyModal,
+  openSignupModal,
+  closeSignupModal,
 } = modal.actions;
 export default modal.reducer;
