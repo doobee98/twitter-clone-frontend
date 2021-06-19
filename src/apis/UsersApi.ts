@@ -3,9 +3,9 @@ import Tweet, { TweetList } from 'models/tweet';
 import User from 'models/user';
 import Api from './Api';
 import ApiBuilder from './ApiBuilder';
+import config from '../config';
 
-const apiPrefix = 'http://localhost:8000/api';
-const usersApiPrefix = `${apiPrefix}/users`;
+const usersApiPrefix = `${config.apiHost}/users`;
 
 class UsersApi extends Api {
   apiEndPoints = {

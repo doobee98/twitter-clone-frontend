@@ -2,9 +2,9 @@ import { AxiosPromise } from 'axios';
 import User from 'models/user';
 import Api from './Api';
 import ApiBuilder from './ApiBuilder';
+import config from '../config';
 
-const apiPrefix = 'http://localhost:8000/api';
-const authApiPrefix = `${apiPrefix}/auth`;
+const authApiPrefix = `${config.apiHost}/auth`;
 
 class AuthApi extends Api {
   apiEndPoints = {
