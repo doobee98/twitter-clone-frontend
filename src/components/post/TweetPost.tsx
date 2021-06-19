@@ -12,19 +12,22 @@ const TweetPostContainer = styled.div`
 `;
 
 interface TweetPostProps {
-  original_tweet_id?: string;
+  originalTweetId?: string;
   onCreatePost?: () => void;
 }
 
 const TweetPost: React.FC<TweetPostProps> = (props) => {
-  const { original_tweet_id, onCreatePost } = props;
+  const { originalTweetId, onCreatePost } = props;
   const dispatch = useAppDispatch();
 
   const handlePost = async (tweetContent: string) => {
     dispatch(
-      !original_tweet_id
+      !originalTweetId
         ? createTweet({ content: tweetContent })
-        : replyTweet({ original_tweet_id, content: tweetContent }),
+        : replyTweet({
+            original_tweet_id: originalTweetId,
+            content: tweetContent,
+          }),
     );
     if (onCreatePost) onCreatePost();
   };

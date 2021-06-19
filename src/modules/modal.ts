@@ -5,7 +5,7 @@ import Tweet from 'models/tweet';
 interface ModalState {
   isOpenedPostModal: boolean;
   isOpenedReplyModal: boolean;
-  tweet?: Tweet;
+  originalTweet?: Tweet;
 }
 
 const initialState: ModalState = {
@@ -25,7 +25,7 @@ export const modal = createSlice({
     },
     openReplyModal: (state: ModalState, action: PayloadAction<Tweet>) => {
       state.isOpenedReplyModal = true;
-      state.tweet = action.payload;
+      state.originalTweet = action.payload;
     },
     closeReplyModal: (state: ModalState, action: PayloadAction) => {
       state.isOpenedReplyModal = false;
