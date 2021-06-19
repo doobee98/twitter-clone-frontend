@@ -17,6 +17,10 @@ const initialState: HomeState = {
   feed: [],
 };
 
+const t = async (t: any) => {
+  window.alert(t);
+};
+
 export const fetchFeed = createAsyncThunk(
   'home/fetchFeed',
   async (_, thunkAPI) => {
@@ -106,11 +110,23 @@ export const replyTweet = createAsyncThunk(
   async (replyCreateRequest: ReplyCreateRequest, thunkAPI) => {
     try {
       const { original_tweet_id, content, image_src_list } = replyCreateRequest;
+      const rootState = thunkAPI.getState() as any;
+      const { feed } = rootState.home as HomeState;
+
       const response = await TweetsApi.instance.replyTweet(
         original_tweet_id,
         content,
         image_src_list,
       );
+
+      //   const tweetIndex = feed.findIndex(
+      //     (tweet) => tweet.tweet_id === response.reply_id,
+      //   );
+      //   if (tweetIndex !== -1) {
+      //     state.feed[tweetIndex].reply_count += 1;
+      //   }
+      //   console.log(state.feed[tweetIndex]);
+      console.log(response);
       return response.data;
     } catch (error) {
       if (!error.response) {
@@ -196,10 +212,14 @@ export const home = createSlice({
     },
     // TODO: reply can be changed
     [replyTweet.fulfilled.type]: (state, action) => {
-      const newTweet = action.payload;
-      return {
-        feed: [newTweet, ...state.feed],
-      };
+      const newReplyTweet = action.payload;
+      const tweetIndex = state.feed.findIndex(
+        (tweet) => tweet.tweet_id === newReplyTweet.reply_id,
+      );
+      if (tweetIndex !== -1) {
+        state.feed[tweetIndex].reply_count += 1;
+      }
+      state.feed = [newReplyTweet, ...state.feed];
     },
     [replyTweet.rejected.type]: (state, error) => {
       console.log(error.payload);
