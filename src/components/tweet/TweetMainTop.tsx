@@ -112,7 +112,7 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
   };
 
   const goToProfilePage = () => {
-    history.push(user.user_id);
+    history.push(`/${tweet.writer_id}`);
   };
 
   const elapsed = getTweetedTimeGap(tweet.tweeted_at);
