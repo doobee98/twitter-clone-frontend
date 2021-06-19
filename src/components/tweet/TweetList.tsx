@@ -35,13 +35,13 @@ const TweetList: React.FC = () => {
     if (res.type.toString() === 'home/fetchFeed/rejected') {
       setIsError(true);
     }
+
+    setIsLoading(false);
   };
 
   // INIT FETCH
-  const LOADING_TIMER = 2000;
   useEffect(() => {
     handleFetchFeed();
-    setTimeout(() => setIsLoading(false), LOADING_TIMER);
   }, []);
 
   // InfinityScroll w/ Throttling
@@ -51,20 +51,29 @@ const TweetList: React.FC = () => {
   };
   useInfinityScroll(handleFetchFeed, timer, setTimer);
 
+  if (isLoading) {
+    return (
+      <ErrorContainer>
+        <Icon iconType={BasicType.LOAD} iconSize={100} />
+      </ErrorContainer>
+    );
+  }
+
+  if (isError) {
+    return (
+      <ErrorContainer>
+        <Icon iconType={BasicType.ALERT} iconSize={100} />
+      </ErrorContainer>
+    );
+  }
+
   return (
     <>
-      {isLoading || isError ? (
-        <ErrorContainer>
-          {(isLoading && <Icon iconType={BasicType.LOAD} iconSize={100} />) ||
-            (isError && <Icon iconType={BasicType.ALERT} iconSize={100} />)}
-        </ErrorContainer>
-      ) : (
-        <TweetListContainer>
-          {feed.map((tweet, index) => (
-            <TweetComponent key={tweet.tweet_id} tweet={tweet} />
-          ))}
-        </TweetListContainer>
-      )}
+      <TweetListContainer>
+        {feed.map((tweet) => (
+          <TweetComponent key={tweet.tweet_id} tweet={tweet} />
+        ))}
+      </TweetListContainer>
     </>
   );
 };

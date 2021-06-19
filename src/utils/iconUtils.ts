@@ -22,7 +22,7 @@ import {
   HiOutlineArrowLeft,
   HiOutlineHashtag,
 } from 'react-icons/hi';
-import { MdMail, MdMailOutline } from 'react-icons/md';
+import { MdMail, MdMailOutline, MdClose } from 'react-icons/md';
 import {
   RiHome4Line,
   RiHome4Fill,
@@ -70,6 +70,8 @@ export enum BasicType {
   LIKE = 'basic-like',
   SHARE = 'basic-share',
 
+  // modal icons
+  CLOSE = 'basic-close',
   ALERT = 'basic-alert',
   LOAD = 'basic-load',
   CANCEL = 'basic-cancel',
@@ -102,6 +104,7 @@ const basicRecord = {
   [BasicType.POLL]: RiBarChartHorizontalFill,
   [BasicType.EMOJI]: VscSmiley,
   [BasicType.SCHEDULE]: AiOutlineSchedule,
+
   [BasicType.FRIENDS]: BsFillPeopleFill,
   [BasicType.AT]: BiAt,
   [BasicType.EARTH]: RiEarthLine,
@@ -112,6 +115,8 @@ const basicRecord = {
   [BasicType.LIKE]: RiHeartLine,
   [BasicType.SHARE]: FiShare,
 
+  // modal icons
+  [BasicType.CLOSE]: MdClose,
   [BasicType.ALERT]: FiAlertTriangle,
   [BasicType.LOAD]: FiLoader,
   [BasicType.CANCEL]: GiCancel,

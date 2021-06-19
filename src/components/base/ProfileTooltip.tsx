@@ -16,7 +16,7 @@ const ProfileTooltipItemWrapper = styled.div`
 
   word-break: break-all;
   text-align: left;
-  color: black;
+  color: ${ColorPalette.BLACK};
 `;
 
 const ProfileTooltipHeader = styled(ProfileTooltipItemWrapper)`
@@ -85,7 +85,7 @@ const ProfileTooltipContianer = styled.div`
   border: 1px solid black;
   border-radius: 10px;
 
-  background-color: white;
+  background-color: ${ColorPalette.WHITE};
 
   cursor: default;
 `;

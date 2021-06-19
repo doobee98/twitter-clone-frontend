@@ -51,6 +51,7 @@ const HoverIcon = styled(Icon)`
   height: 30px;
   border-radius: 9999px;
 `;
+
 interface HoverAreaProps {
   highlightColor: string;
 }

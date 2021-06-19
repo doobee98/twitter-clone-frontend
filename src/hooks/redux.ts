@@ -28,3 +28,4 @@ export function useUserSelector<T>(
     return filter ? filter(user) : user;
   });
 }
+export const useModalOpen = () => useAppSelector((state) => state.modal);
