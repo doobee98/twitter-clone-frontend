@@ -31,7 +31,7 @@ const ProfileImageWrapper = styled.div`
 
 const ProfileTooltipContainer = styled.div`
   position: relative;
-  top: 60%;
+  top: 40%;
   text-align: right;
 `;
 
