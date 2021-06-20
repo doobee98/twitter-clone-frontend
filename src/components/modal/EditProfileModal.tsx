@@ -10,6 +10,7 @@ import { BasicType } from 'utils/iconUtils';
 import useInput from 'hooks/useInput';
 import User from 'models/user';
 import { edit } from 'modules/auth';
+import { fetchUser, getUser } from 'modules/userRecord';
 import PopupBackground from './PopupBackground';
 import Modal from './Modal';
 
@@ -137,7 +138,7 @@ interface EditProfileModalContentProps {
 const EditProfileModalContent: React.FC<EditProfileModalContentProps> = (
   props,
 ) => {
-  const { user, onEdit: onCreateTweet } = props;
+  const { user, onEdit } = props;
   const [username, onChangeUserName, setUserName] = useInput(user.username);
   const [profile_img_src, onChangeProfileImgSrc, setProfileImgSrc] = useInput(
     user.profile_img_src,
@@ -147,9 +148,20 @@ const EditProfileModalContent: React.FC<EditProfileModalContentProps> = (
   const [website, onChangeWebsite, setWebsite] = useInput(user.website);
   const dispatch = useAppDispatch();
 
-  const onSubmit = () => {
-    dispatch(edit({ username, profile_img_src, bio, website, location }));
-    onCreateTweet();
+  const onSubmit = async () => {
+    const result = await dispatch(
+      edit({
+        username,
+        profile_img_src,
+        bio,
+        website,
+        location,
+      }),
+    );
+    if (result.type === 'auth/edit/fulfilled') {
+      await dispatch(fetchUser(user.user_id));
+      onEdit();
+    }
   };
 
   return (
@@ -186,7 +198,6 @@ const EditProfileModalContent: React.FC<EditProfileModalContentProps> = (
           placeholder="Website"
         />
       </InputWrapper>
-
       <EditButton onClick={onSubmit}>Edit</EditButton>
     </EditProfileModalContentWrapper>
   );
@@ -220,13 +231,17 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
     else finishLock();
   }, [isOpened]);
 
+  useClickOutside(popup, () => {
+    closePopup();
+  });
+
   const closePopup = () => {
     dispatch(closeEditModal());
   };
 
-  useClickOutside(popup, () => {
+  const handleEdit = () => {
     closePopup();
-  });
+  };
 
   if (!isOpened) return null;
   if (!user) return null;
@@ -235,7 +250,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
       <Modal width={600}>
         <div ref={popup}>
           <EditProfileModalHeader onClose={closePopup} />
-          <EditProfileModalContent user={user} onEdit={closePopup} />
+          <EditProfileModalContent user={user} onEdit={handleEdit} />
         </div>
       </Modal>
     </PopupBackground>
