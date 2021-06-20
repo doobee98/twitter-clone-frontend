@@ -7,11 +7,11 @@ const config: Record<string, Config> = {
     apiHost: 'http://152.70.90.6:8000/api',
   },
   DEVELOP: {
-    apiHost: 'http://152.70.90.6:8000/api',
+    apiHost: 'http://localhost:8000/api',
   },
   PRODUCTION: {
     apiHost: 'http://152.70.90.6:8000/api',
   },
 };
 
-export default config.LOCAL as Config;
+export default config.DEVELOP as Config;

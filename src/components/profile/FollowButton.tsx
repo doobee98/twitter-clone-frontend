@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import Button from 'components/base/Button';
 import { useAppDispatch } from 'hooks/redux';
-import { followUser, unfollowUser } from 'modules/userRecord';
+import { fetchUser, followUser, unfollowUser } from 'modules/userRecord';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import User from 'models/user';
 
@@ -45,12 +45,18 @@ const FollowButton: React.FC<FollowButtonProps> = (props) => {
     return null;
   }
 
-  const handleFollow = () => {
-    dispatch(followUser(user.user_id));
+  const handleFollow = async () => {
+    const result = await dispatch(followUser(user.user_id));
+    if (result.type === 'userRecord/followUser/fulfilled') {
+      await dispatch(fetchUser(user.user_id));
+    }
   };
 
-  const handleUnfollow = () => {
-    dispatch(unfollowUser(user.user_id));
+  const handleUnfollow = async () => {
+    const result = await dispatch(unfollowUser(user.user_id));
+    if (result.type === 'userRecord/unfollowUser/fulfilled') {
+      await dispatch(fetchUser(user.user_id));
+    }
   };
 
   if (!user.following_flag) {
