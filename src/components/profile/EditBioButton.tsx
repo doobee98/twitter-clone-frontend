@@ -5,6 +5,7 @@ import { useAppDispatch } from 'hooks/redux';
 import { followUser, unfollowUser } from 'modules/userRecord';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import User from 'models/user';
+import { openEditModal } from 'modules/modal';
 
 const EditBio = styled(Button)`
   color: ${ColorPalette.SKYBLUE};
@@ -24,13 +25,17 @@ const EditBioButton: React.FC<EditBioButtonProps> = (props) => {
   const { user } = props;
   const dispatch = useAppDispatch();
 
+  const handleSubmit = () => {
+    dispatch(openEditModal(user));
+  };
+
   if (!user) {
     return null;
   }
 
   return (
     <>
-      <EditBio>Edit Biography</EditBio>
+      <EditBio onClick={handleSubmit}>Edit Biography</EditBio>
     </>
   );
 };

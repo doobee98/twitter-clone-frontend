@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import useClickOutside from 'hooks/useClickOutside';
 import { useAppDispatch } from 'hooks/redux';
-import { closePostModal } from 'modules/modal';
+import { closeEditModal, closePostModal } from 'modules/modal';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import styled from 'styled-components';
 import Button from 'components/base/Button';
@@ -164,7 +164,6 @@ const PostPopupModalContent: React.FC<EditProfileModalContentProps> = (
         <Input
           value={location}
           onChange={onChangeLocation}
-          //   onClick={}
           placeholder="Location"
         />
       </InputWrapper>
@@ -217,7 +216,7 @@ const EditBioModal: React.FC<EditBioModalProps> = (props) => {
   }, [isOpened]);
 
   const closePopup = () => {
-    dispatch(closePostModal());
+    dispatch(closeEditModal());
   };
 
   useClickOutside(popup, () => {
