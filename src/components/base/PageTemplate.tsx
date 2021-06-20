@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import useTitle from 'hooks/useTitle';
-import EditBioModal from 'components/modal/EditProfileModal';
 import NavigationSideBar from './NavigationSideBar';
 import PostPopupModal from '../modal/PostPopupModal';
 import ReplyPopupModal from '../modal/PostReplyModal';
+import EditProfileModal from '../modal/EditProfileModal';
 import { useModalOpen } from '../../hooks/redux';
 
 const PageTemplateContainer = styled.div`
@@ -58,7 +58,7 @@ const PageTemplate: React.FC<PageTemplateProps> = (props) => {
       <ContentWrapper>{children}</ContentWrapper>
       <PostPopupModal isOpened={isOpenedPostModal} />
       <ReplyPopupModal isOpened={isOpenedReplyModal} />
-      <EditBioModal isOpened={isOpenedEditModal} />
+      <EditProfileModal isOpened={isOpenedEditModal} />
     </PageTemplateContainer>
   );
 };

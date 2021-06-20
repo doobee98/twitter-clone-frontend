@@ -5,7 +5,7 @@ import { useAppDispatch } from 'hooks/redux';
 import { openEditModal } from 'modules/modal';
 import Profile from '../base/Profile';
 import FollowButton from './FollowButton';
-import EditBioButton from './EditBioButton';
+import EditProfileButton from './EditProfileButton';
 
 const ProfileHeaderContainer = styled.div`
   width: 106%;
@@ -58,7 +58,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = (props) => {
         <ProfileTooltipContainer>
           <PorfileTooltipItem>
             {isCurrentUser ? (
-              <EditBioButton user={user} />
+              <EditProfileButton user={user} />
             ) : (
               <FollowButton user={user} />
             )}

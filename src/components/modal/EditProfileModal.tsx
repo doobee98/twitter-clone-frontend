@@ -68,7 +68,7 @@ const EditProfileModalContentWrapper = styled.div`
 const InputWrapper = styled.div`
   text-align: left;
   display: inline-block;
-  width: 550px;
+  width: 90%;
 
   outline: none;
   border: 2px solid ${ColorPalette.GRAY_E6};
@@ -91,7 +91,7 @@ const Label = styled.strong`
 
 const Input = styled.input`
   display: inline-block;
-  width: 500px;
+  width: 90%;
   padding: 10px;
   outline: none;
   border: 1px solid ${ColorPalette.GRAY_E6};
@@ -100,7 +100,7 @@ const Input = styled.input`
 `;
 
 const BiographyText = styled.textarea`
-  width: 500px;
+  width: 90%;
   height: 120px;
   padding: 10px;
   margin: 0px;
@@ -118,9 +118,9 @@ const EditButton = styled(Button)`
   display: inline-block;
   color: ${ColorPalette.WHITE};
   background-color: ${ColorPalette.SKYBLUE};
-  width: 550px;
+  width: 80%;
   margin-top: 25px;
-  font-size: 26px;
+  font-size: 24px;
   font-weight: bold;
 
   &:hover {
@@ -133,11 +133,10 @@ interface EditProfileModalContentProps {
   onCreateTweet: () => void;
 }
 
-const PostPopupModalContent: React.FC<EditProfileModalContentProps> = (
+const EditProfileModalContent: React.FC<EditProfileModalContentProps> = (
   props,
 ) => {
   const { user, onCreateTweet } = props;
-  // initla- user -content
   const [name, onChangeName, setName] = useInput(user.username);
   const [biography, onChangeBiography, setBiography] = useInput(user.bio);
   const [location, onChangeLocation, setLocation] = useInput(user.location);
@@ -191,11 +190,11 @@ const PostPopupModalContent: React.FC<EditProfileModalContentProps> = (
   );
 };
 
-interface EditBioModalProps {
+interface EditProfileModalProps {
   isOpened: boolean;
 }
 
-const EditBioModal: React.FC<EditBioModalProps> = (props) => {
+const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
   const { isOpened } = props;
   const popup = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
@@ -234,11 +233,11 @@ const EditBioModal: React.FC<EditBioModalProps> = (props) => {
       <Modal width={600}>
         <div ref={popup}>
           <EditProfileModalHeader onClose={closePopup} />
-          <PostPopupModalContent user={user} onCreateTweet={closePopup} />
+          <EditProfileModalContent user={user} onCreateTweet={closePopup} />
         </div>
       </Modal>
     </PopupBackground>
   );
 };
 
-export default EditBioModal;
+export default EditProfileModal;

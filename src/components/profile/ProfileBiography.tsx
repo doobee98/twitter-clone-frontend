@@ -94,10 +94,10 @@ const ProfileBiography: React.FC<ProfileBiographyProps> = (props) => {
       <ProfileBioUserId>@{user.user_id}</ProfileBioUserId>
       <ProfileBioText>{user.bio ? user.bio : 'there is no bio'}</ProfileBioText>
       <AttributeLine>
-        <AttributeSoft>{user.following_count}</AttributeSoft>
-        <AttributeBold>Following</AttributeBold>
-        <AttributeSoft> {user.follower_count}</AttributeSoft>
-        <AttributeBold>Followers</AttributeBold>
+        <AttributeBold>{user.following_count}</AttributeBold>
+        <AttributeSoft>Following</AttributeSoft>
+        <AttributeBold> {user.follower_count}</AttributeBold>
+        <AttributeSoft>Followers</AttributeSoft>
       </AttributeLine>
       <AttributeLine>
         {user.location && (
