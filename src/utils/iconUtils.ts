@@ -16,6 +16,7 @@ import {
   FiShare,
   FiAlertTriangle,
   FiLoader,
+  FiLink,
 } from 'react-icons/fi';
 import {
   HiHashtag,
@@ -41,6 +42,8 @@ import {
 import { GiCancel } from 'react-icons/gi';
 import { BiAt } from 'react-icons/bi';
 import { VscSmiley } from 'react-icons/vsc';
+import { SiGooglecalendar } from 'react-icons/si';
+import { IoLocationSharp } from 'react-icons/io5';
 import { isEnumType } from 'utils';
 
 /* 
@@ -76,6 +79,10 @@ export enum BasicType {
   ALERT = 'basic-alert',
   LOAD = 'basic-load',
   CANCEL = 'basic-cancel',
+
+  CALENDAR = 'basic-calendar',
+  LINK = 'basic-link',
+  LOCATION = 'basic-location',
 }
 
 export enum HighlightType {
@@ -122,6 +129,10 @@ const basicRecord = {
   [BasicType.ALERT]: FiAlertTriangle,
   [BasicType.LOAD]: FiLoader,
   [BasicType.CANCEL]: GiCancel,
+
+  [BasicType.CALENDAR]: SiGooglecalendar,
+  [BasicType.LINK]: FiLink,
+  [BasicType.LOCATION]: IoLocationSharp,
 };
 
 // [Icon when highlighted state, Icon when basic state]
