@@ -68,6 +68,36 @@ export const deleteTweet = createAsyncThunk(
   },
 );
 
+export const retweetTweet = createAsyncThunk(
+  'tweets/retweetTweet',
+  async (tweetId: string, thunkAPI) => {
+    try {
+      await TweetsApi.instance.retweetTweet(tweetId);
+      return tweetId;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const unretweetTweet = createAsyncThunk(
+  'tweets/unretweetTweet',
+  async (tweetId: string, thunkAPI) => {
+    try {
+      await TweetsApi.instance.unretweetTweet(tweetId);
+      return tweetId;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export const likeTweet = createAsyncThunk(
   'tweets/likeTweet',
   async (tweetId: string, thunkAPI) => {
@@ -140,6 +170,34 @@ export const home = createSlice({
       };
     },
     [deleteTweet.rejected.type]: (state, error) => {
+      console.log(error.payload);
+      return state;
+    },
+    [retweetTweet.fulfilled.type]: (state, action) => {
+      const tweetId = action.payload;
+      const tweetIndex = state.feed.findIndex(
+        (tweet) => tweet.tweet_id === tweetId,
+      );
+      if (tweetIndex !== -1) {
+        state.feed[tweetIndex].retweet_flag = true;
+        state.feed[tweetIndex].retweet_count += 1;
+      }
+    },
+    [retweetTweet.rejected.type]: (state, error) => {
+      console.log(error.payload);
+      return state;
+    },
+    [unretweetTweet.fulfilled.type]: (state, action) => {
+      const tweetId = action.payload;
+      const tweetIndex = state.feed.findIndex(
+        (tweet) => tweet.tweet_id === tweetId,
+      );
+      if (tweetIndex !== -1) {
+        state.feed[tweetIndex].retweet_flag = false;
+        state.feed[tweetIndex].retweet_count -= 1;
+      }
+    },
+    [unretweetTweet.rejected.type]: (state, error) => {
       console.log(error.payload);
       return state;
     },
