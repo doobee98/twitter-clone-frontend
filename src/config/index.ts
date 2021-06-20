@@ -14,4 +14,4 @@ const config: Record<string, Config> = {
   },
 };
 
-export default config.DEVELOP as Config;
+export default config.LOCAL as Config;
