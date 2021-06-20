@@ -51,8 +51,7 @@ const ProfileMain: React.FC<ProfileMainProps> = (props) => {
   const { userId, handleFetchFeed, isLoading, isError } = props;
   const { currentUser } = useAuthSelector();
   const user = useUserSelector(userId);
-  const totalCount = useAppSelector((state) => state.profile.totalCount);
-  const { feed } = useHomeSelector();
+  const { feed, totalCount: userFeedCount } = useHomeSelector();
 
   if (!user) {
     return null;
@@ -69,7 +68,7 @@ const ProfileMain: React.FC<ProfileMainProps> = (props) => {
         <UserInfoContainer>
           <strong>{user.username}</strong>
           <TweetCount>
-            {`${totalCount} ${totalCount <= 1 ? 'Tweet' : 'Tweets'}`}
+            {`${userFeedCount} ${userFeedCount <= 1 ? 'Tweet' : 'Tweets'}`}
           </TweetCount>
         </UserInfoContainer>
       </ContentHeader>
@@ -77,16 +76,14 @@ const ProfileMain: React.FC<ProfileMainProps> = (props) => {
         <ProfileHeader />
         {!isMyProfile && <FollowButton user={user} />}
       </ContentSection>
-      <ContentSection>
-        <ContentTemplate>
-          <TweetList
-            feed={feed}
-            handleFetchFeed={handleFetchFeed}
-            isLoading={isLoading}
-            isError={isError}
-          />
-        </ContentTemplate>
-      </ContentSection>
+      <ContentTemplate>
+        <TweetList
+          feed={feed}
+          handleFetchFeed={handleFetchFeed}
+          isLoading={isLoading}
+          isError={isError}
+        />
+      </ContentTemplate>
     </>
   );
 };

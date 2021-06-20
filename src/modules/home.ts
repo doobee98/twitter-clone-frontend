@@ -9,10 +9,12 @@ const FEED_INITIAL_COUNT = 10;
 
 interface HomeState {
   feed: Tweet[];
+  totalCount: number;
 }
 
 const initialState: HomeState = {
   feed: [],
+  totalCount: 0,
 };
 
 export const fetchFeed = createAsyncThunk(
@@ -123,7 +125,9 @@ export const dislikeTweet = createAsyncThunk(
 export const home = createSlice({
   name: 'home',
   initialState,
-  reducers: {},
+  reducers: {
+    clearHomeState: () => initialState,
+  },
   extraReducers: {
     [fetchFeed.fulfilled.type]: (state, action) => {
       const newFeed = action.payload;
@@ -139,6 +143,7 @@ export const home = createSlice({
       const { totalCount, data: newFeed } = action.payload;
       return {
         feed: [...state.feed, ...newFeed],
+        totalCount,
       };
     },
     [fetchUserFeed.rejected.type]: (state, error) => {
@@ -207,3 +212,4 @@ export const home = createSlice({
 });
 
 export default home.reducer;
+export const { clearHomeState } = home.actions;

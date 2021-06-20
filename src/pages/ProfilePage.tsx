@@ -7,11 +7,16 @@ import ProfileMain from 'components/profile/ProfileMain';
 import { useAppDispatch, useHomeSelector, useUserSelector } from 'hooks/redux';
 import { clearProfileState, getUserFeed } from 'modules/profile';
 import { fetchUser, getUser } from 'modules/userRecord';
-import { fetchUserFeed } from 'modules/home';
+import { clearHomeState, fetchUserFeed } from 'modules/home';
 import Tweet from 'models/tweet';
 
 interface ProfilePageParams {
   id: string;
+}
+
+interface PayloadInterface {
+  userFeedCount: number;
+  data: Array<Tweet>;
 }
 
 const ProfilePage: React.FC = () => {
@@ -20,11 +25,6 @@ const ProfilePage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const dispatch = useAppDispatch();
-
-  interface payloadInterface {
-    totalCount: number;
-    data: Array<any>;
-  }
 
   const handleFetchFeed = async () => {
     const res = await dispatch(fetchUserFeed(paramId));
@@ -36,16 +36,16 @@ const ProfilePage: React.FC = () => {
 
     await setIsLoading(false);
 
-    const payload = (await res.payload) as payloadInterface;
-    const newFeed = (await payload.data) as Tweet[];
+    const payload = res.payload as PayloadInterface;
+    const newFeed = payload.data as Tweet[];
 
     Promise.all(newFeed.map((tweet) => dispatch(getUser(tweet.writer_id))));
   };
 
   useEffect(() => {
     dispatch(clearProfileState());
+    dispatch(clearHomeState());
     handleFetchFeed();
-    dispatch(getUserFeed(paramId));
   }, [paramId]);
 
   return (
