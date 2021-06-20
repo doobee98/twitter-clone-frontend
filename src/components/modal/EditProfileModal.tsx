@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import useClickOutside from 'hooks/useClickOutside';
-import { useAppDispatch } from 'hooks/redux';
+import { useAppDispatch, useModalOpen } from 'hooks/redux';
 import { closeEditModal, closePostModal } from 'modules/modal';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import styled from 'styled-components';
@@ -8,6 +8,7 @@ import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
 import { BasicType } from 'utils/iconUtils';
 import useInput from 'hooks/useInput';
+import User from 'models/user';
 import PopupBackground from './PopupBackground';
 import Modal from './Modal';
 
@@ -128,18 +129,19 @@ const EditButton = styled(Button)`
 `;
 
 interface EditProfileModalContentProps {
+  user: User;
   onCreateTweet: () => void;
 }
 
 const PostPopupModalContent: React.FC<EditProfileModalContentProps> = (
   props,
 ) => {
-  const { onCreateTweet } = props;
+  const { user, onCreateTweet } = props;
   // initla- user -content
-  const [name, onChangeName, setName] = useInput('');
-  const [biography, onChangeBiography, setBiography] = useInput('');
-  const [location, onChangeLocation, setLocation] = useInput('');
-  const [website, onChangeWebsite, setWebsite] = useInput('');
+  const [name, onChangeName, setName] = useInput(user.username);
+  const [biography, onChangeBiography, setBiography] = useInput(user.bio);
+  const [location, onChangeLocation, setLocation] = useInput(user.location);
+  const [website, onChangeWebsite, setWebsite] = useInput(user.website);
 
   const clearInput = () => {
     setName('');
@@ -197,6 +199,8 @@ const EditBioModal: React.FC<EditBioModalProps> = (props) => {
   const { isOpened } = props;
   const popup = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
+  const modalStore = useModalOpen();
+  const { profileOwner: user } = modalStore;
 
   const initLock = async () => {
     document.body.style.paddingRight = ` ${
@@ -224,12 +228,13 @@ const EditBioModal: React.FC<EditBioModalProps> = (props) => {
   });
 
   if (!isOpened) return null;
+  if (!user) return null;
   return (
     <PopupBackground>
       <Modal width={600}>
         <div ref={popup}>
           <EditProfileModalHeader onClose={closePopup} />
-          <PostPopupModalContent onCreateTweet={closePopup} />
+          <PostPopupModalContent user={user} onCreateTweet={closePopup} />
         </div>
       </Modal>
     </PopupBackground>

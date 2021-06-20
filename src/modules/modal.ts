@@ -8,7 +8,7 @@ interface ModalState {
   isOpenedReplyModal: boolean;
   isOpenedSignupModal: boolean;
   isOpenedEditModal: boolean;
-  porfileOwner?: User;
+  profileOwner?: User;
   originalTweet?: Tweet;
 }
 
@@ -44,7 +44,7 @@ export const modal = createSlice({
     },
     openEditModal: (state: ModalState, action: PayloadAction<User>) => {
       state.isOpenedEditModal = true;
-      state.porfileOwner = action.payload;
+      state.profileOwner = action.payload;
     },
     closeEditModal: (state: ModalState, action: PayloadAction) => {
       state.isOpenedEditModal = false;
