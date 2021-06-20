@@ -13,7 +13,7 @@ const NotImplementedPage: React.FC = () => {
   return (
     <>
       <PageTemplate title="Error">
-        <ContentTemplate>
+        <ContentTemplate width="900px">
           <ErrorWrapper>
             <Error
               title="404 Not Found"

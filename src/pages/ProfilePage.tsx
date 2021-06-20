@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ContentTemplate from 'components/base/ContentTemplate';
 import PageTemplate from 'components/base/PageTemplate';
+import ExploreSideBar from 'components/explore/ExploreSideBar';
 import ProfileMain from 'components/profile/ProfileMain';
 import { useAppDispatch, useUserSelector } from 'hooks/redux';
 import { clearProfileState, getUserFeed } from 'modules/profile';
@@ -32,12 +33,9 @@ const ProfilePage: React.FC = () => {
       <ContentTemplate>
         {initLoading && <ProfileMain userId={paramId} />}
       </ContentTemplate>
-      {/* <ContentTemplate width="300px" hideBorder>
-        <ContentHeader hideBorder>
-          <strong>SearchBar</strong>
-        </ContentHeader>
+      <ContentTemplate width="300px" hideBorder>
         <ExploreSideBar />
-      </ContentTemplate> */}
+      </ContentTemplate>
     </PageTemplate>
   );
 };
