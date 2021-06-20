@@ -10,9 +10,9 @@ export interface SignUpRequest {
 }
 
 export interface EditRequest {
-  username: string;
-  profile_img_src: string;
-  bio: string;
-  website: string;
-  location: string;
+  username?: string;
+  profile_img_src?: string;
+  bio?: string;
+  website?: string;
+  location?: string;
 }

@@ -88,11 +88,11 @@ export const edit = createAsyncThunk(
     try {
       const { username, profile_img_src, bio, website, location } = editRequest;
       const response = await AuthApi.instance.editInfo(
-        username,
-        profile_img_src,
-        bio,
-        website,
-        location,
+        username || undefined,
+        profile_img_src || undefined,
+        bio || undefined,
+        website || undefined,
+        location || undefined,
       );
       return response.data as User;
     } catch (error) {
