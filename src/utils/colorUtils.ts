@@ -1,6 +1,7 @@
 export enum ColorPalette {
   BLACK = '#000000',
   LIGHTDARK = '#0f1419',
+  LIGHTERDARK = '#c4cfd6',
   WHITE = '#ffffff',
 
   SKYBLUE = '#1da0f2',

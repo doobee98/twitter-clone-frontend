@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { hexToRgbA, ColorPalette } from 'utils/colorUtils';
 import Profile from '../base/Profile';
 import FollowButton from './FollowButton';
+import EditBioButton from './EditBioButton';
 
 const ProfileHeaderContainer = styled.div`
   width: 106%;
@@ -14,7 +15,7 @@ const ProfileUpperBackground = styled.div`
   display: absolute;
   width: auto;
   height: 200px;
-  background-color: ${hexToRgbA(ColorPalette.BLACK, 0.4)};
+  background-color: ${ColorPalette.LIGHTERDARK};
 `;
 
 // TODO : After Profile Size Refactor
@@ -22,11 +23,8 @@ const ProfileImageWrapper = styled.div`
   position: relative;
   width: 120px;
   height: 120px;
-  border-radius: 50%;
   left: 10px;
   top: 140px;
-
-  background-color: ${ColorPalette.GREEN};
 `;
 
 const ProfileTooltipContainer = styled.div`
@@ -51,13 +49,16 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = (props) => {
   return (
     <ProfileHeaderContainer>
       <ProfileUpperBackground>
-        <ProfileImageWrapper />
+        <ProfileImageWrapper>
+          <Profile size={120} username={user.username} userid={user.user_id} />
+        </ProfileImageWrapper>
         <ProfileTooltipContainer>
           <PorfileTooltipItem>
-            {!isMine && <FollowButton user={user} />}
-          </PorfileTooltipItem>
-          <PorfileTooltipItem>
-            {!isMine && <FollowButton user={user} />}
+            {isMine ? (
+              <EditBioButton user={user} />
+            ) : (
+              <FollowButton user={user} />
+            )}
           </PorfileTooltipItem>
         </ProfileTooltipContainer>
       </ProfileUpperBackground>
