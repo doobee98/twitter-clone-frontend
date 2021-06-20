@@ -8,3 +8,11 @@ export interface SignUpRequest {
   password: string;
   username: string;
 }
+
+export interface EditRequest {
+  username: string;
+  profile_img_src: string;
+  bio: string;
+  website: string;
+  location: string;
+}

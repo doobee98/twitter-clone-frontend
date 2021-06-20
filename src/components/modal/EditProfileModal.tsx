@@ -9,6 +9,7 @@ import Icon from 'components/base/Icon';
 import { BasicType } from 'utils/iconUtils';
 import useInput from 'hooks/useInput';
 import User from 'models/user';
+import { edit } from 'modules/auth';
 import PopupBackground from './PopupBackground';
 import Modal from './Modal';
 
@@ -130,27 +131,24 @@ const EditButton = styled(Button)`
 
 interface EditProfileModalContentProps {
   user: User;
-  onCreateTweet: () => void;
+  onEdit: () => void;
 }
 
 const EditProfileModalContent: React.FC<EditProfileModalContentProps> = (
   props,
 ) => {
-  const { user, onCreateTweet } = props;
-  const [name, onChangeName, setName] = useInput(user.username);
-  const [biography, onChangeBiography, setBiography] = useInput(user.bio);
+  const { user, onEdit: onCreateTweet } = props;
+  const [username, onChangeUserName, setUserName] = useInput(user.username);
+  const [profile_img_src, onChangeProfileImgSrc, setProfileImgSrc] = useInput(
+    user.profile_img_src,
+  );
+  const [bio, onChangeBio, setBio] = useInput(user.bio);
   const [location, onChangeLocation, setLocation] = useInput(user.location);
   const [website, onChangeWebsite, setWebsite] = useInput(user.website);
-
-  const clearInput = () => {
-    setName('');
-    setBiography('');
-    setLocation('');
-    setWebsite('');
-  };
+  const dispatch = useAppDispatch();
 
   const onSubmit = () => {
-    clearInput();
+    dispatch(edit({ username, profile_img_src, bio, website, location }));
     onCreateTweet();
   };
 
@@ -158,7 +156,11 @@ const EditProfileModalContent: React.FC<EditProfileModalContentProps> = (
     <EditProfileModalContentWrapper>
       <InputWrapper>
         <Label>Name</Label>
-        <Input value={name} onChange={onChangeName} placeholder="Name" />
+        <Input
+          value={username}
+          onChange={onChangeUserName}
+          placeholder="Name"
+        />
       </InputWrapper>
       <InputWrapper>
         <Label>Location</Label>
@@ -171,8 +173,8 @@ const EditProfileModalContent: React.FC<EditProfileModalContentProps> = (
       <InputWrapper>
         <Label>Biography</Label>
         <BiographyText
-          value={biography}
-          onChange={onChangeBiography}
+          value={bio}
+          onChange={onChangeBio}
           placeholder="biography"
         />
       </InputWrapper>
@@ -233,7 +235,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
       <Modal width={600}>
         <div ref={popup}>
           <EditProfileModalHeader onClose={closePopup} />
-          <EditProfileModalContent user={user} onCreateTweet={closePopup} />
+          <EditProfileModalContent user={user} onEdit={closePopup} />
         </div>
       </Modal>
     </PopupBackground>
