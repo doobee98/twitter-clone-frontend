@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
 import User from 'models/user';
+import Icon from 'components/base/Icon';
+import { BasicType } from 'utils/iconUtils';
 
 const ProfileBiographyContainer = styled.div`
   display: block;
@@ -27,6 +29,12 @@ const ProfileBioText = styled.div`
   white-space: pre-line;
   margin-top: 10px;
   font-size: 18px;
+`;
+
+const AttributeIcon = styled(Icon)`
+  display: inline-block;
+  color: ${ColorPalette.GRAY_96};
+  margin-right: 5px;
 `;
 
 const AttributeLine = styled.div`
@@ -70,12 +78,25 @@ const ProfileBiography: React.FC<ProfileBiographyProps> = (props) => {
         <AttributeBold>Followers</AttributeBold>
       </AttributeLine>
       <AttributeLine>
-        {user.location && <AttributeSoft>{user.location}</AttributeSoft>}
-        {user.website && <AttributeSoft>{user.website}</AttributeSoft>}
+        {user.location && (
+          <>
+            <AttributeIcon iconType={BasicType.LOCATION} iconSize={18} />
+            <AttributeSoft>{user.location}</AttributeSoft>
+          </>
+        )}
+        {user.website && (
+          <>
+            <AttributeIcon iconType={BasicType.LINK} iconSize={18} />
+            <AttributeSoft>{user.website}</AttributeSoft>
+          </>
+        )}
         {user.joined_at && (
-          <AttributeSoft>
-            Joined at {user.joined_at.substring(0, 10)}
-          </AttributeSoft>
+          <>
+            <AttributeIcon iconType={BasicType.CALENDAR} iconSize={18} />
+            <AttributeSoft>
+              Joined at {user.joined_at.substring(0, 10)}
+            </AttributeSoft>
+          </>
         )}
       </AttributeLine>
     </ProfileBiographyContainer>
