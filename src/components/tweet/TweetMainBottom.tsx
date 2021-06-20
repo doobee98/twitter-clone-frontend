@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
-import User from 'models/user';
 import { useAppDispatch } from 'hooks/redux';
 import {
   dislikeTweet,

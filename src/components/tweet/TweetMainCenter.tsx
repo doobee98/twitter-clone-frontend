@@ -10,12 +10,12 @@ const TweetMainContentWrapper = styled.div`
   white-space: pre-line;
 `;
 
-const TweetMainImageWrapper = styled.div`
-  height: 100px;
+// const TweetMainImageWrapper = styled.div`
+//   height: 100px;
 
-  border: 1px solid;
-  margin: 1px;
-`;
+//   border: 1px solid;
+//   margin: 1px;
+// `;
 
 const TweetMainCenterContainer = styled.div`
   margin: 1px;
