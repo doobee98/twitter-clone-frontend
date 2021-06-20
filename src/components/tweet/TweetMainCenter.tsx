@@ -31,7 +31,7 @@ const TweetMainCenter: React.FC<TweetMainCenterProps> = (props) => {
   return (
     <TweetMainCenterContainer>
       <TweetMainContentWrapper>{tweet.content}</TweetMainContentWrapper>
-      <TweetMainImageWrapper>{tweet.image_src_list}</TweetMainImageWrapper>
+      {/* <TweetMainImageWrapper>{tweet.image_src_list}</TweetMainImageWrapper> */}
     </TweetMainCenterContainer>
   );
 };
