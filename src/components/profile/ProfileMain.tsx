@@ -14,6 +14,7 @@ import { BasicType } from 'utils/iconUtils';
 import ProfileHeader from './ProfileHeader';
 import ProfileFeed from './ProfileFeed';
 import FollowButton from './FollowButton';
+import ProfileBiography from './ProfileBiography';
 
 const BackButton = styled(Button)`
   color: ${ColorPalette.SKYBLUE};
@@ -66,8 +67,10 @@ const ProfileMain: React.FC<ProfileMainProps> = (props) => {
         </UserInfoContainer>
       </ContentHeader>
       <ContentSection>
-        <ProfileHeader />
-        {!isMyProfile && <FollowButton user={user} />}
+        <ProfileHeader user={user} isCurrentUser={isMyProfile} />
+      </ContentSection>
+      <ContentSection>
+        <ProfileBiography user={user} />
       </ContentSection>
       <ContentSection>
         <ProfileFeed />
