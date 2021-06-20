@@ -107,6 +107,7 @@ export const userRecord = createSlice({
     [followUser.fulfilled.type]: (state, action) => {
       const userId = action.payload;
       state.userRecord[userId].following_flag = true;
+      state.userRecord[userId].follower_count += 1;
     },
     [followUser.rejected.type]: (state, error) => {
       console.log(error.payload);
@@ -114,6 +115,7 @@ export const userRecord = createSlice({
     [unfollowUser.fulfilled.type]: (state, action) => {
       const userId = action.payload;
       state.userRecord[userId].following_flag = false;
+      state.userRecord[userId].follower_count -= 1;
     },
     [unfollowUser.rejected.type]: (state, error) => {
       console.log(error.payload);
