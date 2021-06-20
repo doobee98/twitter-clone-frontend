@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { useAppDispatch } from 'hooks/redux';
-import User from 'models/user';
-import { fetchUser, getUser } from 'modules/userRecord';
 import { ColorPalette } from '../../utils/colorUtils';
 import Tweet from '../../models/tweet';
 import TweetSide from './TweetSide';
 import TweetMain from './TweetMain';
+import TweetHeader from './TweetHeader';
 
 const TweetContainer = styled.div`
   display: flex;
+  flex-direction: column;
 
   padding: 2px 2px 4px;
   border-bottom: 0.5px solid ${ColorPalette.GRAY_E6};
@@ -21,6 +20,10 @@ const TweetContainer = styled.div`
   }
 `;
 
+const TweetWrapper = styled.div`
+  display: flex;
+`;
+
 interface TweetComponentProps {
   tweet: Tweet;
 }
@@ -28,22 +31,15 @@ interface TweetComponentProps {
 const TweetComponent: React.FC<TweetComponentProps> = (props) => {
   const { tweet } = props;
 
-  const dispatch = useAppDispatch();
-
-  // const initTweet = async () => {
-  //   const res = await dispatch(getUser(tweet.writer_id));
-
-  //   await setUser(res.payload as User);
-  // };
-
-  // useEffect(() => {
-  //   initTweet();
-  // }, []);
-
   return (
     <TweetContainer>
-      <TweetSide tweet={tweet} />
-      <TweetMain tweet={tweet} />
+      <TweetWrapper>
+        {tweet.type === 'retweet' && <TweetHeader tweet={tweet} />}
+      </TweetWrapper>
+      <TweetWrapper>
+        <TweetSide tweet={tweet} />
+        <TweetMain tweet={tweet} />
+      </TweetWrapper>
     </TweetContainer>
   );
 };

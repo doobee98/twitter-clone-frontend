@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
-import User from 'models/user';
 import { useAppDispatch } from 'hooks/redux';
-import { dislikeTweet, likeTweet } from 'modules/home';
+import {
+  dislikeTweet,
+  likeTweet,
+  retweetTweet,
+  unretweetTweet,
+} from 'modules/home';
 import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
 import Tweet from '../../models/tweet';
 import { BasicType, HighlightType } from '../../utils/iconUtils';
@@ -71,6 +75,9 @@ interface TweetMainBottomProps {
 const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
   const { tweet } = props;
   const [isLikeFlag, setIsLikeFlag] = useState<boolean>(tweet.like_flag);
+  const [isRetweetFlag, setIsRetweetFlag] = useState<boolean>(
+    tweet.retweet_flag,
+  );
   const dispatch = useAppDispatch();
 
   const dispatchPopup = useAppDispatch();
@@ -79,12 +86,19 @@ const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
     dispatchPopup(openReplyModal(tweet));
   };
 
-  const handleRetweet = () => {
+  const handleRetweet = async () => {
     // TODO
+    if (isRetweetFlag) {
+      await dispatch(unretweetTweet(tweet.tweet_id));
+    } else {
+      await dispatch(retweetTweet(tweet.tweet_id));
+    }
+
+    setIsRetweetFlag(!isRetweetFlag);
   };
 
   const handleLike = async () => {
-    if (tweet.like_flag) {
+    if (isLikeFlag) {
       await dispatch(dislikeTweet(tweet.tweet_id));
     } else {
       await dispatch(likeTweet(tweet.tweet_id));
@@ -106,9 +120,21 @@ const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
         </HoverArea>
       </TweetMainBottomItem>
       <TweetMainBottomItem onClick={handleRetweet}>
-        <HoverArea highlightColor={ColorPalette.GREEN}>
-          <HoverIcon iconType={BasicType.RETWEET} iconSize={16} />
-          <HoverText>{tweet.retweet_count}</HoverText>
+        <HoverArea
+          highlightColor={ColorPalette.GREEN}
+          isLikeFlag={isRetweetFlag}
+        >
+          <HoverIcon
+            iconType={BasicType.RETWEET}
+            iconSize={16}
+            isHighlighted={!isRetweetFlag}
+          />
+          <HoverText
+            isLikeFlag={isRetweetFlag}
+            highlightColor={ColorPalette.GREEN}
+          >
+            {tweet.retweet_count}
+          </HoverText>
         </HoverArea>
       </TweetMainBottomItem>
       <TweetMainBottomItem onClick={handleLike}>

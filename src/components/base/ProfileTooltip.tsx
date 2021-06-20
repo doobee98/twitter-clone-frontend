@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import Button from 'components/base/Button';
 import styled, { css } from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
-import User from 'models/user';
 import { useHistory } from 'react-router-dom';
 import { useAuthSelector, useUserSelector } from 'hooks/redux';
 import Profile from './Profile';
