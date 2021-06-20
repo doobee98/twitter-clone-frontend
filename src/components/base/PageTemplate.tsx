@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import useTitle from 'hooks/useTitle';
+import EditBioModal from 'components/modal/EditProfileModal';
 import NavigationSideBar from './NavigationSideBar';
 import PostPopupModal from '../modal/PostPopupModal';
 import ReplyPopupModal from '../modal/PostReplyModal';
@@ -44,7 +45,8 @@ const PageTemplate: React.FC<PageTemplateProps> = (props) => {
   const { children, title } = props;
 
   const modalStore = useModalOpen();
-  const { isOpenedPostModal, isOpenedReplyModal } = modalStore;
+  const { isOpenedPostModal, isOpenedReplyModal, isOpenedEditModal } =
+    modalStore;
 
   useTitle(`${title} / Twitter-Clone`);
 
@@ -56,6 +58,7 @@ const PageTemplate: React.FC<PageTemplateProps> = (props) => {
       <ContentWrapper>{children}</ContentWrapper>
       <PostPopupModal isOpened={isOpenedPostModal} />
       <ReplyPopupModal isOpened={isOpenedReplyModal} />
+      <EditBioModal isOpened={isOpenedEditModal} />
     </PageTemplateContainer>
   );
 };

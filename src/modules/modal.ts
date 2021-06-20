@@ -6,6 +6,7 @@ interface ModalState {
   isOpenedPostModal: boolean;
   isOpenedReplyModal: boolean;
   isOpenedSignupModal: boolean;
+  isOpenedEditModal: boolean;
   originalTweet?: Tweet;
 }
 
@@ -13,6 +14,7 @@ const initialState: ModalState = {
   isOpenedPostModal: false,
   isOpenedReplyModal: false,
   isOpenedSignupModal: false,
+  isOpenedEditModal: false,
 };
 
 export const modal = createSlice({
@@ -38,6 +40,12 @@ export const modal = createSlice({
     closeSignupModal: (state: ModalState, action: PayloadAction) => {
       state.isOpenedSignupModal = false;
     },
+    openEditModal: (state: ModalState, action: PayloadAction) => {
+      state.isOpenedEditModal = true;
+    },
+    closeEditModal: (state: ModalState, action: PayloadAction) => {
+      state.isOpenedEditModal = false;
+    },
   },
   extraReducers: {},
 });
@@ -49,5 +57,7 @@ export const {
   closeReplyModal,
   openSignupModal,
   closeSignupModal,
+  openEditModal,
+  closeEditModal,
 } = modal.actions;
 export default modal.reducer;
