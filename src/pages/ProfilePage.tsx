@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ContentTemplate from 'components/base/ContentTemplate';
-import ExploreSideBar from 'components/base/ExploreSideBar';
 import PageTemplate from 'components/base/PageTemplate';
 import ProfileMain from 'components/profile/ProfileMain';
 import { useAppDispatch, useUserSelector } from 'hooks/redux';

@@ -7,9 +7,10 @@ const name = 'userRecord';
 
 export interface UserRecordState {
   userRecord: Record<string, User>;
+  searchResult: User[];
 }
 
-const initialState: UserRecordState = { userRecord: {} };
+const initialState: UserRecordState = { userRecord: {}, searchResult: [] };
 
 export const fetchUser = createAsyncThunk(
   `${name}/fetchUser`,
@@ -39,6 +40,21 @@ export const getUser = createAsyncThunk(
 
       // fetchUser
       const response = await UsersApi.instance.getUser(userId);
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const searchUser = createAsyncThunk(
+  `${name}/searchUser`,
+  async (keyword: string, thunkAPI) => {
+    try {
+      const response = await UsersApi.instance.searchUser(keyword);
       return response.data;
     } catch (error) {
       if (!error.response) {
@@ -101,6 +117,17 @@ export const userRecord = createSlice({
       state.userRecord[user.user_id] = user;
     },
     [getUser.rejected.type]: (state, error) => {
+      console.log(error.payload);
+      // window.alert(error.payload.msg);
+    },
+    [searchUser.fulfilled.type]: (state, action) => {
+      const userList: User[] = action.payload;
+      userList.forEach((user) => {
+        state.userRecord[user.user_id] = user;
+      });
+      state.searchResult = userList;
+    },
+    [searchUser.rejected.type]: (state, error) => {
       console.log(error.payload);
       // window.alert(error.payload.msg);
     },

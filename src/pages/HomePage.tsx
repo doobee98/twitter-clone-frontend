@@ -10,6 +10,7 @@ import ContentTemplate, {
 } from 'components/base/ContentTemplate';
 import { ColorPalette } from 'utils/colorUtils';
 import { useAuthSelector } from 'hooks/redux';
+import ExploreSideBar from 'components/explore/ExploreSideBar';
 
 const SpaceSection = styled(ContentSection)`
   background-color: ${ColorPalette.GRAY_F9};
@@ -37,12 +38,9 @@ const HomePage: React.FC = () => {
           <SpaceSection />
           <TweetList />
         </ContentTemplate>
-        {/* <ContentTemplate width="300px" hideBorder>
-        <ContentHeader hideBorder>
-          <strong>SearchBar</strong>
-        </ContentHeader>
-        <ExploreSideBar />
-      </ContentTemplate> */}
+        <ContentTemplate width="300px" hideBorder>
+          <ExploreSideBar />
+        </ContentTemplate>
       </PageTemplate>
     </>
   );
