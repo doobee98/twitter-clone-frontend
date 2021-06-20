@@ -6,10 +6,8 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import UserSummary from './UserSummary';
 
-const ExploreSideBarContainer = styled.aside`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+const SearchItem = styled(ContentSection)`
+  padding: 0;
 `;
 
 const ExploreSideBar: React.FC = () => {
@@ -31,9 +29,9 @@ const ExploreSideBar: React.FC = () => {
         <input value={keyword} onChange={onChangeKeyword} />
       </ContentHeader>
       {searchResult.map((user) => (
-        <ContentSection key={user.user_id}>
+        <SearchItem key={user.user_id}>
           <UserSummary user={user} />
-        </ContentSection>
+        </SearchItem>
       ))}
       <ContentSection />
     </>
