@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 
 const PopupBackground = styled.div`

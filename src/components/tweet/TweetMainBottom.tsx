@@ -13,6 +13,7 @@ import {
 import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
 import Tweet from '../../models/tweet';
 import { BasicType, HighlightType } from '../../utils/iconUtils';
+import { openReplyModal } from '../../modules/modal';
 
 const TweetMainBottomContainer = styled.div`
   display: flex;
@@ -80,8 +81,10 @@ const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
   );
   const dispatch = useAppDispatch();
 
+  const dispatchPopup = useAppDispatch();
+
   const handleReply = () => {
-    // TODO
+    dispatchPopup(openReplyModal(tweet));
   };
 
   const handleRetweet = async () => {

@@ -1,13 +1,17 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import Tweet from 'models/tweet';
 
 interface ModalState {
   isOpenedPostModal: boolean;
+  isOpenedReplyModal: boolean;
   isOpenedSignupModal: boolean;
+  originalTweet?: Tweet;
 }
 
 const initialState: ModalState = {
   isOpenedPostModal: false,
+  isOpenedReplyModal: false,
   isOpenedSignupModal: false,
 };
 
@@ -21,6 +25,13 @@ export const modal = createSlice({
     closePostModal: (state: ModalState, action: PayloadAction) => {
       state.isOpenedPostModal = false;
     },
+    openReplyModal: (state: ModalState, action: PayloadAction<Tweet>) => {
+      state.isOpenedReplyModal = true;
+      state.originalTweet = action.payload;
+    },
+    closeReplyModal: (state: ModalState, action: PayloadAction) => {
+      state.isOpenedReplyModal = false;
+    },
     openSignupModal: (state: ModalState, action: PayloadAction) => {
       state.isOpenedSignupModal = true;
     },
@@ -28,11 +39,14 @@ export const modal = createSlice({
       state.isOpenedSignupModal = false;
     },
   },
+  extraReducers: {},
 });
 
 export const {
   openPostModal,
   closePostModal,
+  openReplyModal,
+  closeReplyModal,
   openSignupModal,
   closeSignupModal,
 } = modal.actions;
