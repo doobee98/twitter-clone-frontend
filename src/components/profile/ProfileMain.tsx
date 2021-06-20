@@ -1,11 +1,15 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import Button from 'components/base/Button';
-import { ContentHeader, ContentSection } from 'components/base/ContentTemplate';
+import ContentTemplate, {
+  ContentHeader,
+  ContentSection,
+} from 'components/base/ContentTemplate';
 import Icon from 'components/base/Icon';
 import {
   useAppSelector,
   useAuthSelector,
+  useHomeSelector,
   useProfileSelector,
   useUserSelector,
 } from 'hooks/redux';
@@ -14,6 +18,7 @@ import { BasicType } from 'utils/iconUtils';
 import ProfileHeader from './ProfileHeader';
 import ProfileFeed from './ProfileFeed';
 import FollowButton from './FollowButton';
+import TweetList from '../tweet/TweetList';
 
 const BackButton = styled(Button)`
   color: ${ColorPalette.SKYBLUE};
@@ -38,13 +43,17 @@ const TweetCount = styled.div`
 
 interface ProfileMainProps {
   userId: string;
+  handleFetchFeed: () => Promise<void>;
+  isLoading: boolean;
+  isError: boolean;
 }
 
 const ProfileMain: React.FC<ProfileMainProps> = (props) => {
-  const { userId } = props;
+  const { userId, handleFetchFeed, isLoading, isError } = props;
   const { currentUser } = useAuthSelector();
   const user = useUserSelector(userId);
   const totalCount = useAppSelector((state) => state.profile.totalCount);
+  const { feed } = useHomeSelector();
 
   if (!user) {
     return null;
@@ -70,7 +79,14 @@ const ProfileMain: React.FC<ProfileMainProps> = (props) => {
         {!isMyProfile && <FollowButton user={user} />}
       </ContentSection>
       <ContentSection>
-        <ProfileFeed />
+        <ContentTemplate>
+          <TweetList
+            feed={feed}
+            handleFetchFeed={handleFetchFeed}
+            isLoading={isLoading}
+            isError={isError}
+          />
+        </ContentTemplate>
       </ContentSection>
     </>
   );
