@@ -6,6 +6,7 @@ import User from 'models/user';
 const ProfileBiographyContainer = styled.div`
   display: block;
   padding-top: 70px;
+  padding-bottom: 10px;
   width: 100%;
   margin-left: -3%;
   margin-right: -3%;
@@ -28,22 +29,27 @@ const ProfileBioText = styled.div`
   font-size: 18px;
 `;
 
-const ProfileFollowInfo = styled.div`
+const AttributeLine = styled.div`
   margin-top: 10px;
   display: block;
+  text-align: left;
+
+  & > strong {
+    display: inline-block;
+    margin-right: 6px;
+  }
+
+  & > span {
+    display: inline-block;
+    color: ${ColorPalette.GRAY_76};
+    margin-right: 5px;
+    left: 0px;
+    position: relative;
+  }
 `;
 
-const FollowNumber = styled.span`
-  display: inline-block;
-  font-weight: bold;
-  margin-right: 4px;
-`;
-
-const FollowWord = styled.span`
-  display: inline-block;
-  color: ${ColorPalette.GRAY_76};
-  margin-right: 4px;
-`;
+const AttributeBold = styled.strong``;
+const AttributeSoft = styled.span``;
 
 interface ProfileBiographyProps {
   user: User;
@@ -57,12 +63,21 @@ const ProfileBiography: React.FC<ProfileBiographyProps> = (props) => {
       <ProfileBioUserName>{user.username}</ProfileBioUserName>
       <ProfileBioUserId>@{user.user_id}</ProfileBioUserId>
       <ProfileBioText>{user.bio ? user.bio : 'there is no bio'}</ProfileBioText>
-      <ProfileFollowInfo>
-        <FollowNumber>{user.following_count}</FollowNumber>
-        <FollowWord>Following</FollowWord>
-        <FollowNumber> {user.follower_count}</FollowNumber>
-        <FollowWord>Followers</FollowWord>
-      </ProfileFollowInfo>
+      <AttributeLine>
+        <AttributeSoft>{user.following_count}</AttributeSoft>
+        <AttributeBold>Following</AttributeBold>
+        <AttributeSoft> {user.follower_count}</AttributeSoft>
+        <AttributeBold>Followers</AttributeBold>
+      </AttributeLine>
+      <AttributeLine>
+        {user.location && <AttributeSoft>{user.location}</AttributeSoft>}
+        {user.website && <AttributeSoft>{user.website}</AttributeSoft>}
+        {user.joined_at && (
+          <AttributeSoft>
+            Joined at {user.joined_at.substring(0, 10)}
+          </AttributeSoft>
+        )}
+      </AttributeLine>
     </ProfileBiographyContainer>
   );
 };
