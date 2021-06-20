@@ -16,8 +16,8 @@ export default interface Tweet {
   retweet_flag: boolean;
   like_flag: boolean;
 
-  retweet_wrtier_id?: string;
-  retweetw_at?: string;
+  retweet_writer_id?: string;
+  retweet_at?: string;
   reply_id?: string;
 }
 
