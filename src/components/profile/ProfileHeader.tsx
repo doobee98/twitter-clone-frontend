@@ -18,11 +18,11 @@ const ProfileUpperBackground = styled.div`
   background-color: ${ColorPalette.LIGHTERDARK};
 `;
 
-// TODO : After Profile Size Refactor
 const ProfileImageWrapper = styled.div`
   position: relative;
   width: 120px;
   height: 120px;
+  border-radius: 50%;
   left: 10px;
   top: 140px;
 `;
@@ -40,11 +40,11 @@ const PorfileTooltipItem = styled.div`
 
 interface ProfileHeaderProps {
   user: User;
-  isMine: boolean;
+  isCurrentUser: boolean;
 }
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = (props) => {
-  const { user, isMine } = props;
+  const { user, isCurrentUser } = props;
 
   return (
     <ProfileHeaderContainer>
@@ -54,7 +54,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = (props) => {
         </ProfileImageWrapper>
         <ProfileTooltipContainer>
           <PorfileTooltipItem>
-            {isMine ? (
+            {isCurrentUser ? (
               <EditBioButton user={user} />
             ) : (
               <FollowButton user={user} />

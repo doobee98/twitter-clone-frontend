@@ -67,7 +67,7 @@ const ProfileMain: React.FC<ProfileMainProps> = (props) => {
         </UserInfoContainer>
       </ContentHeader>
       <ContentSection>
-        <ProfileHeader user={user} isMine={isMyProfile} />
+        <ProfileHeader user={user} isCurrentUser={isMyProfile} />
       </ContentSection>
       <ContentSection>
         <ProfileBiography user={user} />
