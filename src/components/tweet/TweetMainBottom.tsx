@@ -8,6 +8,7 @@ import { dislikeTweet, likeTweet } from 'modules/home';
 import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
 import Tweet from '../../models/tweet';
 import { BasicType, HighlightType } from '../../utils/iconUtils';
+import { openReplyModal } from '../../modules/modal';
 
 const TweetMainBottomContainer = styled.div`
   display: flex;
@@ -72,8 +73,10 @@ const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
   const [isLikeFlag, setIsLikeFlag] = useState<boolean>(tweet.like_flag);
   const dispatch = useAppDispatch();
 
+  const dispatchPopup = useAppDispatch();
+
   const handleReply = () => {
-    // TODO
+    dispatchPopup(openReplyModal(tweet));
   };
 
   const handleRetweet = () => {

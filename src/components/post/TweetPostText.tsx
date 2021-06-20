@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
 
 interface TweetPostTextAreaProps {
@@ -26,6 +26,7 @@ const TweetPostTextArea = styled.textarea<TweetPostTextAreaProps>`
 interface TweetPostTextProps {
   tweetContent: string;
   textAreaHeight: string;
+  placeholder?: string;
   onChangeTweetContent: (e: React.ChangeEvent<HTMLInputElement>) => void;
   setIsWritingStarted: (isWriting: boolean) => void;
   setTextAreaHeight: (height: string) => void;
@@ -38,6 +39,7 @@ const TweetPostText: React.FC<TweetPostTextProps> = (props) => {
     tweetContent,
     initialRows,
     textAreaHeight,
+    placeholder,
     setIsWritingStarted,
     onChangeTweetContent,
     setTextAreaHeight,
@@ -65,7 +67,7 @@ const TweetPostText: React.FC<TweetPostTextProps> = (props) => {
       height={textAreaHeight}
       value={tweetContent}
       rows={initialRows ?? 1}
-      placeholder="What's happening?"
+      placeholder={placeholder}
       onClick={handleClick}
       onChange={onTweetTextChange}
     />

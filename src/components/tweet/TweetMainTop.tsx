@@ -78,6 +78,26 @@ const TweetMainTopContainer = styled.div`
   margin: 1px;
 `;
 
+interface TweetMainTopDescriptionProps {
+  tweet: Tweet;
+}
+export const TweetMainTopDescription: React.FC<TweetMainTopDescriptionProps> = (
+  props,
+) => {
+  const { tweet } = props;
+  const elapsed = getTweetedTimeGap(tweet.tweeted_at);
+  return (
+    <>
+      <TweetMainTopLeftContainer>
+        <TweetMainTopUsername>USERNAME</TweetMainTopUsername>
+        <TweetMainTopUseridTweetedAt>
+          @{tweet.writer_id} - {elapsed}
+        </TweetMainTopUseridTweetedAt>
+      </TweetMainTopLeftContainer>
+    </>
+  );
+};
+
 interface TweetMainTopProps {
   tweet: Tweet;
 }

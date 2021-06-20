@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
 
@@ -12,7 +12,7 @@ const ModalContainer = styled.div<ModalContainerProps>`
   background-color: ${ColorPalette.WHITE};
   border-radius: 25px;
   top: ${(props) => props.top}px;
-  left: calc(50vw - ${(props) => props.width / 2}px);
+  left: calc(57vw - ${(props) => props.width / 2}px);
   width: ${(props) => props.width}px;
   min-width: 375px;
 `;
@@ -24,7 +24,7 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = (props) => {
-  const { width, className, children } = props;
+  const { children, width } = props;
 
   return (
     <ModalContainer top={window.pageYOffset + 100} width={width}>

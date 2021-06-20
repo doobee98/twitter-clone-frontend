@@ -1,14 +1,14 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import Button from 'components/base/Button';
-import Icon from 'components/base/Icon';
-import { useAppDispatch } from 'hooks/redux';
-import useClickOutside from 'hooks/useClickOutside';
-import useInput from 'hooks/useInput';
-import { signup } from 'modules/auth';
-import { closeSignupModal } from 'modules/modal';
-import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
-import { BasicType } from 'utils/iconUtils';
+import Button from '../base/Button';
+import Icon from '../base/Icon';
+import { useAppDispatch } from '../../hooks/redux';
+import useClickOutside from '../../hooks/useClickOutside';
+import useInput from '../../hooks/useInput';
+import { signup } from '../../modules/auth';
+import { closeSignupModal } from '../../modules/modal';
+import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
+import { BasicType } from '../../utils/iconUtils';
 import Modal from './Modal';
 
 const ModalBackground = styled.div`

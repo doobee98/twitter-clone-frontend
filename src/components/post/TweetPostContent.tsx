@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
@@ -7,8 +7,6 @@ import Icon from 'components/base/Icon';
 import TweetPostToolBar from './TweetPostToolBar';
 import TweetPostText from './TweetPostText';
 import useInput from '../../hooks/useInput';
-import { useAppDispatch } from '../../hooks/redux';
-import { createTweet } from '../../modules/home';
 
 const TweetPostContentContainer = styled.div`
   float: left;
@@ -107,11 +105,12 @@ const TweetButton = styled(Button)`
 `;
 
 interface TweetPostContentProps {
-  onCreateTweet?: () => void;
+  placeholder?: string;
+  onPost: (content: string) => void;
 }
 
 const TweetPostContent: React.FC<TweetPostContentProps> = (props) => {
-  const { onCreateTweet } = props;
+  const { placeholder, onPost } = props;
 
   const [isWritingStarted, setIsWritingStarted] = useState(false);
   const [textAreaHeight, setTextAreaHeight] = useState('auto');
@@ -119,7 +118,6 @@ const TweetPostContent: React.FC<TweetPostContentProps> = (props) => {
   const [isUploaded, setIsUploaded] = useState(false);
   const [tweetContent, onChangeTweetContent, setTweetContent] = useInput('');
   const [hasTweetContent, setHasTweetContent] = useState(false);
-  const dispatch = useAppDispatch();
 
   const permissions = [
     {
@@ -161,15 +159,14 @@ const TweetPostContent: React.FC<TweetPostContentProps> = (props) => {
     setIsWritingStarted(false);
   };
 
+  const handleCreatePost = () => {
+    onPost(tweetContent);
+    clearTweetPost();
+  };
+
   useEffect(() => {
     setHasTweetContent(tweetContent.length > 0);
   }, [tweetContent]);
-
-  const handleCreateTweet = async () => {
-    dispatch(createTweet({ content: tweetContent }));
-    clearTweetPost();
-    if (onCreateTweet) onCreateTweet();
-  };
 
   return (
     <TweetPostContentContainer>
@@ -177,6 +174,7 @@ const TweetPostContent: React.FC<TweetPostContentProps> = (props) => {
         <TweetPostText
           tweetContent={tweetContent}
           textAreaHeight={textAreaHeight}
+          placeholder={placeholder}
           onChangeTweetContent={onChangeTweetContent}
           setIsWritingStarted={setIsWritingStarted}
           setTextAreaHeight={setTextAreaHeight}
@@ -203,7 +201,7 @@ const TweetPostContent: React.FC<TweetPostContentProps> = (props) => {
       <TweetPostToolBarWrapper>
         <TweetPostToolBar handleImgInput={handleImgInput} />
         <ButtonWrapper>
-          <TweetButton onClick={handleCreateTweet} disabled={!hasTweetContent}>
+          <TweetButton onClick={handleCreatePost} disabled={!hasTweetContent}>
             Tweet
           </TweetButton>
         </ButtonWrapper>
