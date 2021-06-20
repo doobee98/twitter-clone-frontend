@@ -67,6 +67,7 @@ const ProfileBiography: React.FC<ProfileBiographyProps> = (props) => {
   const { user } = props;
 
   const monthNames = [
+    'FOO',
     'January',
     'February',
     'March',
