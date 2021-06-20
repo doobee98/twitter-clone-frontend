@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useAppDispatch, useAuthSelector } from 'hooks/redux';
 import { logout } from 'modules/auth';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType, HighlightType } from 'utils/iconUtils';
 import { openPostModal } from 'modules/modal';
+import Dropdown, { DropdownItem } from './Dropdown';
 import NavItem from './NavItem';
 import Button from './Button';
 import Icon from './Icon';
@@ -80,19 +81,20 @@ const BottomContainer = styled.div`
   margin: 12px 0;
 `;
 
-const ToBeRemovedWrapper = styled(React.Fragment)``;
-
 const NavigationSideBar: React.FC = () => {
   const authStore = useAuthSelector();
   const dispatch = useAppDispatch();
   const { currentUser } = authStore;
   const dispatchPopup = useAppDispatch();
+  const [isOpenedDropdown, setIsOpenedDropdown] = useState(false);
 
   const openPopup = () => {
     dispatchPopup(openPostModal());
   };
 
-  // [TODO: NEED TO BE REMOVED] test for logout button
+  const toggleLogoutDropdown = () => {
+    setIsOpenedDropdown((state) => !state);
+  };
   const fetchLogout = () => {
     dispatch(logout());
   };
@@ -147,18 +149,21 @@ const NavigationSideBar: React.FC = () => {
         <TweetButton onClick={openPopup}>Tweet</TweetButton>
       </TopContainer>
       <BottomContainer>
-        <ToBeRemovedWrapper>
-          <button type="button" onClick={fetchLogout}>
-            로그아웃
-          </button>
-        </ToBeRemovedWrapper>
         {currentUser && (
-          <UserButton>
+          <UserButton onClick={toggleLogoutDropdown}>
             <UserButtonTextArea>
               <Username>{currentUser.username}</Username>
               <UserId>@{currentUser.user_id}</UserId>
             </UserButtonTextArea>
             <Icon iconType={BasicType.MORE} iconSize={20} />
+            {isOpenedDropdown && (
+              <Dropdown>
+                <DropdownItem onClick={fetchLogout}>
+                  <Icon iconType={BasicType.CANCEL} />
+                  로그아웃
+                </DropdownItem>
+              </Dropdown>
+            )}
           </UserButton>
         )}
       </BottomContainer>
