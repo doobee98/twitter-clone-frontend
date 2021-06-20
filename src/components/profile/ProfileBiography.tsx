@@ -66,6 +66,27 @@ interface ProfileBiographyProps {
 const ProfileBiography: React.FC<ProfileBiographyProps> = (props) => {
   const { user } = props;
 
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+
+  const monthYear = (substring: string) => {
+    const yearMonthDay = substring.split('-');
+    const month = parseInt(yearMonthDay[1], 10);
+    return `${yearMonthDay[2]} ${monthNames[month]} ${yearMonthDay[0]}`;
+  };
+
   return (
     <ProfileBiographyContainer>
       <ProfileBioUserName>{user.username}</ProfileBioUserName>
@@ -94,7 +115,7 @@ const ProfileBiography: React.FC<ProfileBiographyProps> = (props) => {
           <>
             <AttributeIcon iconType={BasicType.CALENDAR} iconSize={18} />
             <AttributeSoft>
-              Joined at {user.joined_at.substring(0, 10)}
+              Joined at {monthYear(user.joined_at.substring(0, 10))}
             </AttributeSoft>
           </>
         )}
