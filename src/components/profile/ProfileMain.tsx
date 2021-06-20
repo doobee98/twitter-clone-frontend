@@ -16,7 +16,6 @@ import {
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
 import ProfileHeader from './ProfileHeader';
-import ProfileFeed from './ProfileFeed';
 import FollowButton from './FollowButton';
 import TweetList from '../tweet/TweetList';
 

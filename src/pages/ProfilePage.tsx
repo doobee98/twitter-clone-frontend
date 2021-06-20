@@ -45,6 +45,7 @@ const ProfilePage: React.FC = () => {
   useEffect(() => {
     dispatch(clearProfileState());
     handleFetchFeed();
+    dispatch(getUserFeed(paramId));
   }, [paramId]);
 
   return (
