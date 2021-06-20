@@ -30,6 +30,7 @@ interface TweetComponentProps {
 
 const TweetComponent: React.FC<TweetComponentProps> = (props) => {
   const { tweet } = props;
+  console.log(tweet);
 
   return (
     <TweetContainer>

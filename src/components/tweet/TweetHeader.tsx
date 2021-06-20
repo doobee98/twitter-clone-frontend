@@ -15,12 +15,15 @@ const TweetHeaderContainer = styled.div`
   color: ${ColorPalette.GRAY_96};
 
   font-weight: bold;
+  font-size: 12px;
 `;
 
 const TweetHeaderItemWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  margin-right: 4px;
 `;
 
 interface TweetHeaderProps {
@@ -32,22 +35,20 @@ const TweetHeader: React.FC<TweetHeaderProps> = (props) => {
 
   // TO BE REMOVED: BUG FIXXING....
   // tweet에는 retweet_writer_id가 잘 출력되는데
-  // retweet)wrtier_id만 출력하려고하면 undefined네요..!!!
+  // retweet.wrtier_id만 출력하려고하면 undefined네요..!!!
   console.log(tweet);
   console.log(tweet.type);
   console.log(tweet.retweet_wrtier_id);
 
   return (
-    <>
-      <TweetHeaderContainer>
-        <TweetHeaderItemWrapper>
-          <Icon iconType={BasicType.RETWEET} />
-        </TweetHeaderItemWrapper>
-        <TweetHeaderItemWrapper>
-          {`${tweet.retweet_wrtier_id}`} Retweeted
-        </TweetHeaderItemWrapper>
-      </TweetHeaderContainer>
-    </>
+    <TweetHeaderContainer>
+      <TweetHeaderItemWrapper>
+        <Icon iconType={BasicType.RETWEET} iconSize={14} />
+      </TweetHeaderItemWrapper>
+      <TweetHeaderItemWrapper>
+        {`${tweet.retweet_wrtier_id}`} Retweeted
+      </TweetHeaderItemWrapper>
+    </TweetHeaderContainer>
   );
 };
 
