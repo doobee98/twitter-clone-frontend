@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import ContentTemplate from 'components/base/ContentTemplate';
-import ExploreSideBar from 'components/base/ExploreSideBar';
 import PageTemplate from 'components/base/PageTemplate';
+import ExploreSideBar from 'components/explore/ExploreSideBar';
 import ProfileMain from 'components/profile/ProfileMain';
 import { useAppDispatch, useAuthSelector, useUserSelector } from 'hooks/redux';
 import { clearProfileState, getUserFeed } from 'modules/profile';
@@ -64,6 +64,9 @@ const ProfilePage: React.FC = () => {
             isError={isError}
           />
         )}
+      </ContentTemplate>
+      <ContentTemplate width="300px" hideBorder>
+        <ExploreSideBar />
       </ContentTemplate>
     </PageTemplate>
   );

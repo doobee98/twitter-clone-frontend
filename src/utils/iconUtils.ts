@@ -17,6 +17,7 @@ import {
   FiAlertTriangle,
   FiLoader,
   FiLink,
+  FiSearch,
 } from 'react-icons/fi';
 import {
   HiHashtag,
@@ -59,6 +60,7 @@ export enum BasicType {
   LEFT_ARROW = 'basic-left-arrow',
 
   ERROR = 'basic-error',
+  SEARCH = 'basic-search',
 
   // tweet-post icons
   MEDIA = 'basic-media',
@@ -109,6 +111,7 @@ const basicRecord = {
   [BasicType.LEFT_ARROW]: HiOutlineArrowLeft,
 
   [BasicType.ERROR]: MdError,
+  [BasicType.SEARCH]: FiSearch,
 
   // tweet-post icons
   [BasicType.MEDIA]: AiOutlinePicture,

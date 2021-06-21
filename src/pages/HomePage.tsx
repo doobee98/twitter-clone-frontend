@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import PageTemplate from 'components/base/PageTemplate';
+import ExploreSideBar from 'components/explore/ExploreSideBar';
 import TweetList from 'components/tweet/TweetList';
 import TweetPost from 'components/post/TweetPost';
 import ContentTemplate, {
@@ -70,12 +71,9 @@ const HomePage: React.FC = () => {
             isError={isError}
           />
         </ContentTemplate>
-        {/* <ContentTemplate width="300px" hideBorder>
-        <ContentHeader hideBorder>
-          <strong>SearchBar</strong>
-        </ContentHeader>
-        <ExploreSideBar />
-      </ContentTemplate> */}
+        <ContentTemplate width="300px" hideBorder>
+          <ExploreSideBar />
+        </ContentTemplate>
       </PageTemplate>
     </>
   );
