@@ -1,3 +1,5 @@
+import { useAppDispatch } from 'hooks/redux';
+import { createTweet, replyTweet } from 'modules/home';
 import React from 'react';
 import styled from 'styled-components';
 import TweetPostContent from './TweetPostContent';
@@ -10,15 +12,34 @@ const TweetPostContainer = styled.div`
 `;
 
 interface TweetPostProps {
-  onCreateTweet?: () => void;
+  isReply?: boolean;
+  originalTweetId?: string;
+  onCreatePost?: () => void;
 }
 
 const TweetPost: React.FC<TweetPostProps> = (props) => {
-  const { onCreateTweet } = props;
+  const { isReply, originalTweetId, onCreatePost } = props;
+  const dispatch = useAppDispatch();
+
+  const handlePost = async (tweetContent: string) => {
+    dispatch(
+      !originalTweetId
+        ? createTweet({ content: tweetContent })
+        : replyTweet({
+            original_tweet_id: originalTweetId,
+            content: tweetContent,
+          }),
+    );
+    if (onCreatePost) onCreatePost();
+  };
+
   return (
     <TweetPostContainer>
       <TweetPostProfile />
-      <TweetPostContent onCreateTweet={onCreateTweet} />
+      <TweetPostContent
+        placeholder={!isReply ? "What's happening?" : 'Add another Tweet'}
+        onPost={handlePost}
+      />
     </TweetPostContainer>
   );
 };

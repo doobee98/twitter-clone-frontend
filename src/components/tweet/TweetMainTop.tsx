@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { setTimeout } from 'timers';
 import Icon from 'components/base/Icon';
 import { BasicType } from 'utils/iconUtils';
-import User from 'models/user';
 import { useHistory } from 'react-router-dom';
 import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
 import ProfileTooltip from '../base/ProfileTooltip';
@@ -77,6 +76,26 @@ const TweetMainTopContainer = styled.div`
 
   margin: 1px;
 `;
+
+interface TweetMainTopDescriptionProps {
+  tweet: Tweet;
+}
+export const TweetMainTopDescription: React.FC<TweetMainTopDescriptionProps> = (
+  props,
+) => {
+  const { tweet } = props;
+  const elapsed = getTweetedTimeGap(tweet.tweeted_at);
+  return (
+    <>
+      <TweetMainTopLeftContainer>
+        <TweetMainTopUsername>USERNAME</TweetMainTopUsername>
+        <TweetMainTopUseridTweetedAt>
+          @{tweet.writer_id} - {elapsed}
+        </TweetMainTopUseridTweetedAt>
+      </TweetMainTopLeftContainer>
+    </>
+  );
+};
 
 interface TweetMainTopProps {
   tweet: Tweet;

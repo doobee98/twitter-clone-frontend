@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import useTitle from 'hooks/useTitle';
 import NavigationSideBar from './NavigationSideBar';
 import PostPopupModal from '../modal/PostPopupModal';
+import ReplyPopupModal from '../modal/PostReplyModal';
 import { useModalOpen } from '../../hooks/redux';
 
 const PageTemplateContainer = styled.div`
@@ -43,7 +44,7 @@ const PageTemplate: React.FC<PageTemplateProps> = (props) => {
   const { children, title } = props;
 
   const modalStore = useModalOpen();
-  const { isOpenedPostModal } = modalStore;
+  const { isOpenedPostModal, isOpenedReplyModal } = modalStore;
 
   useTitle(`${title} / Twitter-Clone`);
 
@@ -53,7 +54,8 @@ const PageTemplate: React.FC<PageTemplateProps> = (props) => {
         <NavigationSideBar />
       </NavigationSideBarWrapper>
       <ContentWrapper>{children}</ContentWrapper>
-      <PostPopupModal isOpened={isOpenedPostModal} width={600} />
+      <PostPopupModal isOpened={isOpenedPostModal} />
+      <ReplyPopupModal isOpened={isOpenedReplyModal} />
     </PageTemplateContainer>
   );
 };

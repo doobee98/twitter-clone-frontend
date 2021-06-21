@@ -3,7 +3,10 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import TweetsApi from 'apis/TweetsApi';
 import UsersApi from 'apis/UsersApi';
 import Tweet from '../models/tweet';
-import { TweetCreateRequest } from '../models/request/tweets';
+import {
+  TweetCreateRequest,
+  ReplyCreateRequest,
+} from '../models/request/tweets';
 
 const FEED_INITIAL_COUNT = 10;
 
@@ -92,6 +95,36 @@ export const deleteTweet = createAsyncThunk(
   },
 );
 
+export const retweetTweet = createAsyncThunk(
+  'tweets/retweetTweet',
+  async (tweetId: string, thunkAPI) => {
+    try {
+      await TweetsApi.instance.retweetTweet(tweetId);
+      return tweetId;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const unretweetTweet = createAsyncThunk(
+  'tweets/unretweetTweet',
+  async (tweetId: string, thunkAPI) => {
+    try {
+      await TweetsApi.instance.unretweetTweet(tweetId);
+      return tweetId;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export const likeTweet = createAsyncThunk(
   'tweets/likeTweet',
   async (tweetId: string, thunkAPI) => {
@@ -113,6 +146,26 @@ export const dislikeTweet = createAsyncThunk(
     try {
       await TweetsApi.instance.dislikeTweet(tweetId);
       return tweetId;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const replyTweet = createAsyncThunk(
+  'home/replyTweet',
+  async (replyCreateRequest: ReplyCreateRequest, thunkAPI) => {
+    try {
+      const { original_tweet_id, content, image_src_list } = replyCreateRequest;
+      const response = await TweetsApi.instance.replyTweet(
+        original_tweet_id,
+        content,
+        image_src_list,
+      );
+      return response.data;
     } catch (error) {
       if (!error.response) {
         throw error;
@@ -180,6 +233,34 @@ export const home = createSlice({
       console.log(error.payload);
       return state;
     },
+    [retweetTweet.fulfilled.type]: (state, action) => {
+      const tweetId = action.payload;
+      const tweetIndex = state.feed.findIndex(
+        (tweet) => tweet.tweet_id === tweetId,
+      );
+      if (tweetIndex !== -1) {
+        state.feed[tweetIndex].retweet_flag = true;
+        state.feed[tweetIndex].retweet_count += 1;
+      }
+    },
+    [retweetTweet.rejected.type]: (state, error) => {
+      console.log(error.payload);
+      return state;
+    },
+    [unretweetTweet.fulfilled.type]: (state, action) => {
+      const tweetId = action.payload;
+      const tweetIndex = state.feed.findIndex(
+        (tweet) => tweet.tweet_id === tweetId,
+      );
+      if (tweetIndex !== -1) {
+        state.feed[tweetIndex].retweet_flag = false;
+        state.feed[tweetIndex].retweet_count -= 1;
+      }
+    },
+    [unretweetTweet.rejected.type]: (state, error) => {
+      console.log(error.payload);
+      return state;
+    },
     [likeTweet.fulfilled.type]: (state, action) => {
       const tweetId = action.payload;
       const tweetIndex = state.feed.findIndex(
@@ -205,6 +286,21 @@ export const home = createSlice({
       }
     },
     [dislikeTweet.rejected.type]: (state, error) => {
+      console.log(error.payload);
+      return state;
+    },
+    // TODO: reply can be changed
+    [replyTweet.fulfilled.type]: (state, action) => {
+      const newReplyTweet = action.payload;
+      const tweetIndex = state.feed.findIndex(
+        (tweet) => tweet.tweet_id === newReplyTweet.reply_id,
+      );
+      if (tweetIndex !== -1) {
+        state.feed[tweetIndex].reply_count += 1;
+      }
+      state.feed = [newReplyTweet, ...state.feed];
+    },
+    [replyTweet.rejected.type]: (state, error) => {
       console.log(error.payload);
       return state;
     },

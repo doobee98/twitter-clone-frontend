@@ -12,3 +12,9 @@ export interface TweetFeedRequest {
   offset: number;
   count: number;
 }
+
+export interface ReplyCreateRequest {
+  original_tweet_id: string;
+  content: string;
+  image_src_list?: string[];
+}
