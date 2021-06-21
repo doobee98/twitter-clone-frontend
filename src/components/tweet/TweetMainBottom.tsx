@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
 import { useRootDispatch, useUserRecordSelector } from 'hooks/redux';
@@ -78,17 +78,14 @@ const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
   );
   const dispatch = useRootDispatch();
 
-  const dispatchPopup = useRootDispatch();
-
   const handleReply = () => {
     const isFollowingWriter = writer?.following_flag;
     if (tweet.reply_permission && !isFollowingWriter) {
       window.alert('reply not permitted!!');
-    } else dispatchPopup(modalActions.openReplyModal(tweet));
+    } else dispatch(modalActions.openReplyModal(tweet));
   };
 
   const handleRetweet = async () => {
-    // TODO
     if (isRetweetFlag) {
       await dispatch(homeActions.unretweetTweet(tweet.tweet_id));
     } else {

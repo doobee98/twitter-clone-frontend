@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from 'react';
-import Tweet from '../models/tweet';
+import React, { useEffect } from 'react';
 
 const useInfinityScroll = (
   scrollFunction: () => Promise<any>,

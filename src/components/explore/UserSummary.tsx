@@ -1,6 +1,6 @@
-import User from 'models/user';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import User from 'models/user';
 import { ColorPalette } from 'utils/colorUtils';
 
 const UserSummaryTextContainer = styled.div`

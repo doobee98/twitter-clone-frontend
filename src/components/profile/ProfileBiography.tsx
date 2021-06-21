@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
-import { ColorPalette } from 'utils/colorUtils';
-import User from 'models/user';
+import React from 'react';
+import styled from 'styled-components';
 import Icon from 'components/base/Icon';
+import User from 'models/user';
+import { ColorPalette } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
 
 const ProfileBiographyContainer = styled.div`
@@ -67,7 +67,7 @@ const ProfileBiography: React.FC<ProfileBiographyProps> = (props) => {
   const { user } = props;
 
   const monthNames = [
-    'FOO',
+    'FOO', // dummy
     'January',
     'February',
     'March',

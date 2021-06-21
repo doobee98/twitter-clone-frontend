@@ -2,9 +2,9 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import Button from 'components/base/Button';
 import { useRootDispatch } from 'hooks/redux';
+import User from 'models/user';
 import { userRecordActions } from 'modules/userRecord';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
-import User from 'models/user';
 
 const Follow = styled(Button)`
   color: ${ColorPalette.SKYBLUE};

@@ -9,11 +9,11 @@ import ContentTemplate, {
   ContentHeader,
   ContentSection,
 } from 'components/base/ContentTemplate';
-import { ColorPalette } from 'utils/colorUtils';
 import { useRootDispatch, useAuthSelector, useHomeSelector } from 'hooks/redux';
+import Tweet from 'models/tweet';
 import { homeActions } from 'modules/home';
 import { userRecordActions } from 'modules/userRecord';
-import Tweet from 'models/tweet';
+import { ColorPalette } from 'utils/colorUtils';
 
 const SpaceSection = styled(ContentSection)`
   background-color: ${ColorPalette.GRAY_F9};

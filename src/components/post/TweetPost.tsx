@@ -1,7 +1,7 @@
-import { useRootDispatch, useAuthSelector } from 'hooks/redux';
-import { homeActions } from 'modules/home';
 import React from 'react';
 import styled from 'styled-components';
+import { useRootDispatch, useAuthSelector } from 'hooks/redux';
+import { homeActions } from 'modules/home';
 import TweetPostContent from './TweetPostContent';
 import TweetPostProfile from './TweetPostProfile';
 
@@ -43,11 +43,12 @@ const TweetPost: React.FC<TweetPostProps> = (props) => {
   };
 
   if (!currentUser) return null;
+
   return (
     <TweetPostContainer>
       <TweetPostProfile currentUser={currentUser} />
       <TweetPostContent
-        placeholder={!isReply ? "What's happening?" : 'Add another Tweet'}
+        placeholder={!isReply ? "What's happening?" : 'Tweet your reply'}
         onPost={handlePost}
       />
     </TweetPostContainer>

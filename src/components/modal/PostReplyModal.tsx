@@ -1,17 +1,17 @@
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import Button from 'components/base/Button';
+import Icon from 'components/base/Icon';
+import TweetDescription from 'components/tweet/TweetDescription';
+import TweetPost from 'components/post/TweetPost';
+import { useRootDispatch, useModalSelector } from 'hooks/redux';
+import useClickOutside from 'hooks/useClickOutside';
+import Tweet from 'models/tweet';
+import { modalActions } from 'modules/modal';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
-import TweetPost from 'components/post/TweetPost';
-import { useEffect, useRef } from 'react';
-import { useRootDispatch, useModalSelector } from 'hooks/redux';
-import { modalActions } from 'modules/modal';
-import useClickOutside from 'hooks/useClickOutside';
-import TweetDescription from 'components/tweet/TweetDescription';
-import Tweet from 'models/tweet';
 import Modal from './Modal';
 import PopupBackground from './PopupBackground';
-import Button from '../base/Button';
-import Icon from '../base/Icon';
 
 const ReplyPopupModalHeaderWrapper = styled.div`
   border-bottom: 1px solid ${hexToRgbA(ColorPalette.BLACK, 0.2)};
@@ -49,7 +49,8 @@ const ReplyPopupModalContentWrapper = styled.div`
   margin-bottom: 10px;
   width: 88%;
   padding: 10px 12px 0 24px;
-  & :last-child {
+
+  &:last-child {
     border: none;
   }
 `;
@@ -81,7 +82,7 @@ interface ReplyPopupModalProps {
 
 const ReplyPopupModal: React.FC<ReplyPopupModalProps> = (props) => {
   const { isOpened } = props;
-  const popup = useRef<HTMLDivElement>(null);
+  const popupRef = useRef<HTMLDivElement>(null);
   const dispatch = useRootDispatch();
   const originalTweet = useModalSelector((state) => state.originalTweet);
 
@@ -106,16 +107,17 @@ const ReplyPopupModal: React.FC<ReplyPopupModalProps> = (props) => {
     dispatch(modalActions.closeReplyModal());
   };
 
-  useClickOutside(popup, () => {
+  useClickOutside(popupRef, () => {
     closePopup();
   });
 
   if (!isOpened) return null;
   if (!originalTweet) return null;
+
   return (
     <PopupBackground>
       <Modal width={600}>
-        <div ref={popup}>
+        <div ref={popupRef}>
           <ReplyPopupModalHeader onClose={closePopup} />
           <TweetDescription tweet={originalTweet} />
           <ReplyPopupModalContent

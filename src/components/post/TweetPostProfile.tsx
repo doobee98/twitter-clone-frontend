@@ -1,4 +1,4 @@
-import Profile from 'components/base/Profile';
+import ProfileImage from 'components/base/Profile';
 import User from 'models/user';
 import React from 'react';
 import styled from 'styled-components';
@@ -25,7 +25,10 @@ const TweetPostProfile: React.FC<TweetPostProfileProps> = (props) => {
   return (
     <TweetProfileWrapper>
       <ImageWrapper>
-        <Profile userid={currentUser.user_id} username={currentUser.username} />
+        <ProfileImage
+          userid={currentUser.user_id}
+          username={currentUser.username}
+        />
       </ImageWrapper>
     </TweetProfileWrapper>
   );

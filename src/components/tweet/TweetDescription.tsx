@@ -1,6 +1,6 @@
-import Profile from 'components/base/Profile';
-import Tweet from 'models/tweet';
 import styled from 'styled-components';
+import ProfileImage from 'components/base/Profile';
+import Tweet from 'models/tweet';
 import { ColorPalette } from 'utils/colorUtils';
 import TweetMainCenter from './TweetMainCenter';
 import { TweetMainTopDescription } from './TweetMainTop';
@@ -52,7 +52,7 @@ const TweetDescription: React.FC<TweetDescriptionProps> = (props) => {
     <TweetContainer>
       <TweetSideContainer>
         <TweetProfileWrapper>
-          <Profile userid={tweet.writer_id} username={tweet.writer_id} />
+          <ProfileImage userid={tweet.writer_id} username={tweet.writer_id} />
         </TweetProfileWrapper>
       </TweetSideContainer>
       <TweetMainContainer>

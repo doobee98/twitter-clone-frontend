@@ -1,7 +1,7 @@
-import Icon from 'components/base/Icon';
-import ProfileTooltip from 'components/base/ProfileTooltip';
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Icon from 'components/base/Icon';
+import ProfileTooltip from 'components/base/ProfileTooltip';
 import { ColorPalette } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
 import Tweet from '../../models/tweet';
@@ -28,7 +28,7 @@ const TweetHeaderItemWrapper = styled.div`
 `;
 
 const TweetHeaderTextWrapper = styled(TweetHeaderItemWrapper)`
-  &: hover {
+  &:hover {
     text-decoration: underline;
     cursor: pointer;
   }

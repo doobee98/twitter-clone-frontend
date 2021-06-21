@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { setTimeout } from 'timers';
 import Icon from 'components/base/Icon';
 import { BasicType } from 'utils/iconUtils';
-import { useHistory } from 'react-router-dom';
 import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
 import ProfileTooltip from '../base/ProfileTooltip';
 import Tweet from '../../models/tweet';
-import getTweetedTimeGap from '../../utils/getTweetedTimeGap';
+import { getTweetedTimeGap } from '../../utils';
 import TweetMoreDropdown from './TweetMoreDropdown';
 
 const TweetMainTopItem = styled.div`
   width: auto;
-
   margin: 1px;
-
   display: inline-block;
 `;
 
@@ -80,6 +78,7 @@ const TweetMainTopContainer = styled.div`
 interface TweetMainTopDescriptionProps {
   tweet: Tweet;
 }
+
 export const TweetMainTopDescription: React.FC<TweetMainTopDescriptionProps> = (
   props,
 ) => {

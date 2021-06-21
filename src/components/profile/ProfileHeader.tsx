@@ -1,7 +1,7 @@
 import User from 'models/user';
 import styled from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
-import Profile from '../base/Profile';
+import ProfileImage from '../base/Profile';
 import FollowButton from './FollowButton';
 import EditProfileButton from './EditProfileButton';
 
@@ -50,7 +50,11 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = (props) => {
     <ProfileHeaderContainer>
       <ProfileUpperBackground>
         <ProfileImageWrapper>
-          <Profile size={120} username={user.username} userid={user.user_id} />
+          <ProfileImage
+            size={120}
+            username={user.username}
+            userid={user.user_id}
+          />
         </ProfileImageWrapper>
         <ProfileTooltipContainer>
           <PorfileTooltipItem>

@@ -1,11 +1,11 @@
+import React from 'react';
+import styled from 'styled-components';
 import { ContentHeader, ContentSection } from 'components/base/ContentTemplate';
 import Icon from 'components/base/Icon';
 import { useRootDispatch, useUserRecordSelector } from 'hooks/redux';
 import { useDebouncePreset } from 'hooks/useDebounce';
 import useInput from 'hooks/useInput';
 import { userRecordActions } from 'modules/userRecord';
-import React from 'react';
-import styled from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
 import UserSummary from './UserSummary';
@@ -74,7 +74,7 @@ const ExploreSideBar: React.FC = () => {
         <SearchBarInput value={keyword} onChange={onChangeKeyword} />
       </SearchHeader>
       {searchResult.map((user) => (
-        <SearchItem key={user.user_id}>
+        <SearchItem key={`search-${user.user_id}`}>
           <UserSummary user={user} />
         </SearchItem>
       ))}

@@ -9,10 +9,10 @@ import {
   useAuthSelector,
   useUserRecordSelector,
 } from 'hooks/redux';
+import Tweet from 'models/tweet';
 import { profileActions } from 'modules/profile';
 import { userRecordActions } from 'modules/userRecord';
 import { homeActions } from 'modules/home';
-import Tweet from 'models/tweet';
 
 interface ProfilePageParams {
   id: string;

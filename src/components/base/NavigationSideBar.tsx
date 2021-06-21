@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRootDispatch, useAuthSelector } from 'hooks/redux';
 import { authActions } from 'modules/auth';
+import { modalActions } from 'modules/modal';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType, HighlightType } from 'utils/iconUtils';
-import { modalActions } from 'modules/modal';
 import NavItem from './NavItem';
 import Button from './Button';
 import Icon from './Icon';
@@ -95,10 +95,9 @@ const BottomContainer = styled.div`
 const NavigationSideBar: React.FC = () => {
   const currentUser = useAuthSelector((state) => state.currentUser);
   const dispatch = useRootDispatch();
-  const dispatchPopup = useRootDispatch();
 
   const openPopup = () => {
-    dispatchPopup(modalActions.openPostModal());
+    dispatch(modalActions.openPostModal());
   };
 
   const fetchLogout = () => {
@@ -131,14 +130,12 @@ const NavigationSideBar: React.FC = () => {
           >
             Messages
           </NotImplementedNavItem>
-          {/* TODO: need to change routing '/i/bookmarks' */}
           <NotImplementedNavItem
             iconType={HighlightType.BOOKMARKS}
             link="/bookmarks"
           >
             Bookmarks
           </NotImplementedNavItem>
-          {/* TODO: need to change routing '/:user_id/lists' */}
           <NotImplementedNavItem iconType={HighlightType.LISTS} link="/lists">
             Lists
           </NotImplementedNavItem>
