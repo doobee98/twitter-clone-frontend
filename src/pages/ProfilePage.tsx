@@ -4,10 +4,14 @@ import ContentTemplate from 'components/base/ContentTemplate';
 import PageTemplate from 'components/base/PageTemplate';
 import ExploreSideBar from 'components/explore/ExploreSideBar';
 import ProfileMain from 'components/profile/ProfileMain';
-import { useAppDispatch, useAuthSelector, useUserSelector } from 'hooks/redux';
-import { clearProfileState, getUserFeed } from 'modules/profile';
-import { fetchUser, getUser } from 'modules/userRecord';
-import { clearHomeState, fetchUserFeed } from 'modules/home';
+import {
+  useRootDispatch,
+  useAuthSelector,
+  useUserRecordSelector,
+} from 'hooks/redux';
+import { profileActions } from 'modules/profile';
+import { userRecordActions } from 'modules/userRecord';
+import { homeActions } from 'modules/home';
 import Tweet from 'models/tweet';
 
 interface ProfilePageParams {
@@ -21,14 +25,16 @@ interface PayloadInterface {
 
 const ProfilePage: React.FC = () => {
   const { id: paramId } = useParams<ProfilePageParams>();
-  const username = useUserSelector(paramId, (user) => user?.username);
-  const { currentUser } = useAuthSelector();
+  const username = useUserRecordSelector(
+    (state) => state.userRecord[paramId]?.username,
+  );
+  const currentUser = useAuthSelector((state) => state.currentUser);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const dispatch = useAppDispatch();
+  const dispatch = useRootDispatch();
 
   const handleFetchFeed = async () => {
-    const res = await dispatch(fetchUserFeed(paramId));
+    const res = await dispatch(homeActions.fetchUserFeed(paramId));
 
     if (res.type.toString() === 'home/fetchUserFeed/rejected') {
       setIsError(true);
@@ -40,12 +46,16 @@ const ProfilePage: React.FC = () => {
     const payload = res.payload as PayloadInterface;
     const newFeed = payload.data as Tweet[];
 
-    Promise.all(newFeed.map((tweet) => dispatch(getUser(tweet.writer_id))));
+    Promise.all(
+      newFeed.map((tweet) =>
+        dispatch(userRecordActions.getUser(tweet.writer_id)),
+      ),
+    );
   };
 
   useEffect(() => {
-    dispatch(clearProfileState());
-    dispatch(clearHomeState());
+    dispatch(profileActions.clearProfileState());
+    dispatch(homeActions.clearHomeState());
     handleFetchFeed();
   }, [paramId]);
 

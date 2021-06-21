@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
 import SignupModal from 'components/modal/SignupModal';
-import { useAppDispatch, useModalOpen } from 'hooks/redux';
+import { useRootDispatch, useModalSelector } from 'hooks/redux';
 import useInput from 'hooks/useInput';
-import { login } from 'modules/auth';
-import { openSignupModal } from 'modules/modal';
+import { authActions } from 'modules/auth';
+import { modalActions } from 'modules/modal';
 import { ColorPalette } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
 
@@ -73,13 +73,15 @@ const LoginHelpItem = styled.div`
 const LoginMain: React.FC = () => {
   const [id, onChangeId] = useInput('');
   const [password, onChangePassword] = useInput('');
-  const { isOpenedSignupModal } = useModalOpen();
+  const isOpenedSignupModal = useModalSelector(
+    (state) => state.isOpenedSignupModal,
+  );
 
   const history = useHistory();
-  const dispatch = useAppDispatch();
+  const dispatch = useRootDispatch();
 
   const fetchLogin = async () => {
-    const result = await dispatch(login({ user_id: id, password }));
+    const result = await dispatch(authActions.login({ user_id: id, password }));
 
     if (result.type === 'auth/login/fulfilled') {
       history.push('/home');
@@ -87,7 +89,7 @@ const LoginMain: React.FC = () => {
   };
 
   const goToSignup = () => {
-    dispatch(openSignupModal());
+    dispatch(modalActions.openSignupModal());
   };
 
   return (

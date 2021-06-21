@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useAppDispatch, useAuthSelector } from 'hooks/redux';
-import { logout } from 'modules/auth';
+import { useRootDispatch, useAuthSelector } from 'hooks/redux';
+import { authActions } from 'modules/auth';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType, HighlightType } from 'utils/iconUtils';
-import { openPostModal } from 'modules/modal';
+import { modalActions } from 'modules/modal';
 import NavItem from './NavItem';
 import Button from './Button';
 import Icon from './Icon';
@@ -93,17 +93,16 @@ const BottomContainer = styled.div`
 `;
 
 const NavigationSideBar: React.FC = () => {
-  const authStore = useAuthSelector();
-  const dispatch = useAppDispatch();
-  const { currentUser } = authStore;
-  const dispatchPopup = useAppDispatch();
+  const currentUser = useAuthSelector((state) => state.currentUser);
+  const dispatch = useRootDispatch();
+  const dispatchPopup = useRootDispatch();
 
   const openPopup = () => {
-    dispatchPopup(openPostModal());
+    dispatchPopup(modalActions.openPostModal());
   };
 
   const fetchLogout = () => {
-    dispatch(logout());
+    dispatch(authActions.logout());
   };
 
   return (

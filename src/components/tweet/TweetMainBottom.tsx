@@ -2,17 +2,12 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
-import { useAppDispatch, useUserSelector } from 'hooks/redux';
-import {
-  dislikeTweet,
-  likeTweet,
-  retweetTweet,
-  unretweetTweet,
-} from 'modules/home';
+import { useRootDispatch, useUserRecordSelector } from 'hooks/redux';
+import { homeActions } from 'modules/home';
 import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
 import Tweet from '../../models/tweet';
 import { BasicType, HighlightType } from '../../utils/iconUtils';
-import { openReplyModal } from '../../modules/modal';
+import { modalActions } from '../../modules/modal';
 
 const TweetMainBottomContainer = styled.div`
   display: flex;
@@ -78,24 +73,26 @@ const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
   const [isRetweetFlag, setIsRetweetFlag] = useState<boolean>(
     tweet.retweet_flag,
   );
-  const writer = useUserSelector(tweet.writer_id);
-  const dispatch = useAppDispatch();
+  const writer = useUserRecordSelector(
+    (state) => state.userRecord[tweet.writer_id],
+  );
+  const dispatch = useRootDispatch();
 
-  const dispatchPopup = useAppDispatch();
+  const dispatchPopup = useRootDispatch();
 
   const handleReply = () => {
     const isFollowingWriter = writer?.following_flag;
     if (tweet.reply_permission && !isFollowingWriter) {
       window.alert('reply not permitted!!');
-    } else dispatchPopup(openReplyModal(tweet));
+    } else dispatchPopup(modalActions.openReplyModal(tweet));
   };
 
   const handleRetweet = async () => {
     // TODO
     if (isRetweetFlag) {
-      await dispatch(unretweetTweet(tweet.tweet_id));
+      await dispatch(homeActions.unretweetTweet(tweet.tweet_id));
     } else {
-      await dispatch(retweetTweet(tweet.tweet_id));
+      await dispatch(homeActions.retweetTweet(tweet.tweet_id));
     }
 
     setIsRetweetFlag(!isRetweetFlag);
@@ -103,9 +100,9 @@ const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
 
   const handleLike = async () => {
     if (isLikeFlag) {
-      await dispatch(dislikeTweet(tweet.tweet_id));
+      await dispatch(homeActions.dislikeTweet(tweet.tweet_id));
     } else {
-      await dispatch(likeTweet(tweet.tweet_id));
+      await dispatch(homeActions.likeTweet(tweet.tweet_id));
     }
 
     setIsLikeFlag(!isLikeFlag);

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import Button from 'components/base/Button';
-import { useAppDispatch } from 'hooks/redux';
+import { useRootDispatch } from 'hooks/redux';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import User from 'models/user';
-import { openEditModal } from 'modules/modal';
+import { modalActions } from 'modules/modal';
 
 const EditProfile = styled(Button)`
   color: ${ColorPalette.SKYBLUE};
@@ -21,10 +21,10 @@ interface EditProfileButtonProps {
 
 const EditProfileButton: React.FC<EditProfileButtonProps> = (props) => {
   const { user } = props;
-  const dispatch = useAppDispatch();
+  const dispatch = useRootDispatch();
 
   const openModal = () => {
-    dispatch(openEditModal(user));
+    dispatch(modalActions.openEditModal(user));
   };
 
   if (!user) {

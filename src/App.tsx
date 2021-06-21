@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
-import { useAppDispatch } from 'hooks/redux';
-import { info } from 'modules/auth';
+import { useRootDispatch } from 'hooks/redux';
+import { authActions } from 'modules/auth';
 import storage, { AUTH_TOKEN_NAME } from 'utils/storage';
 import NotImplementedPage from 'pages/NotImplementedPage';
 import HomePage from './pages/HomePage';
@@ -62,7 +62,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App: React.FC = () => {
-  const dispatch = useAppDispatch();
+  const dispatch = useRootDispatch();
 
   const [initialLoading, setInitialLoading] = useState(false);
 
@@ -76,7 +76,7 @@ const App: React.FC = () => {
       return;
     }
 
-    dispatch(info()).finally(completeInitialLoading);
+    dispatch(authActions.info()).finally(completeInitialLoading);
   }, []);
 
   if (!initialLoading) {

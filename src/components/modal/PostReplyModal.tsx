@@ -3,8 +3,8 @@ import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
 import TweetPost from 'components/post/TweetPost';
 import { useEffect, useRef } from 'react';
-import { useAppDispatch, useModalOpen } from 'hooks/redux';
-import { closeReplyModal } from 'modules/modal';
+import { useRootDispatch, useModalSelector } from 'hooks/redux';
+import { modalActions } from 'modules/modal';
 import useClickOutside from 'hooks/useClickOutside';
 import TweetDescription from 'components/tweet/TweetDescription';
 import Tweet from 'models/tweet';
@@ -82,9 +82,8 @@ interface ReplyPopupModalProps {
 const ReplyPopupModal: React.FC<ReplyPopupModalProps> = (props) => {
   const { isOpened } = props;
   const popup = useRef<HTMLDivElement>(null);
-  const dispatch = useAppDispatch();
-  const modalStore = useModalOpen();
-  const { originalTweet } = modalStore;
+  const dispatch = useRootDispatch();
+  const originalTweet = useModalSelector((state) => state.originalTweet);
 
   const initLock = async () => {
     document.body.style.paddingRight = ` ${
@@ -104,7 +103,7 @@ const ReplyPopupModal: React.FC<ReplyPopupModalProps> = (props) => {
   }, [isOpened]);
 
   const closePopup = () => {
-    dispatch(closeReplyModal());
+    dispatch(modalActions.closeReplyModal());
   };
 
   useClickOutside(popup, () => {

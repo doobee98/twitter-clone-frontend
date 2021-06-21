@@ -1,5 +1,5 @@
-import { useAppDispatch, useAuthSelector } from 'hooks/redux';
-import { createTweet, replyTweet } from 'modules/home';
+import { useRootDispatch, useAuthSelector } from 'hooks/redux';
+import { homeActions } from 'modules/home';
 import React from 'react';
 import styled from 'styled-components';
 import TweetPostContent from './TweetPostContent';
@@ -20,9 +20,8 @@ interface TweetPostProps {
 
 const TweetPost: React.FC<TweetPostProps> = (props) => {
   const { isReply, originalTweetId, onCreatePost } = props;
-  const dispatch = useAppDispatch();
-  const authStore = useAuthSelector();
-  const { currentUser } = authStore;
+  const dispatch = useRootDispatch();
+  const currentUser = useAuthSelector((state) => state.currentUser);
 
   const handlePost = async (
     tweetContent: string,
@@ -30,11 +29,11 @@ const TweetPost: React.FC<TweetPostProps> = (props) => {
   ) => {
     dispatch(
       !originalTweetId
-        ? createTweet({
+        ? homeActions.createTweet({
             content: tweetContent,
             reply_permission: replyPermission,
           })
-        : replyTweet({
+        : homeActions.replyTweet({
             original_tweet_id: originalTweetId,
             content: tweetContent,
             reply_permission: replyPermission,

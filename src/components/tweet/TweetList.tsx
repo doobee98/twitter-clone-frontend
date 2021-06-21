@@ -1,10 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { useAppDispatch, useHomeSelector } from 'hooks/redux';
-import { fetchFeed } from 'modules/home';
 import Icon from 'components/base/Icon';
 import { BasicType } from 'utils/iconUtils';
-import { fetchUser, getUser } from 'modules/userRecord';
 import { ColorPalette } from '../../utils/colorUtils';
 import TweetComponent from './TweetComponent';
 import useInfinityScroll from '../../hooks/useInfinityScroll';

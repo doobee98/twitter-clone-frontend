@@ -2,15 +2,9 @@ import React, { useEffect } from 'react';
 import AuthApi from 'apis/AuthApi';
 import useInput from 'hooks/useInput';
 import Button from 'components/base/Button';
-import { useAppDispatch, useAuthSelector, useHomeSelector } from 'hooks/redux';
-import { login, logout, signup } from 'modules/auth';
-import {
-  createTweet,
-  deleteTweet,
-  dislikeTweet,
-  fetchFeed,
-  likeTweet,
-} from 'modules/home';
+import { useRootDispatch, useAuthSelector, useHomeSelector } from 'hooks/redux';
+import { authActions } from 'modules/auth';
+import { homeActions } from 'modules/home';
 import Tweet from 'models/tweet';
 
 // TODO: SignUpPage 따로 만들것
@@ -21,23 +15,20 @@ const LoginPage: React.FC = () => {
   const [tweetId, onChangeTweetId] = useInput('');
   const [tweetContent, onChangeTweetContent] = useInput('');
 
-  const authStore = useAuthSelector();
-  const homeStore = useHomeSelector();
-  const dispatch = useAppDispatch();
-
-  const { currentUser } = authStore;
-  const { feed } = homeStore;
+  const currentUser = useAuthSelector((state) => state.currentUser);
+  const feed = useHomeSelector((state) => state.feed);
+  const dispatch = useRootDispatch();
 
   const handleLogin = async () => {
-    return dispatch(login({ user_id: id, password }));
+    return dispatch(authActions.login({ user_id: id, password }));
   };
 
   const handleLogout = async () => {
-    return dispatch(logout());
+    return dispatch(authActions.logout());
   };
 
   const handleSignup = async () => {
-    return dispatch(signup({ user_id: id, password, username }));
+    return dispatch(authActions.signup({ user_id: id, password, username }));
   };
 
   const handleCurrentUser = async () => {
@@ -52,23 +43,23 @@ const LoginPage: React.FC = () => {
   };
 
   const handleCreateTweet = async () => {
-    dispatch(createTweet({ content: tweetContent }));
+    dispatch(homeActions.createTweet({ content: tweetContent }));
   };
 
   const handleDeleteTweet = async () => {
-    dispatch(deleteTweet(tweetId));
+    dispatch(homeActions.deleteTweet(tweetId));
   };
 
   const handleFetchFeed = async () => {
-    dispatch(fetchFeed());
+    dispatch(homeActions.fetchFeed());
   };
 
   const toggleLikeTweet = async (tweet: Tweet) => {
     console.log(tweet);
     if (tweet.like_flag) {
-      dispatch(dislikeTweet(tweet.tweet_id));
+      dispatch(homeActions.dislikeTweet(tweet.tweet_id));
     } else {
-      dispatch(likeTweet(tweet.tweet_id));
+      dispatch(homeActions.likeTweet(tweet.tweet_id));
     }
   };
 

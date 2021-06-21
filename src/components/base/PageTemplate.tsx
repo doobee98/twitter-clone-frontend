@@ -4,7 +4,7 @@ import NavigationSideBar from './NavigationSideBar';
 import PostPopupModal from '../modal/PostPopupModal';
 import ReplyPopupModal from '../modal/PostReplyModal';
 import EditProfileModal from '../modal/EditProfileModal';
-import { useModalOpen } from '../../hooks/redux';
+import { useModalSelector } from '../../hooks/redux';
 
 const PageTemplateContainer = styled.div`
   position: relative;
@@ -44,9 +44,15 @@ interface PageTemplateProps {
 const PageTemplate: React.FC<PageTemplateProps> = (props) => {
   const { children, title } = props;
 
-  const modalStore = useModalOpen();
-  const { isOpenedPostModal, isOpenedReplyModal, isOpenedEditModal } =
-    modalStore;
+  const isOpenedPostModal = useModalSelector(
+    (state) => state.isOpenedPostModal,
+  );
+  const isOpenedReplyModal = useModalSelector(
+    (state) => state.isOpenedReplyModal,
+  );
+  const isOpenedEditModal = useModalSelector(
+    (state) => state.isOpenedEditModal,
+  );
 
   useTitle(`${title} / Twitter-Clone`);
 

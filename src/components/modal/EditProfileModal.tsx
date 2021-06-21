@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import useClickOutside from 'hooks/useClickOutside';
-import { useAppDispatch, useModalOpen } from 'hooks/redux';
-import { closeEditModal, closePostModal } from 'modules/modal';
+import { useRootDispatch, useModalSelector } from 'hooks/redux';
+import { modalActions } from 'modules/modal';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import styled from 'styled-components';
 import Button from 'components/base/Button';
@@ -9,8 +9,8 @@ import Icon from 'components/base/Icon';
 import { BasicType } from 'utils/iconUtils';
 import useInput from 'hooks/useInput';
 import User from 'models/user';
-import { edit } from 'modules/auth';
-import { fetchUser, getUser } from 'modules/userRecord';
+import { authActions } from 'modules/auth';
+import { userRecordActions } from 'modules/userRecord';
 import PopupBackground from './PopupBackground';
 import Modal from './Modal';
 
@@ -139,27 +139,25 @@ const EditProfileModalContent: React.FC<EditProfileModalContentProps> = (
   props,
 ) => {
   const { user, onEdit } = props;
-  const [username, onChangeUserName, setUserName] = useInput(user.username);
-  const [profile_img_src, onChangeProfileImgSrc, setProfileImgSrc] = useInput(
-    user.profile_img_src,
-  );
-  const [bio, onChangeBio, setBio] = useInput(user.bio);
-  const [location, onChangeLocation, setLocation] = useInput(user.location);
-  const [website, onChangeWebsite, setWebsite] = useInput(user.website);
-  const dispatch = useAppDispatch();
+  const [username, onChangeUserName] = useInput(user.username);
+  const [profileImgSrc, onChangeProfileImgSrc] = useInput(user.profile_img_src);
+  const [bio, onChangeBio] = useInput(user.bio);
+  const [location, onChangeLocation] = useInput(user.location);
+  const [website, onChangeWebsite] = useInput(user.website);
+  const dispatch = useRootDispatch();
 
   const onSubmit = async () => {
     const result = await dispatch(
-      edit({
+      authActions.edit({
         username,
-        profile_img_src,
+        profile_img_src: profileImgSrc,
         bio,
         website,
         location,
       }),
     );
     if (result.type === 'auth/edit/fulfilled') {
-      await dispatch(fetchUser(user.user_id));
+      await dispatch(userRecordActions.fetchUser(user.user_id));
       onEdit();
     }
   };
@@ -210,9 +208,8 @@ interface EditProfileModalProps {
 const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
   const { isOpened } = props;
   const popup = useRef<HTMLDivElement>(null);
-  const dispatch = useAppDispatch();
-  const modalStore = useModalOpen();
-  const { profileOwner: user } = modalStore;
+  const dispatch = useRootDispatch();
+  const user = useModalSelector((state) => state.profileOwner);
 
   const initLock = async () => {
     document.body.style.paddingRight = ` ${
@@ -236,7 +233,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
   });
 
   const closePopup = () => {
-    dispatch(closeEditModal());
+    dispatch(modalActions.closeEditModal());
   };
 
   const handleEdit = () => {

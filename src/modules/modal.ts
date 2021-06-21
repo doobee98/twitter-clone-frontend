@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Tweet from 'models/tweet';
 import User from 'models/user';
 
-interface ModalState {
+export interface ModalState {
   isOpenedPostModal: boolean;
   isOpenedReplyModal: boolean;
   isOpenedSignupModal: boolean;
@@ -53,14 +53,5 @@ export const modal = createSlice({
   extraReducers: {},
 });
 
-export const {
-  openPostModal,
-  closePostModal,
-  openReplyModal,
-  closeReplyModal,
-  openSignupModal,
-  closeSignupModal,
-  openEditModal,
-  closeEditModal,
-} = modal.actions;
+export const modalActions = modal.actions;
 export default modal.reducer;

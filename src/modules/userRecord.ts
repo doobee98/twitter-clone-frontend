@@ -12,7 +12,7 @@ export interface UserRecordState {
 
 const initialState: UserRecordState = { userRecord: {}, searchResult: [] };
 
-export const fetchUser = createAsyncThunk(
+const fetchUser = createAsyncThunk(
   `${name}/fetchUser`,
   async (userId: string, thunkAPI) => {
     try {
@@ -27,15 +27,15 @@ export const fetchUser = createAsyncThunk(
   },
 );
 
-export const getUser = createAsyncThunk(
+const getUser = createAsyncThunk(
   `${name}/getUser`,
   async (userId: string, thunkAPI) => {
     try {
       const rootState = thunkAPI.getState() as any;
-      const { userRecord } = rootState.userRecord as UserRecordState;
+      const state = rootState.userRecord as UserRecordState;
 
-      if (userId in userRecord) {
-        return userRecord[userId];
+      if (userId in state.userRecord) {
+        return state.userRecord[userId];
       }
 
       // fetchUser
@@ -65,7 +65,7 @@ export const searchUser = createAsyncThunk(
   },
 );
 
-export const followUser = createAsyncThunk(
+const followUser = createAsyncThunk(
   `${name}/followUser`,
   async (userId: string, thunkAPI) => {
     try {
@@ -80,7 +80,7 @@ export const followUser = createAsyncThunk(
   },
 );
 
-export const unfollowUser = createAsyncThunk(
+const unfollowUser = createAsyncThunk(
   `${name}/unfollowUser`,
   async (userId: string, thunkAPI) => {
     try {
@@ -99,7 +99,7 @@ export const userRecord = createSlice({
   name,
   initialState,
   reducers: {
-    clearUserRecord: (state, action) => {
+    clearUserRecord: (state) => {
       state.userRecord = {};
     },
     clearSearchResult: (state) => {
@@ -153,5 +153,12 @@ export const userRecord = createSlice({
   },
 });
 
+export const userRecordActions = {
+  fetchUser,
+  getUser,
+  searchUser,
+  followUser,
+  unfollowUser,
+  ...userRecord.actions,
+};
 export default userRecord.reducer;
-export const { clearUserRecord, clearSearchResult } = userRecord.actions;

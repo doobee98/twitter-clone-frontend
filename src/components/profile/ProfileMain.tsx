@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import styled from 'styled-components';
 import Button from 'components/base/Button';
 import ContentTemplate, {
@@ -7,16 +6,13 @@ import ContentTemplate, {
 } from 'components/base/ContentTemplate';
 import Icon from 'components/base/Icon';
 import {
-  useAppSelector,
   useAuthSelector,
   useHomeSelector,
-  useProfileSelector,
-  useUserSelector,
+  useUserRecordSelector,
 } from 'hooks/redux';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
 import ProfileHeader from './ProfileHeader';
-import FollowButton from './FollowButton';
 import TweetList from '../tweet/TweetList';
 import ProfileBiography from './ProfileBiography';
 
@@ -50,9 +46,10 @@ interface ProfileMainProps {
 
 const ProfileMain: React.FC<ProfileMainProps> = (props) => {
   const { userId, handleFetchFeed, isLoading, isError } = props;
-  const { currentUser } = useAuthSelector();
-  const user = useUserSelector(userId);
-  const { feed, totalCount: userFeedCount } = useHomeSelector();
+  const currentUser = useAuthSelector((state) => state.currentUser);
+  const user = useUserRecordSelector((state) => state.userRecord[userId]);
+  const feed = useHomeSelector((state) => state.feed);
+  const userFeedCount = useHomeSelector((state) => state.totalCount);
 
   if (!user) {
     return null;

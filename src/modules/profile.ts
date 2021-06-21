@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import UsersApi from 'apis/UsersApi';
 import Tweet from 'models/tweet';
@@ -13,7 +14,7 @@ export interface ProfileState {
 
 const initialState: ProfileState = { feed: [], totalCount: 0 };
 
-export const getUserFeed = createAsyncThunk(
+const getUserFeed = createAsyncThunk(
   `${name}/getUserFeed`,
   async (userId: string, thunkAPI) => {
     try {
@@ -43,17 +44,14 @@ export const profile = createSlice({
   extraReducers: {
     [getUserFeed.fulfilled.type]: (state, action) => {
       const { totalCount, data: newFeed } = action.payload;
-      return {
-        feed: [...state.feed, ...newFeed],
-        totalCount,
-      };
+      state.feed = [...state.feed, ...newFeed];
+      state.totalCount = totalCount;
     },
     [getUserFeed.rejected.type]: (state, error) => {
       console.log(error.payload);
-      return state;
     },
   },
 });
 
+export const profileActions = { getUserFeed, ...profile.actions };
 export default profile.reducer;
-export const { clearProfileState } = profile.actions;

@@ -2,11 +2,11 @@ import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Button from '../base/Button';
 import Icon from '../base/Icon';
-import { useAppDispatch } from '../../hooks/redux';
+import { useRootDispatch } from '../../hooks/redux';
 import useClickOutside from '../../hooks/useClickOutside';
 import useInput from '../../hooks/useInput';
-import { signup } from '../../modules/auth';
-import { closeSignupModal } from '../../modules/modal';
+import { authActions } from '../../modules/auth';
+import { modalActions } from '../../modules/modal';
 import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
 import { BasicType } from '../../utils/iconUtils';
 import Modal from './Modal';
@@ -101,7 +101,7 @@ const SignupModal: React.FC<SignupModalProps> = (props) => {
   const [username, onChangeUsername, setUsername] = useInput('');
 
   const modalRef = useRef<HTMLDivElement>(null);
-  const dispatch = useAppDispatch();
+  const dispatch = useRootDispatch();
 
   const initLock = async () => {
     document.body.style.paddingRight = ` ${
@@ -122,11 +122,13 @@ const SignupModal: React.FC<SignupModalProps> = (props) => {
   };
 
   const closeModal = () => {
-    dispatch(closeSignupModal());
+    dispatch(modalActions.closeSignupModal());
   };
 
   const fetchSignup = async () => {
-    const result = await dispatch(signup({ user_id: id, username, password }));
+    const result = await dispatch(
+      authActions.signup({ user_id: id, username, password }),
+    );
 
     if (result.type === 'auth/signup/fulfilled') {
       clearInput();

@@ -10,9 +10,9 @@ import ContentTemplate, {
   ContentSection,
 } from 'components/base/ContentTemplate';
 import { ColorPalette } from 'utils/colorUtils';
-import { useAppDispatch, useAuthSelector, useHomeSelector } from 'hooks/redux';
-import { fetchFeed } from 'modules/home';
-import { getUser } from 'modules/userRecord';
+import { useRootDispatch, useAuthSelector, useHomeSelector } from 'hooks/redux';
+import { homeActions } from 'modules/home';
+import { userRecordActions } from 'modules/userRecord';
 import Tweet from 'models/tweet';
 
 const SpaceSection = styled(ContentSection)`
@@ -21,16 +21,14 @@ const SpaceSection = styled(ContentSection)`
 `;
 
 const HomePage: React.FC = () => {
-  const authStore = useAuthSelector();
-  const { currentUser } = authStore;
+  const currentUser = useAuthSelector((state) => state.currentUser);
+  const feed = useHomeSelector((state) => state.feed);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const homeStore = useHomeSelector();
-  const dispatch = useAppDispatch();
-  const { feed } = homeStore;
+  const dispatch = useRootDispatch();
 
   const handleFetchFeed = async () => {
-    const res = await dispatch(fetchFeed());
+    const res = await dispatch(homeActions.fetchFeed());
 
     if (res.type.toString() === 'home/fetchFeed/rejected') {
       setIsError(true);
@@ -41,7 +39,11 @@ const HomePage: React.FC = () => {
 
     const newFeed = (await res.payload) as Tweet[];
 
-    Promise.all(newFeed.map((tweet) => dispatch(getUser(tweet.writer_id))));
+    Promise.all(
+      newFeed.map((tweet) =>
+        dispatch(userRecordActions.getUser(tweet.writer_id)),
+      ),
+    );
   };
 
   // INIT FETCH

@@ -1,6 +1,6 @@
 import Icon from 'components/base/Icon';
-import { useAppDispatch, useHomeSelector } from 'hooks/redux';
-import { deleteTweet } from 'modules/home';
+import { useRootDispatch } from 'hooks/redux';
+import { homeActions } from 'modules/home';
 import Tweet from 'models/tweet';
 import React from 'react';
 import { BasicType } from 'utils/iconUtils';
@@ -12,11 +12,11 @@ interface TweetMoreDropdownProps {
 
 const TweetMoreDropdown: React.FC<TweetMoreDropdownProps> = (props) => {
   const { tweet } = props;
-  const dispatch = useAppDispatch();
+  const dispatch = useRootDispatch();
 
   const handleDelete = () => {
     // TODO?
-    dispatch(deleteTweet(tweet.tweet_id));
+    dispatch(homeActions.deleteTweet(tweet.tweet_id));
   };
 
   return (

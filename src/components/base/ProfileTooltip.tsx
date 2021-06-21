@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
 import { useHistory } from 'react-router-dom';
-import { useAuthSelector, useUserSelector } from 'hooks/redux';
+import { useAuthSelector, useUserRecordSelector } from 'hooks/redux';
 import Profile from './Profile';
 import FollowButton from '../profile/FollowButton';
 
@@ -96,8 +96,8 @@ interface ProfileTooltipProps {
 
 const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
   const { isOpen, setIsOpen, userId } = props;
-  const { currentUser } = useAuthSelector();
-  const user = useUserSelector(userId);
+  const currentUser = useAuthSelector((state) => state.currentUser);
+  const user = useUserRecordSelector((state) => state.userRecord[userId]);
   const [isHoverActive, setIsHoverActive] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
   const history = useHistory();

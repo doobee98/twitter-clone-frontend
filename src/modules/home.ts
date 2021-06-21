@@ -10,7 +10,7 @@ import {
 
 const FEED_INITIAL_COUNT = 10;
 
-interface HomeState {
+export interface HomeState {
   feed: Tweet[];
   totalCount: number;
 }
@@ -20,27 +20,24 @@ const initialState: HomeState = {
   totalCount: 0,
 };
 
-export const fetchFeed = createAsyncThunk(
-  'home/fetchFeed',
-  async (_, thunkAPI) => {
-    try {
-      const rootState = thunkAPI.getState() as any;
-      const { feed } = rootState.home as HomeState;
-      const response = await TweetsApi.instance.getFeed(
-        feed.length + 1,
-        FEED_INITIAL_COUNT,
-      );
-      return response.data;
-    } catch (error) {
-      if (!error.response) {
-        throw error;
-      }
-      return thunkAPI.rejectWithValue(error.response.data);
+const fetchFeed = createAsyncThunk('home/fetchFeed', async (_, thunkAPI) => {
+  try {
+    const rootState = thunkAPI.getState() as any;
+    const { feed } = rootState.home as HomeState;
+    const response = await TweetsApi.instance.getFeed(
+      feed.length + 1,
+      FEED_INITIAL_COUNT,
+    );
+    return response.data;
+  } catch (error) {
+    if (!error.response) {
+      throw error;
     }
-  },
-);
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+});
 
-export const fetchUserFeed = createAsyncThunk(
+const fetchUserFeed = createAsyncThunk(
   'home/fetchUserFeed',
   async (userId: string, thunkAPI) => {
     try {
@@ -61,7 +58,7 @@ export const fetchUserFeed = createAsyncThunk(
   },
 );
 
-export const createTweet = createAsyncThunk(
+const createTweet = createAsyncThunk(
   'home/createTweet',
   async (tweetCreateRequest: TweetCreateRequest, thunkAPI) => {
     try {
@@ -81,7 +78,7 @@ export const createTweet = createAsyncThunk(
   },
 );
 
-export const deleteTweet = createAsyncThunk(
+const deleteTweet = createAsyncThunk(
   'tweets/deleteTweet',
   async (tweetId: string, thunkAPI) => {
     try {
@@ -96,7 +93,7 @@ export const deleteTweet = createAsyncThunk(
   },
 );
 
-export const retweetTweet = createAsyncThunk(
+const retweetTweet = createAsyncThunk(
   'tweets/retweetTweet',
   async (tweetId: string, thunkAPI) => {
     try {
@@ -111,7 +108,7 @@ export const retweetTweet = createAsyncThunk(
   },
 );
 
-export const unretweetTweet = createAsyncThunk(
+const unretweetTweet = createAsyncThunk(
   'tweets/unretweetTweet',
   async (tweetId: string, thunkAPI) => {
     try {
@@ -126,7 +123,7 @@ export const unretweetTweet = createAsyncThunk(
   },
 );
 
-export const likeTweet = createAsyncThunk(
+const likeTweet = createAsyncThunk(
   'tweets/likeTweet',
   async (tweetId: string, thunkAPI) => {
     try {
@@ -141,7 +138,7 @@ export const likeTweet = createAsyncThunk(
   },
 );
 
-export const dislikeTweet = createAsyncThunk(
+const dislikeTweet = createAsyncThunk(
   'tweets/dislikeTweet',
   async (tweetId: string, thunkAPI) => {
     try {
@@ -156,7 +153,7 @@ export const dislikeTweet = createAsyncThunk(
   },
 );
 
-export const replyTweet = createAsyncThunk(
+const replyTweet = createAsyncThunk(
   'home/replyTweet',
   async (replyCreateRequest: ReplyCreateRequest, thunkAPI) => {
     try {
@@ -187,13 +184,10 @@ export const home = createSlice({
   extraReducers: {
     [fetchFeed.fulfilled.type]: (state, action) => {
       const newFeed = action.payload;
-      return {
-        feed: [...state.feed, ...newFeed],
-      };
+      state.feed = [...state.feed, ...newFeed];
     },
     [fetchFeed.rejected.type]: (state, error) => {
       console.log(error.payload);
-      return state;
     },
     [fetchUserFeed.fulfilled.type]: (state, action) => {
       const { totalCount, data: newFeed } = action.payload;
@@ -208,33 +202,19 @@ export const home = createSlice({
     },
     [createTweet.fulfilled.type]: (state, action) => {
       const newTweet = action.payload;
-      return {
-        feed: [newTweet, ...state.feed],
-      };
+      state.feed = [newTweet, ...state.feed];
     },
     [createTweet.rejected.type]: (state, error) => {
       console.log(error.payload);
-      return state;
     },
     [deleteTweet.fulfilled.type]: (state, action) => {
       const deletedTweetId = action.payload;
-      return {
-        feed: state.feed.filter((tweet) => tweet.tweet_id !== deletedTweetId),
-      };
+      state.feed = state.feed.filter(
+        (tweet) => tweet.tweet_id !== deletedTweetId,
+      );
     },
     [deleteTweet.rejected.type]: (state, error) => {
       console.log(error.payload);
-      return state;
-    },
-    [deleteTweet.fulfilled.type]: (state, action) => {
-      const deletedTweetId = action.payload;
-      return {
-        feed: state.feed.filter((tweet) => tweet.tweet_id !== deletedTweetId),
-      };
-    },
-    [deleteTweet.rejected.type]: (state, error) => {
-      console.log(error.payload);
-      return state;
     },
     [retweetTweet.fulfilled.type]: (state, action) => {
       const tweetId = action.payload;
@@ -276,7 +256,6 @@ export const home = createSlice({
     },
     [likeTweet.rejected.type]: (state, error) => {
       console.log(error.payload);
-      return state;
     },
     [dislikeTweet.fulfilled.type]: (state, action) => {
       const tweetId = action.payload;
@@ -290,7 +269,6 @@ export const home = createSlice({
     },
     [dislikeTweet.rejected.type]: (state, error) => {
       console.log(error.payload);
-      return state;
     },
     // TODO: reply can be changed
     [replyTweet.fulfilled.type]: (state, action) => {
@@ -310,5 +288,16 @@ export const home = createSlice({
   },
 });
 
+export const homeActions = {
+  fetchFeed,
+  fetchUserFeed,
+  createTweet,
+  deleteTweet,
+  retweetTweet,
+  unretweetTweet,
+  likeTweet,
+  dislikeTweet,
+  replyTweet,
+  ...home.actions,
+};
 export default home.reducer;
-export const { clearHomeState } = home.actions;

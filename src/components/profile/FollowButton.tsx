@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import Button from 'components/base/Button';
-import { useAppDispatch } from 'hooks/redux';
-import { followUser, unfollowUser } from 'modules/userRecord';
+import { useRootDispatch } from 'hooks/redux';
+import { userRecordActions } from 'modules/userRecord';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import User from 'models/user';
 
@@ -38,7 +38,7 @@ interface FollowButtonProps {
 
 const FollowButton: React.FC<FollowButtonProps> = (props) => {
   const { user } = props;
-  const dispatch = useAppDispatch();
+  const dispatch = useRootDispatch();
   const [isHover, setIsHover] = useState(false);
 
   if (!user) {
@@ -46,11 +46,11 @@ const FollowButton: React.FC<FollowButtonProps> = (props) => {
   }
 
   const handleFollow = () => {
-    dispatch(followUser(user.user_id));
+    dispatch(userRecordActions.followUser(user.user_id));
   };
 
   const handleUnfollow = () => {
-    dispatch(unfollowUser(user.user_id));
+    dispatch(userRecordActions.unfollowUser(user.user_id));
   };
 
   if (!user.following_flag) {

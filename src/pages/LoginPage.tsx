@@ -12,8 +12,7 @@ const LoginPageWrapper = styled.div`
 `;
 
 const LoginPage: React.FC = () => {
-  const authStore = useAuthSelector();
-  const { currentUser } = authStore;
+  const currentUser = useAuthSelector((state) => state.currentUser);
 
   useTitle('Login / Twitter-Clone');
 

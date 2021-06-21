@@ -1,8 +1,6 @@
 import User from 'models/user';
 import styled from 'styled-components';
-import { hexToRgbA, ColorPalette } from 'utils/colorUtils';
-import { useAppDispatch } from 'hooks/redux';
-import { openEditModal } from 'modules/modal';
+import { ColorPalette } from 'utils/colorUtils';
 import Profile from '../base/Profile';
 import FollowButton from './FollowButton';
 import EditProfileButton from './EditProfileButton';
@@ -47,7 +45,6 @@ interface ProfileHeaderProps {
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = (props) => {
   const { user, isCurrentUser } = props;
-  const dispatch = useAppDispatch();
 
   return (
     <ProfileHeaderContainer>

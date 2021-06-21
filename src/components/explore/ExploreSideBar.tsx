@@ -1,10 +1,10 @@
 import { ContentHeader, ContentSection } from 'components/base/ContentTemplate';
 import Icon from 'components/base/Icon';
-import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { useRootDispatch, useUserRecordSelector } from 'hooks/redux';
 import { useDebouncePreset } from 'hooks/useDebounce';
 import useInput from 'hooks/useInput';
-import { clearSearchResult, searchUser } from 'modules/userRecord';
-import React, { useEffect } from 'react';
+import { userRecordActions } from 'modules/userRecord';
+import React from 'react';
 import styled from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
@@ -47,14 +47,14 @@ const SearchItem = styled(ContentSection)`
 `;
 
 const ExploreSideBar: React.FC = () => {
-  const searchResult = useAppSelector((state) => state.userRecord.searchResult);
   const [keyword, onChangeKeyword] = useInput('');
-  const dispatch = useAppDispatch();
+  const searchResult = useUserRecordSelector((state) => state.searchResult);
+  const dispatch = useRootDispatch();
 
   useDebouncePreset(
     () => {
       if (searchResult.length !== 0) {
-        dispatch(clearSearchResult());
+        dispatch(userRecordActions.clearSearchResult());
       }
     },
     () => {
@@ -62,7 +62,7 @@ const ExploreSideBar: React.FC = () => {
         return;
       }
 
-      dispatch(searchUser(keyword));
+      dispatch(userRecordActions.searchUser(keyword));
     },
     [keyword],
   );
