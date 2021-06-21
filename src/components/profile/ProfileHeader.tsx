@@ -1,9 +1,11 @@
 import User from 'models/user';
 import styled from 'styled-components';
 import { hexToRgbA, ColorPalette } from 'utils/colorUtils';
+import { useAppDispatch } from 'hooks/redux';
+import { openEditModal } from 'modules/modal';
 import Profile from '../base/Profile';
 import FollowButton from './FollowButton';
-import EditBioButton from './EditBioButton';
+import EditProfileButton from './EditProfileButton';
 
 const ProfileHeaderContainer = styled.div`
   width: 106%;
@@ -45,6 +47,7 @@ interface ProfileHeaderProps {
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = (props) => {
   const { user, isCurrentUser } = props;
+  const dispatch = useAppDispatch();
 
   return (
     <ProfileHeaderContainer>
@@ -55,7 +58,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = (props) => {
         <ProfileTooltipContainer>
           <PorfileTooltipItem>
             {isCurrentUser ? (
-              <EditBioButton user={user} />
+              <EditProfileButton user={user} />
             ) : (
               <FollowButton user={user} />
             )}
