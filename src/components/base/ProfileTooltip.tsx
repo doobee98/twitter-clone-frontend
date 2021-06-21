@@ -165,9 +165,9 @@ const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
               </ProfileTooltipFollowItem>
             </ProfileTooltipFollowItemWrapper>
           </ProfileTooltipFollowItemContainer>
-          <ProfileTooltipWhoFollowed>
+          {/* <ProfileTooltipWhoFollowed>
             temp : followed by anyone
-          </ProfileTooltipWhoFollowed>
+          </ProfileTooltipWhoFollowed> */}
         </ProfileTooltipContianer>
       )}
     </>
