@@ -6,9 +6,7 @@ import FollowButton from './FollowButton';
 import EditProfileButton from './EditProfileButton';
 
 const ProfileHeaderContainer = styled.div`
-  width: 106%;
-  margin-left: -3%;
-  margin-right: -3%;
+  width: 100%;
 `;
 
 const ProfileUpperBackground = styled.div`

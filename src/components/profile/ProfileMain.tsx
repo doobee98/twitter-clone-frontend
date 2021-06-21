@@ -25,6 +25,10 @@ const BackButton = styled(Button)`
   }
 `;
 
+const ProfileHeaderSection = styled(ContentSection)`
+  padding: 0;
+`;
+
 const UserInfoContainer = styled.div`
   margin-left: 15px;
   display: flex;
@@ -76,9 +80,9 @@ const ProfileMain: React.FC<ProfileMainProps> = (props) => {
           </TweetCount>
         </UserInfoContainer>
       </ContentHeader>
-      <ContentSection>
+      <ProfileHeaderSection>
         <ProfileHeader user={user} isCurrentUser={isMyProfile} />
-      </ContentSection>
+      </ProfileHeaderSection>
       <ContentSection>
         <ProfileBiography user={user} />
       </ContentSection>
