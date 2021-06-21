@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import ContentTemplate from 'components/base/ContentTemplate';
+import Error from 'components/base/Error';
 import PageTemplate from 'components/base/PageTemplate';
 import ExploreSideBar from 'components/explore/ExploreSideBar';
 import ProfileMain from 'components/profile/ProfileMain';
@@ -34,6 +35,8 @@ const ProfilePage: React.FC = () => {
   const dispatch = useRootDispatch();
 
   const handleFetchFeed = async () => {
+    await setIsError(false);
+
     const res = await dispatch(homeActions.fetchUserFeed(paramId));
 
     if (res.type.toString() === 'home/fetchUserFeed/rejected') {
@@ -41,10 +44,11 @@ const ProfilePage: React.FC = () => {
       return;
     }
 
+    await setIsError(false);
     await setIsLoading(false);
 
     const payload = res.payload as PayloadInterface;
-    const newFeed = payload.data as Tweet[];
+    const newFeed = payload.data;
 
     Promise.all(
       newFeed.map((tweet) =>
@@ -65,6 +69,22 @@ const ProfilePage: React.FC = () => {
 
   if (!currentUser) {
     return <Redirect to="/login" />;
+  }
+
+  if (!username && isError) {
+    return (
+      <PageTemplate title={`Error (@${paramId})`}>
+        <ContentTemplate>
+          <Error
+            title="404 Not Found"
+            description={`cannot find user @${paramId}.`}
+          />
+        </ContentTemplate>
+        <ContentTemplate width="300px" hideBorder>
+          <ExploreSideBar />
+        </ContentTemplate>
+      </PageTemplate>
+    );
   }
 
   return (
