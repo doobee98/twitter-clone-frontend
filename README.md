@@ -18,6 +18,7 @@ You can also check our [Twitter-Clone-Backend](https://github.com/doobee98/twitt
 
 ```bash
 $ git clone https://github.com/doobee98/twitter-clone-frontend.git
+$ cd twitter-clone-frontend
 $ yarn install
 $ yarn start
 ```
