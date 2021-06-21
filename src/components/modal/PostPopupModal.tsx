@@ -44,7 +44,8 @@ const PostPopupModalHeader: React.FC<PostPopupModalHeaderProps> = (props) => {
 };
 
 const PostPopupModalContentWrapper = styled.div`
-  margin-bottom: 10px;
+  width: 88%;
+  padding: 0 12px 0 16px;
   & :last-child {
     border: none;
   }
