@@ -2,7 +2,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import AuthApi from 'apis/AuthApi';
 import storage, { AUTH_TOKEN_NAME } from 'utils/storage';
 import User from '../models/user';
-import { LoginRequest, SignUpRequest } from '../models/request/auth';
+import {
+  LoginRequest,
+  SignUpRequest,
+  EditRequest,
+} from '../models/request/auth';
 
 const name = 'auth';
 
@@ -78,6 +82,28 @@ export const signup = createAsyncThunk(
   },
 );
 
+export const edit = createAsyncThunk(
+  `${name}/edit`,
+  async (editRequest: EditRequest, thunkAPI) => {
+    try {
+      const { username, profile_img_src, bio, website, location } = editRequest;
+      const response = await AuthApi.instance.editInfo(
+        username || undefined,
+        profile_img_src || undefined,
+        bio || undefined,
+        website || undefined,
+        location || undefined,
+      );
+      return response.data as User;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
 export const auth = createSlice({
   name,
   initialState,
@@ -116,6 +142,16 @@ export const auth = createSlice({
       return state;
     },
     [signup.rejected.type]: (state, error) => {
+      console.log(error.payload);
+      if (error.payload.msg) {
+        window.alert(error.payload.msg);
+      }
+      return state;
+    },
+    [edit.fulfilled.type]: (state, action) => {
+      return state;
+    },
+    [edit.rejected.type]: (state, error) => {
       console.log(error.payload);
       if (error.payload.msg) {
         window.alert(error.payload.msg);

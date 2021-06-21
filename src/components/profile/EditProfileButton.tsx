@@ -1,12 +1,11 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import Button from 'components/base/Button';
 import { useAppDispatch } from 'hooks/redux';
-import { followUser, unfollowUser } from 'modules/userRecord';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import User from 'models/user';
+import { openEditModal } from 'modules/modal';
 
-const EditBio = styled(Button)`
+const EditProfile = styled(Button)`
   color: ${ColorPalette.SKYBLUE};
   font-weight: bold;
   border: 1px solid ${ColorPalette.SKYBLUE};
@@ -16,13 +15,17 @@ const EditBio = styled(Button)`
   }
 `;
 
-interface EditBioButtonProps {
+interface EditProfileButtonProps {
   user: User;
 }
 
-const EditBioButton: React.FC<EditBioButtonProps> = (props) => {
+const EditProfileButton: React.FC<EditProfileButtonProps> = (props) => {
   const { user } = props;
   const dispatch = useAppDispatch();
+
+  const openModal = () => {
+    dispatch(openEditModal(user));
+  };
 
   if (!user) {
     return null;
@@ -30,9 +33,9 @@ const EditBioButton: React.FC<EditBioButtonProps> = (props) => {
 
   return (
     <>
-      <EditBio>Edit Biography</EditBio>
+      <EditProfile onClick={openModal}>Edit Profile</EditProfile>
     </>
   );
 };
 
-export default EditBioButton;
+export default EditProfileButton;
