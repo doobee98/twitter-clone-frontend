@@ -102,6 +102,9 @@ export const userRecord = createSlice({
     clearUserRecord: (state, action) => {
       state.userRecord = {};
     },
+    clearSearchResult: (state) => {
+      state.searchResult = [];
+    },
   },
   extraReducers: {
     [fetchUser.fulfilled.type]: (state, action) => {
@@ -149,4 +152,4 @@ export const userRecord = createSlice({
 });
 
 export default userRecord.reducer;
-export const { clearUserRecord } = userRecord.actions;
+export const { clearUserRecord, clearSearchResult } = userRecord.actions;

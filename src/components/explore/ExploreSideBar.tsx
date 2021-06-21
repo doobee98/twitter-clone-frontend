@@ -1,8 +1,9 @@
 import { ContentHeader, ContentSection } from 'components/base/ContentTemplate';
 import Icon from 'components/base/Icon';
 import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import { useDebouncePreset } from 'hooks/useDebounce';
 import useInput from 'hooks/useInput';
-import { searchUser } from 'modules/userRecord';
+import { clearSearchResult, searchUser } from 'modules/userRecord';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
@@ -50,13 +51,21 @@ const ExploreSideBar: React.FC = () => {
   const [keyword, onChangeKeyword] = useInput('');
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (!keyword) {
-      return;
-    }
+  useDebouncePreset(
+    () => {
+      if (searchResult.length !== 0) {
+        dispatch(clearSearchResult());
+      }
+    },
+    () => {
+      if (!keyword) {
+        return;
+      }
 
-    dispatch(searchUser(keyword));
-  }, [keyword]);
+      dispatch(searchUser(keyword));
+    },
+    [keyword],
+  );
 
   return (
     <>
