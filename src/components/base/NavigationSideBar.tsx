@@ -8,6 +8,7 @@ import { BasicType, HighlightType } from 'utils/iconUtils';
 import NavItem from './NavItem';
 import Button from './Button';
 import Icon from './Icon';
+import ProfileImage from './ProfileImage';
 
 const NavigationSideBarContainer = styled.header`
   width: 275px;
@@ -58,12 +59,12 @@ const UserButton = styled(Button)`
 `;
 
 const UserButtonTextArea = styled.div`
-  width: 100%;
-
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: flex-start;
+  flex-grow: 2;
+  padding-left: 10px;
 
   & > * + * {
     margin-top: 5px;
@@ -154,6 +155,11 @@ const NavigationSideBar: React.FC = () => {
       <BottomContainer>
         {currentUser && (
           <UserButton>
+            <ProfileImage
+              userid={currentUser.user_id}
+              username={currentUser.username}
+              size={50}
+            />
             <UserButtonTextArea>
               <Username>{currentUser.username}</Username>
               <UserId>@{currentUser.user_id}</UserId>

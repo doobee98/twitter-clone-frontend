@@ -1,7 +1,7 @@
 import User from 'models/user';
 import styled from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
-import ProfileImage from '../base/Profile';
+import ProfileImage from '../base/ProfileImage';
 import FollowButton from './FollowButton';
 import EditProfileButton from './EditProfileButton';
 

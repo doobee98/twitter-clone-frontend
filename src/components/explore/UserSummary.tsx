@@ -2,15 +2,15 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import User from 'models/user';
 import { ColorPalette } from 'utils/colorUtils';
+import ProfileImage from 'components/base/ProfileImage';
 
-const UserSummaryTextContainer = styled.div`
+const UserSummaryContainer = styled.div`
   width: 100%;
   padding: 8px 16px;
 
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: center;
 
   & > * + * {
     margin-top: 5px;
@@ -22,9 +22,18 @@ const UserSummaryTextContainer = styled.div`
   }
 `;
 
+const TextContainer = styled.div`
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+`;
+
 const Username = styled.strong``;
 
 const UserId = styled.span`
+  margin-top: 3px;
   color: ${ColorPalette.GRAY_70};
 `;
 
@@ -41,10 +50,13 @@ const UserSummary: React.FC<UserSummaryProps> = (props) => {
   };
 
   return (
-    <UserSummaryTextContainer onClick={goToUserProfile}>
-      <Username>{user.username}</Username>
-      <UserId>@{user.user_id}</UserId>
-    </UserSummaryTextContainer>
+    <UserSummaryContainer>
+      <ProfileImage userid={user.user_id} username={user.username} size={40} />
+      <TextContainer onClick={goToUserProfile}>
+        <Username>{user.username}</Username>
+        <UserId>@{user.user_id}</UserId>
+      </TextContainer>
+    </UserSummaryContainer>
   );
 };
 

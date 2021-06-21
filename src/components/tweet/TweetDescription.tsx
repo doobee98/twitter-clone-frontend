@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ProfileImage from 'components/base/Profile';
+import ProfileImage from 'components/base/ProfileImage';
 import Tweet from 'models/tweet';
 import { ColorPalette } from 'utils/colorUtils';
 import TweetMainCenter from './TweetMainCenter';

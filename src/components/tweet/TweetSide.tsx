@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import ProfileTooltip from 'components/base/ProfileTooltip';
 import User from 'models/user';
-import ProfileImage from '../base/Profile';
+import ProfileImage from '../base/ProfileImage';
 import Tweet from '../../models/tweet';
 
 const TweetProfileWrapper = styled.div`

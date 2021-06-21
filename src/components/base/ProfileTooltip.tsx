@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { useAuthSelector, useUserRecordSelector } from 'hooks/redux';
 import { ColorPalette } from 'utils/colorUtils';
-import ProfileImage from './Profile';
+import ProfileImage from './ProfileImage';
 import FollowButton from '../profile/FollowButton';
 
 const ProfileTooltipItemWrapper = styled.div`

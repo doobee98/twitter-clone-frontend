@@ -1,4 +1,4 @@
-import ProfileImage from 'components/base/Profile';
+import ProfileImage from 'components/base/ProfileImage';
 import User from 'models/user';
 import React from 'react';
 import styled from 'styled-components';
