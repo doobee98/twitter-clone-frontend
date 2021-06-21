@@ -4,11 +4,7 @@ import ContentTemplate from 'components/base/ContentTemplate';
 import ExploreSideBar from 'components/base/ExploreSideBar';
 import PageTemplate from 'components/base/PageTemplate';
 import ProfileMain from 'components/profile/ProfileMain';
-<<<<<<< HEAD
 import { useAppDispatch, useAuthSelector, useUserSelector } from 'hooks/redux';
-=======
-import { useAppDispatch, useHomeSelector, useUserSelector } from 'hooks/redux';
->>>>>>> 4e5d799d58deaebdd12116253a1081ed71d3e0bd
 import { clearProfileState, getUserFeed } from 'modules/profile';
 import { fetchUser, getUser } from 'modules/userRecord';
 import { clearHomeState, fetchUserFeed } from 'modules/home';
