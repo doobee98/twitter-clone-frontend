@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
 import Button from './Button';
+import defaultImg from '../../resources/defaultProfile.png';
 
 // TO BE REFACTORED into Button
 interface ProfileWrapperProps {
@@ -20,19 +21,11 @@ const ProfileWrapper = styled.div<ProfileWrapperProps>`
   cursor: pointer;
 `;
 
-interface ImageWrapperProps {
-  profileSrc?: string;
-}
-const ImageWrapper = styled.div<ImageWrapperProps>`
+const ImageWrapper = styled.img`
   width: 100%;
   height: 100%;
   border-radius: 50%;
-
-  background-color: ${(props) => props.profileSrc || ColorPalette.GREEN};
 `;
-
-// [REMOVED]
-const TestImage = styled.div<ImageWrapperProps>``;
 
 interface ProfileProps {
   userid: string;
@@ -51,9 +44,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
 
   return (
     <ProfileWrapper size={size} onClick={goToUserProfile}>
-      <ImageWrapper profileSrc={profileSrc}>
-        <TestImage />
-      </ImageWrapper>
+      <ImageWrapper src={defaultImg} />
     </ProfileWrapper>
   );
 };
