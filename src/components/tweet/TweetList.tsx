@@ -24,32 +24,15 @@ const TweetListContainer = styled.div`
   border: 2px solid ${ColorPalette.SKYBLUE};
 `;
 
-const TweetList: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-  const homeStore = useHomeSelector();
-  const dispatch = useAppDispatch();
-  const { feed } = homeStore;
+interface TweetListProps {
+  feed: Tweet[];
+  handleFetchFeed: () => Promise<void>;
+  isLoading: boolean;
+  isError: boolean;
+}
 
-  const handleFetchFeed = async () => {
-    const res = await dispatch(fetchFeed());
-
-    if (res.type.toString() === 'home/fetchFeed/rejected') {
-      setIsError(true);
-      return;
-    }
-
-    await setIsLoading(false);
-
-    const newFeed = (await res.payload) as Tweet[];
-
-    Promise.all(newFeed.map((tweet) => dispatch(getUser(tweet.writer_id))));
-  };
-
-  // INIT FETCH
-  useEffect(() => {
-    handleFetchFeed();
-  }, []);
+const TweetList: React.FC<TweetListProps> = (props) => {
+  const { feed, handleFetchFeed, isLoading, isError } = props;
 
   // InfinityScroll w/ Throttling
   const timer = useRef<boolean>(false);

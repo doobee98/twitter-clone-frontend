@@ -1,20 +1,23 @@
 /* eslint-disable no-param-reassign */
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import TweetsApi from 'apis/TweetsApi';
+import UsersApi from 'apis/UsersApi';
 import Tweet from '../models/tweet';
 import {
   TweetCreateRequest,
   ReplyCreateRequest,
 } from '../models/request/tweets';
 
-const HOMEPAGE_FEED_INITIAL_COUNT = 10;
+const FEED_INITIAL_COUNT = 10;
 
 interface HomeState {
   feed: Tweet[];
+  totalCount: number;
 }
 
 const initialState: HomeState = {
   feed: [],
+  totalCount: 0,
 };
 
 export const fetchFeed = createAsyncThunk(
@@ -25,7 +28,28 @@ export const fetchFeed = createAsyncThunk(
       const { feed } = rootState.home as HomeState;
       const response = await TweetsApi.instance.getFeed(
         feed.length + 1,
-        HOMEPAGE_FEED_INITIAL_COUNT,
+        FEED_INITIAL_COUNT,
+      );
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const fetchUserFeed = createAsyncThunk(
+  'home/fetchUserFeed',
+  async (userId: string, thunkAPI) => {
+    try {
+      const rootState = thunkAPI.getState() as any;
+      const { feed } = rootState.home as HomeState;
+      const response = await UsersApi.instance.getUserFeed(
+        userId,
+        feed.length + 1,
+        FEED_INITIAL_COUNT,
       );
       return response.data;
     } catch (error) {
@@ -154,7 +178,9 @@ export const replyTweet = createAsyncThunk(
 export const home = createSlice({
   name: 'home',
   initialState,
-  reducers: {},
+  reducers: {
+    clearHomeState: () => initialState,
+  },
   extraReducers: {
     [fetchFeed.fulfilled.type]: (state, action) => {
       const newFeed = action.payload;
@@ -163,6 +189,17 @@ export const home = createSlice({
       };
     },
     [fetchFeed.rejected.type]: (state, error) => {
+      console.log(error.payload);
+      return state;
+    },
+    [fetchUserFeed.fulfilled.type]: (state, action) => {
+      const { totalCount, data: newFeed } = action.payload;
+      return {
+        feed: [...state.feed, ...newFeed],
+        totalCount,
+      };
+    },
+    [fetchUserFeed.rejected.type]: (state, error) => {
       console.log(error.payload);
       return state;
     },
@@ -271,3 +308,4 @@ export const home = createSlice({
 });
 
 export default home.reducer;
+export const { clearHomeState } = home.actions;
