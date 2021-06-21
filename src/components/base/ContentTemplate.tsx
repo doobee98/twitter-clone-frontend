@@ -28,7 +28,7 @@ const ContentSectionContainer = styled.div<ContentSectionContainerProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0 16px;
+  padding: 10px;
   font-size: 15px;
 
   background-color: ${(props) => props.background || ColorPalette.WHITE};

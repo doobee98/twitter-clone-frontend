@@ -7,9 +7,7 @@ import TweetPostProfile from './TweetPostProfile';
 
 const TweetPostContainer = styled.div`
   display: flex;
-  padding: 8px 10px;
-  margin: 0px -20px;
-  width: 120%;
+  width: 100%;
 `;
 
 interface TweetPostProps {

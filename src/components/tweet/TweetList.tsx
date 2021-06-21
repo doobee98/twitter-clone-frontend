@@ -2,7 +2,8 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import Icon from 'components/base/Icon';
 import { BasicType } from 'utils/iconUtils';
-import { ColorPalette } from '../../utils/colorUtils';
+import { ContentSection } from 'components/base/ContentTemplate';
+import { ColorPalette } from 'utils/colorUtils';
 import TweetComponent from './TweetComponent';
 import useInfinityScroll from '../../hooks/useInfinityScroll';
 import Tweet from '../../models/tweet';
@@ -17,8 +18,12 @@ const ErrorContainer = styled.div`
   height: 400px;
 `;
 
-const TweetListContainer = styled.div`
-  border: 2px solid ${ColorPalette.SKYBLUE};
+const TweetSection = styled(ContentSection)`
+  padding-bottom: 5px;
+
+  &:hover {
+    background-color: ${ColorPalette.GRAY_F9};
+  }
 `;
 
 interface TweetListProps {
@@ -56,14 +61,11 @@ const TweetList: React.FC<TweetListProps> = (props) => {
 
   return (
     <>
-      <TweetListContainer>
-        {feed.map((tweet) => (
-          <TweetComponent
-            key={`${tweet.type}-${tweet.tweet_id}`}
-            tweet={tweet}
-          />
-        ))}
-      </TweetListContainer>
+      {feed.map((tweet) => (
+        <TweetSection key={`${tweet.type}-${tweet.tweet_id}`}>
+          <TweetComponent tweet={tweet} />
+        </TweetSection>
+      ))}
     </>
   );
 };

@@ -11,7 +11,7 @@ import { modalActions } from '../../modules/modal';
 
 const TweetMainBottomContainer = styled.div`
   display: flex;
-  margin: 0 1px;
+  margin-top: 10px;
 `;
 
 const TweetMainBottomItem = styled(Button)`

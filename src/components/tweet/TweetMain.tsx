@@ -8,9 +8,8 @@ import TweetMainBottom from './TweetMainBottom';
 const TweetMainContainer = styled.div`
   display: flex;
   height: 100%;
-  width: 100%;
-
-  margin-right: 2px;
+  margin-left: 1%;
+  width: 99%;
 
   display: inline-block;
   vertical-align: top;

@@ -15,11 +15,6 @@ const UserSummaryContainer = styled.div`
   & > * + * {
     margin-top: 5px;
   }
-
-  &:hover {
-    background-color: ${ColorPalette.GRAY_F9};
-    cursor: pointer;
-  }
 `;
 
 const TextContainer = styled.div`
