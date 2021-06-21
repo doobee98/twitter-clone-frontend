@@ -15,6 +15,7 @@ interface IconProps {
   isHighlighted?: boolean;
   iconSize?: number;
   iconStyle?: React.CSSProperties;
+  onClick?: (e?: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   className?: string;
 }
 
@@ -24,6 +25,7 @@ const Icon: React.FC<IconProps> = (props) => {
     isHighlighted,
     iconSize = 20,
     iconStyle,
+    onClick,
     className,
   } = props;
 
@@ -37,7 +39,7 @@ const Icon: React.FC<IconProps> = (props) => {
   };
 
   return (
-    <IconWrapper className={className}>
+    <IconWrapper onClick={onClick} className={className}>
       <IconContext.Provider value={customIconStyle}>
         <IconComponent />
       </IconContext.Provider>

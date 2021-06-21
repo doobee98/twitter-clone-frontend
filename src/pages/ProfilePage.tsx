@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Redirect } from 'react-router-dom';
 import ContentTemplate from 'components/base/ContentTemplate';
 import ExploreSideBar from 'components/base/ExploreSideBar';
 import PageTemplate from 'components/base/PageTemplate';
 import ProfileMain from 'components/profile/ProfileMain';
-import { useAppDispatch, useHomeSelector, useUserSelector } from 'hooks/redux';
+import { useAppDispatch, useAuthSelector, useUserSelector } from 'hooks/redux';
 import { clearProfileState, getUserFeed } from 'modules/profile';
 import { fetchUser, getUser } from 'modules/userRecord';
 import { clearHomeState, fetchUserFeed } from 'modules/home';
@@ -22,6 +22,7 @@ interface PayloadInterface {
 const ProfilePage: React.FC = () => {
   const { id: paramId } = useParams<ProfilePageParams>();
   const username = useUserSelector(paramId, (user) => user?.username);
+  const { currentUser } = useAuthSelector();
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const dispatch = useAppDispatch();
@@ -47,6 +48,10 @@ const ProfilePage: React.FC = () => {
     dispatch(clearHomeState());
     handleFetchFeed();
   }, [paramId]);
+
+  if (!currentUser) {
+    return <Redirect to="/login" />;
+  }
 
   return (
     <PageTemplate title={`${username} (@${paramId})`}>

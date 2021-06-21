@@ -50,9 +50,10 @@ const TweetButton = styled(Button)`
 
 const UserButton = styled(Button)`
   width: 100%;
+  border: 1px solid ${ColorPalette.WHITE};
 
   &:hover {
-    background-color: ${hexToRgbA(ColorPalette.SKYBLUE, 0.1)};
+    border: 1px solid ${ColorPalette.SKYBLUE};
   }
 `;
 
@@ -75,12 +76,21 @@ const UserId = styled.span`
   color: ${ColorPalette.GRAY_70};
 `;
 
+const PowerOffIcon = styled(Icon)`
+  border-radius: 9999px;
+  width: 40px;
+  height: 40px;
+
+  &:hover {
+    color: ${ColorPalette.SKYBLUE};
+    background-color: ${hexToRgbA(ColorPalette.SKYBLUE, 0.2)};
+  }
+`;
+
 const BottomContainer = styled.div`
   width: 100%;
   margin: 12px 0;
 `;
-
-const ToBeRemovedWrapper = styled(React.Fragment)``;
 
 const NavigationSideBar: React.FC = () => {
   const authStore = useAuthSelector();
@@ -92,7 +102,6 @@ const NavigationSideBar: React.FC = () => {
     dispatchPopup(openPostModal());
   };
 
-  // [TODO: NEED TO BE REMOVED] test for logout button
   const fetchLogout = () => {
     dispatch(logout());
   };
@@ -147,18 +156,17 @@ const NavigationSideBar: React.FC = () => {
         <TweetButton onClick={openPopup}>Tweet</TweetButton>
       </TopContainer>
       <BottomContainer>
-        <ToBeRemovedWrapper>
-          <button type="button" onClick={fetchLogout}>
-            로그아웃
-          </button>
-        </ToBeRemovedWrapper>
         {currentUser && (
           <UserButton>
             <UserButtonTextArea>
               <Username>{currentUser.username}</Username>
               <UserId>@{currentUser.user_id}</UserId>
             </UserButtonTextArea>
-            <Icon iconType={BasicType.MORE} iconSize={20} />
+            <PowerOffIcon
+              iconType={BasicType.POWER_OFF}
+              iconSize={20}
+              onClick={fetchLogout}
+            />
           </UserButton>
         )}
       </BottomContainer>

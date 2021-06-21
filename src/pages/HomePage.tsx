@@ -28,10 +28,6 @@ const HomePage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { feed } = homeStore;
 
-  if (!currentUser) {
-    return <Redirect to="/login" />;
-  }
-
   const handleFetchFeed = async () => {
     const res = await dispatch(fetchFeed());
 
@@ -51,6 +47,10 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     handleFetchFeed();
   }, []);
+
+  if (!currentUser) {
+    return <Redirect to="/login" />;
+  }
 
   return (
     <>
