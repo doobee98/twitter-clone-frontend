@@ -41,7 +41,6 @@ interface TweetPostToolBarProps {
 
 const TweetPostToolBar = (props: TweetPostToolBarProps) => {
   const { handleImgInput } = props;
-
   const hiddenFileInputRef = useRef<HTMLInputElement>(null);
 
   const openMediaFileInput = () => {
@@ -71,12 +70,12 @@ const TweetPostToolBar = (props: TweetPostToolBarProps) => {
           </ToolIconButton>
         </ToolIconList>
       </ToolBarContainer>
-      <HiddenInput
+      {/* <HiddenInput
         type="file"
         accept="image/jpg,image/png,image/jpeg"
         ref={hiddenFileInputRef}
         onChange={handleImgInput}
-      />
+      /> */}
     </>
   );
 };

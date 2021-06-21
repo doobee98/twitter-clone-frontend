@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-import Button from 'components/base/Button';
-import styled, { css } from 'styled-components';
+import React from 'react';
+import styled from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
-import Profile from './Profile';
 
 const DropdownItemWrapper = styled.div`
   display: flex;

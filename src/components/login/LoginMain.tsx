@@ -88,13 +88,19 @@ const LoginMain: React.FC = () => {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === 'Enter') {
+      fetchLogin();
+    }
+  };
+
   const goToSignup = () => {
     dispatch(modalActions.openSignupModal());
   };
 
   return (
     <>
-      <LoginMainContainer>
+      <LoginMainContainer onKeyDown={handleKeyDown}>
         <TwitterIcon iconType={BasicType.TWITTER} iconSize={40} />
         <LoginTitle>Log in to Twitter</LoginTitle>
         <LoginInput value={id} onChange={onChangeId} placeholder="Id" />

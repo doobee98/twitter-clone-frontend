@@ -1,15 +1,15 @@
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import Button from 'components/base/Button';
+import Icon from 'components/base/Icon';
+import TweetPost from 'components/post/TweetPost';
+import { useRootDispatch } from 'hooks/redux';
+import useClickOutside from 'hooks/useClickOutside';
+import { modalActions } from 'modules/modal';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
-import TweetPost from 'components/post/TweetPost';
-import { useEffect, useRef } from 'react';
-import { useRootDispatch } from 'hooks/redux';
-import { modalActions } from 'modules/modal';
-import useClickOutside from 'hooks/useClickOutside';
 import Modal from './Modal';
 import PopupBackground from './PopupBackground';
-import Button from '../base/Button';
-import Icon from '../base/Icon';
 
 const PostPopupModalHeaderWrapper = styled.div`
   border-bottom: 1px solid ${hexToRgbA(ColorPalette.BLACK, 0.2)};
@@ -44,9 +44,9 @@ const PostPopupModalHeader: React.FC<PostPopupModalHeaderProps> = (props) => {
 };
 
 const PostPopupModalContentWrapper = styled.div`
-  width: 88%;
-  padding: 0 12px 0 16px;
-  & :last-child {
+  margin: 0 10px 10px 10px;
+
+  &:last-child {
     border: none;
   }
 `;
@@ -71,7 +71,7 @@ interface PostPopupModalProps {
 
 const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
   const { isOpened } = props;
-  const popup = useRef<HTMLDivElement>(null);
+  const popupRef = useRef<HTMLDivElement>(null);
   const dispatch = useRootDispatch();
 
   const initLock = async () => {
@@ -95,7 +95,7 @@ const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
     dispatch(modalActions.closePostModal());
   };
 
-  useClickOutside(popup, () => {
+  useClickOutside(popupRef, () => {
     closePopup();
   });
 
@@ -106,7 +106,7 @@ const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
   return (
     <PopupBackground>
       <Modal width={600}>
-        <div ref={popup}>
+        <div ref={popupRef}>
           <PostPopupModalHeader onClose={() => closePopup()} />
           <PostPopupModalContent onCreateTweet={() => closePopup()} />
         </div>

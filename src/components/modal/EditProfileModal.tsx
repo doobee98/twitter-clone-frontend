@@ -1,39 +1,38 @@
-import { useEffect, useRef, useState } from 'react';
-import useClickOutside from 'hooks/useClickOutside';
-import { useRootDispatch, useModalSelector } from 'hooks/redux';
-import { modalActions } from 'modules/modal';
-import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
+import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
-import { BasicType } from 'utils/iconUtils';
+import useClickOutside from 'hooks/useClickOutside';
 import useInput from 'hooks/useInput';
+import { useRootDispatch, useModalSelector } from 'hooks/redux';
+import { modalActions } from 'modules/modal';
 import User from 'models/user';
 import { authActions } from 'modules/auth';
 import { userRecordActions } from 'modules/userRecord';
+import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
+import { BasicType } from 'utils/iconUtils';
 import PopupBackground from './PopupBackground';
 import Modal from './Modal';
 
 const EditProfileModalHeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 10px;
+
   border-bottom: 1px solid ${hexToRgbA(ColorPalette.BLACK, 0.2)};
-  margin-bottom: 10px;
   height: 50px;
 `;
 
-const EditPorfileHeader = styled.h2`
+const EditProfileHeader = styled.h2`
+  margin-left: 10px;
   display: inline-block;
-  position: relative;
-
-  left: 10px;
 `;
 
 const CloseButton = styled(Button)`
-  display: inline-block;
-  position: relative;
-
   width: 48px;
   height: 48px;
-  margin-top: 4px;
+
   color: ${ColorPalette.SKYBLUE};
 
   &:hover {
@@ -54,7 +53,7 @@ const EditProfileModalHeader: React.FC<EditProfileModalHeaderProps> = (
       <CloseButton>
         <Icon iconType={BasicType.CLOSE} iconSize={20} />
       </CloseButton>
-      <EditPorfileHeader>Edit Profile</EditPorfileHeader>
+      <EditProfileHeader>Edit Profile</EditProfileHeader>
     </EditProfileModalHeaderWrapper>
   );
 };
@@ -62,7 +61,8 @@ const EditProfileModalHeader: React.FC<EditProfileModalHeaderProps> = (
 const EditProfileModalContentWrapper = styled.div`
   margin-bottom: 10px;
   text-align: center;
-  & :last-child {
+
+  &:last-child {
     border: none;
   }
 `;
@@ -96,7 +96,7 @@ const Input = styled.input`
   width: 90%;
   padding: 10px;
   outline: none;
-  border: 1px solid ${ColorPalette.GRAY_E6};
+  border: none;
   border-radius: 3px;
   font-size: 18px;
 `;
@@ -107,13 +107,10 @@ const BiographyText = styled.textarea`
   padding: 10px;
   margin: 0px;
   outline: none;
-  border: 1px solid ${ColorPalette.GRAY_E6};
+  border: none;
   border-radius: 3px;
-  font-size: 18px;
-
-  resize: none;
-
   font-size: 20px;
+  resize: none;
 `;
 
 const EditButton = styled(Button)`
@@ -156,6 +153,7 @@ const EditProfileModalContent: React.FC<EditProfileModalContentProps> = (
         location,
       }),
     );
+
     if (result.type === 'auth/edit/fulfilled') {
       await dispatch(userRecordActions.fetchUser(user.user_id));
       onEdit();
@@ -207,7 +205,7 @@ interface EditProfileModalProps {
 
 const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
   const { isOpened } = props;
-  const popup = useRef<HTMLDivElement>(null);
+  const popupRef = useRef<HTMLDivElement>(null);
   const dispatch = useRootDispatch();
   const user = useModalSelector((state) => state.profileOwner);
 
@@ -228,7 +226,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
     else finishLock();
   }, [isOpened]);
 
-  useClickOutside(popup, () => {
+  useClickOutside(popupRef, () => {
     closePopup();
   });
 
@@ -245,7 +243,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = (props) => {
   return (
     <PopupBackground>
       <Modal width={600}>
-        <div ref={popup}>
+        <div ref={popupRef}>
           <EditProfileModalHeader onClose={closePopup} />
           <EditProfileModalContent user={user} onEdit={handleEdit} />
         </div>

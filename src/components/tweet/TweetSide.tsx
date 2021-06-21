@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import ProfileTooltip from 'components/base/ProfileTooltip';
 import styled from 'styled-components';
+import ProfileTooltip from 'components/base/ProfileTooltip';
 import User from 'models/user';
-import Profile from '../base/Profile';
+import ProfileImage from '../base/ProfileImage';
 import Tweet from '../../models/tweet';
 
 const TweetProfileWrapper = styled.div`
   display: flex;
   width: 50px;
   height: 50px;
-
   margin: 1px;
 
   justify-content: center;
@@ -19,17 +18,15 @@ const TweetProfileWrapper = styled.div`
 const TweetSideContainer = styled.div`
   display: flex;
   justify-content: center;
-
   width: 60px;
 `;
 
 interface TweetSideProps {
   tweet: Tweet;
-  user?: User;
 }
 
 const TweetSide: React.FC<TweetSideProps> = (props) => {
-  const { tweet, user } = props;
+  const { tweet } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
 
@@ -57,7 +54,7 @@ const TweetSide: React.FC<TweetSideProps> = (props) => {
           onMouseEnter={openProfileTooltip}
           onMouseLeave={closeProfileTooltip}
         >
-          <Profile userid={tweet.writer_id} username={tweet.writer_name} />
+          <ProfileImage userid={tweet.writer_id} username={tweet.writer_name} />
         </TweetProfileWrapper>
         <ProfileTooltip
           isOpen={isOpen}

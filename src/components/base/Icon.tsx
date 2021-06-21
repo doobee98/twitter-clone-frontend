@@ -1,7 +1,7 @@
 import { IconContext } from 'react-icons';
 import styled from 'styled-components';
 import { isEnumType } from 'utils';
-import { BasicType, HighlightType, getIconType } from '../../utils/iconUtils';
+import { BasicType, HighlightType, getIconType } from 'utils/iconUtils';
 
 const IconWrapper = styled.div`
   border-color: transparent;

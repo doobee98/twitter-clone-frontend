@@ -1,10 +1,10 @@
 import styled from 'styled-components';
+import { useModalSelector } from 'hooks/redux';
 import useTitle from 'hooks/useTitle';
 import NavigationSideBar from './NavigationSideBar';
 import PostPopupModal from '../modal/PostPopupModal';
 import ReplyPopupModal from '../modal/PostReplyModal';
 import EditProfileModal from '../modal/EditProfileModal';
-import { useModalSelector } from '../../hooks/redux';
 
 const PageTemplateContainer = styled.div`
   position: relative;
@@ -34,6 +34,8 @@ const ContentWrapper = styled.main`
   flex-grow: 1;
   flex-shrink: 1;
 
+  min-height: 100vh;
+
   display: flex;
 `;
 
@@ -47,9 +49,11 @@ const PageTemplate: React.FC<PageTemplateProps> = (props) => {
   const isOpenedPostModal = useModalSelector(
     (state) => state.isOpenedPostModal,
   );
+
   const isOpenedReplyModal = useModalSelector(
     (state) => state.isOpenedReplyModal,
   );
+
   const isOpenedEditModal = useModalSelector(
     (state) => state.isOpenedEditModal,
   );

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import ContentTemplate from 'components/base/ContentTemplate';
+import Error from 'components/base/Error';
 import PageTemplate from 'components/base/PageTemplate';
 import ExploreSideBar from 'components/explore/ExploreSideBar';
 import ProfileMain from 'components/profile/ProfileMain';
@@ -9,9 +10,9 @@ import {
   useAuthSelector,
   useUserRecordSelector,
 } from 'hooks/redux';
+import Tweet from 'models/tweet';
 import { userRecordActions } from 'modules/userRecord';
 import { homeActions } from 'modules/home';
-import Tweet from 'models/tweet';
 
 interface ProfilePageParams {
   id: string;
@@ -33,6 +34,8 @@ const ProfilePage: React.FC = () => {
   const dispatch = useRootDispatch();
 
   const handleFetchFeed = async () => {
+    await setIsError(false);
+
     const res = await dispatch(homeActions.fetchUserFeed(paramId));
 
     if (res.type.toString() === 'home/fetchUserFeed/rejected') {
@@ -40,10 +43,11 @@ const ProfilePage: React.FC = () => {
       return;
     }
 
+    await setIsError(false);
     await setIsLoading(false);
 
     const payload = res.payload as PayloadInterface;
-    const newFeed = payload.data as Tweet[];
+    const newFeed = payload.data;
 
     Promise.all(
       newFeed.map((tweet) =>
@@ -52,13 +56,33 @@ const ProfilePage: React.FC = () => {
     );
   };
 
-  useEffect(() => {
-    dispatch(homeActions.clearHomeState());
+  const initialFetch = async () => {
+    await dispatch(homeActions.clearHomeState());
     handleFetchFeed();
+  };
+
+  useEffect(() => {
+    initialFetch();
   }, [paramId]);
 
   if (!currentUser) {
     return <Redirect to="/login" />;
+  }
+
+  if (!username && isError) {
+    return (
+      <PageTemplate title={`Error (@${paramId})`}>
+        <ContentTemplate>
+          <Error
+            title="404 Not Found"
+            description={`cannot find user @${paramId}.`}
+          />
+        </ContentTemplate>
+        <ContentTemplate width="300px" hideBorder>
+          <ExploreSideBar />
+        </ContentTemplate>
+      </PageTemplate>
+    );
   }
 
   return (

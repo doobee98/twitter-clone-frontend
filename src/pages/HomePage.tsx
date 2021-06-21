@@ -9,11 +9,12 @@ import ContentTemplate, {
   ContentHeader,
   ContentSection,
 } from 'components/base/ContentTemplate';
-import { ColorPalette } from 'utils/colorUtils';
 import { useRootDispatch, useAuthSelector, useHomeSelector } from 'hooks/redux';
+import Tweet from 'models/tweet';
 import { homeActions } from 'modules/home';
 import { userRecordActions } from 'modules/userRecord';
-import Tweet from 'models/tweet';
+import { ColorPalette } from 'utils/colorUtils';
+import { authActions } from 'modules/auth';
 
 const SpaceSection = styled(ContentSection)`
   background-color: ${ColorPalette.GRAY_F9};
@@ -46,9 +47,18 @@ const HomePage: React.FC = () => {
     );
   };
 
-  // INIT FETCH
-  useEffect(() => {
+  const initialFetch = async () => {
+    await dispatch(homeActions.clearHomeState());
+
+    if (currentUser) {
+      await dispatch(userRecordActions.fetchUser(currentUser.user_id));
+    }
+
     handleFetchFeed();
+  };
+
+  useEffect(() => {
+    initialFetch();
   }, []);
 
   if (!currentUser) {

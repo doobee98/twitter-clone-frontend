@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ColorPalette } from '../../utils/colorUtils';
 import Tweet from '../../models/tweet';
 import TweetSide from './TweetSide';
 import TweetMain from './TweetMain';
@@ -9,15 +8,8 @@ import TweetHeader from './TweetHeader';
 const TweetContainer = styled.div`
   display: flex;
   flex-direction: column;
-
-  padding: 2px 2px 4px;
-  border-bottom: 0.5px solid ${ColorPalette.GRAY_E6};
-  border-collapse;
-
-  &:hover {
-    color: ${ColorPalette.SKYBLUE};
-    background-color: ${ColorPalette.GRAY_E6};
-  }
+  width: 100%;
+  border-collapse: collapse;
 `;
 
 const TweetWrapper = styled.div`
@@ -26,10 +18,11 @@ const TweetWrapper = styled.div`
 
 interface TweetComponentProps {
   tweet: Tweet;
+  hideInteraction?: boolean;
 }
 
 const TweetComponent: React.FC<TweetComponentProps> = (props) => {
-  const { tweet } = props;
+  const { tweet, hideInteraction } = props;
 
   return (
     <TweetContainer>
@@ -38,7 +31,7 @@ const TweetComponent: React.FC<TweetComponentProps> = (props) => {
       </TweetWrapper>
       <TweetWrapper>
         <TweetSide tweet={tweet} />
-        <TweetMain tweet={tweet} />
+        <TweetMain tweet={tweet} hideInteraction={hideInteraction} />
       </TweetWrapper>
     </TweetContainer>
   );

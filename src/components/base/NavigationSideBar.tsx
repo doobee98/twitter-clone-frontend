@@ -2,12 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { useRootDispatch, useAuthSelector } from 'hooks/redux';
 import { authActions } from 'modules/auth';
+import { modalActions } from 'modules/modal';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType, HighlightType } from 'utils/iconUtils';
-import { modalActions } from 'modules/modal';
 import NavItem from './NavItem';
 import Button from './Button';
 import Icon from './Icon';
+import ProfileImage from './ProfileImage';
 
 const NavigationSideBarContainer = styled.header`
   width: 275px;
@@ -58,12 +59,12 @@ const UserButton = styled(Button)`
 `;
 
 const UserButtonTextArea = styled.div`
-  width: 100%;
-
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: flex-start;
+  flex-grow: 2;
+  padding-left: 10px;
 
   & > * + * {
     margin-top: 5px;
@@ -82,8 +83,8 @@ const PowerOffIcon = styled(Icon)`
   height: 40px;
 
   &:hover {
-    color: ${ColorPalette.SKYBLUE};
-    background-color: ${hexToRgbA(ColorPalette.SKYBLUE, 0.2)};
+    color: ${ColorPalette.MAGENTA};
+    background-color: ${hexToRgbA(ColorPalette.MAGENTA, 0.2)};
   }
 `;
 
@@ -95,10 +96,9 @@ const BottomContainer = styled.div`
 const NavigationSideBar: React.FC = () => {
   const currentUser = useAuthSelector((state) => state.currentUser);
   const dispatch = useRootDispatch();
-  const dispatchPopup = useRootDispatch();
 
   const openPopup = () => {
-    dispatchPopup(modalActions.openPostModal());
+    dispatch(modalActions.openPostModal());
   };
 
   const fetchLogout = () => {
@@ -131,14 +131,12 @@ const NavigationSideBar: React.FC = () => {
           >
             Messages
           </NotImplementedNavItem>
-          {/* TODO: need to change routing '/i/bookmarks' */}
           <NotImplementedNavItem
             iconType={HighlightType.BOOKMARKS}
             link="/bookmarks"
           >
             Bookmarks
           </NotImplementedNavItem>
-          {/* TODO: need to change routing '/:user_id/lists' */}
           <NotImplementedNavItem iconType={HighlightType.LISTS} link="/lists">
             Lists
           </NotImplementedNavItem>
@@ -157,6 +155,11 @@ const NavigationSideBar: React.FC = () => {
       <BottomContainer>
         {currentUser && (
           <UserButton>
+            <ProfileImage
+              userid={currentUser.user_id}
+              username={currentUser.username}
+              size={50}
+            />
             <UserButtonTextArea>
               <Username>{currentUser.username}</Username>
               <UserId>@{currentUser.user_id}</UserId>

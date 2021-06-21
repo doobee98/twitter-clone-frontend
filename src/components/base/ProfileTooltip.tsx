@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
-import { ColorPalette } from 'utils/colorUtils';
 import { useHistory } from 'react-router-dom';
+import styled, { css } from 'styled-components';
 import { useAuthSelector, useUserRecordSelector } from 'hooks/redux';
-import Profile from './Profile';
+import { ColorPalette } from 'utils/colorUtils';
+import ProfileImage from './ProfileImage';
 import FollowButton from '../profile/FollowButton';
 
 const ProfileTooltipItemWrapper = styled.div`
@@ -102,6 +102,12 @@ const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
   const [timer, setTimer] = useState<NodeJS.Timeout>();
   const history = useHistory();
 
+  if (!user) {
+    return null;
+  }
+
+  const isMyProfile = currentUser?.user_id === user.user_id;
+
   const openProfile = () => {
     setIsHoverActive(true);
   };
@@ -115,18 +121,13 @@ const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
       setIsOpen(false);
       setIsHoverActive(false);
     }, 500);
+
     setTimer(newTimer);
   };
-
-  if (!user) {
-    return null;
-  }
 
   const goToProfilePage = () => {
     history.push(`/${user.user_id}`);
   };
-
-  const isMyProfile = currentUser?.user_id === user.user_id;
 
   return (
     <>
@@ -136,7 +137,7 @@ const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
           onMouseLeave={closeProfile}
         >
           <ProfileTooltipHeader>
-            <Profile userid={user.user_id} username={user.username} />
+            <ProfileImage userid={user.user_id} username={user.username} />
             {!isMyProfile && <FollowButton user={user} />}
           </ProfileTooltipHeader>
           <ProfileTooltipUserName onClick={goToProfilePage}>
@@ -164,9 +165,9 @@ const ProfileTooltip: React.FC<ProfileTooltipProps> = (props) => {
               </ProfileTooltipFollowItem>
             </ProfileTooltipFollowItemWrapper>
           </ProfileTooltipFollowItemContainer>
-          <ProfileTooltipWhoFollowed>
+          {/* <ProfileTooltipWhoFollowed>
             temp : followed by anyone
-          </ProfileTooltipWhoFollowed>
+          </ProfileTooltipWhoFollowed> */}
         </ProfileTooltipContianer>
       )}
     </>

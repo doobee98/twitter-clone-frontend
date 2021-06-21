@@ -1,14 +1,12 @@
 import User from 'models/user';
 import styled from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
-import Profile from '../base/Profile';
+import ProfileImage from '../base/ProfileImage';
 import FollowButton from './FollowButton';
 import EditProfileButton from './EditProfileButton';
 
 const ProfileHeaderContainer = styled.div`
-  width: 106%;
-  margin-left: -3%;
-  margin-right: -3%;
+  width: 100%;
 `;
 
 const ProfileUpperBackground = styled.div`
@@ -50,7 +48,11 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = (props) => {
     <ProfileHeaderContainer>
       <ProfileUpperBackground>
         <ProfileImageWrapper>
-          <Profile size={120} username={user.username} userid={user.user_id} />
+          <ProfileImage
+            size={120}
+            username={user.username}
+            userid={user.user_id}
+          />
         </ProfileImageWrapper>
         <ProfileTooltipContainer>
           <PorfileTooltipItem>

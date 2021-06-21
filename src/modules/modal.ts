@@ -23,30 +23,30 @@ export const modal = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    openPostModal: (state: ModalState, action: PayloadAction) => {
+    openPostModal: (state: ModalState) => {
       state.isOpenedPostModal = true;
     },
-    closePostModal: (state: ModalState, action: PayloadAction) => {
+    closePostModal: (state: ModalState) => {
       state.isOpenedPostModal = false;
     },
     openReplyModal: (state: ModalState, action: PayloadAction<Tweet>) => {
       state.isOpenedReplyModal = true;
       state.originalTweet = action.payload;
     },
-    closeReplyModal: (state: ModalState, action: PayloadAction) => {
+    closeReplyModal: (state: ModalState) => {
       state.isOpenedReplyModal = false;
     },
-    openSignupModal: (state: ModalState, action: PayloadAction) => {
+    openSignupModal: (state: ModalState) => {
       state.isOpenedSignupModal = true;
     },
-    closeSignupModal: (state: ModalState, action: PayloadAction) => {
+    closeSignupModal: (state: ModalState) => {
       state.isOpenedSignupModal = false;
     },
     openEditModal: (state: ModalState, action: PayloadAction<User>) => {
       state.isOpenedEditModal = true;
       state.profileOwner = action.payload;
     },
-    closeEditModal: (state: ModalState, action: PayloadAction) => {
+    closeEditModal: (state: ModalState) => {
       state.isOpenedEditModal = false;
     },
   },

@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 import Button from 'components/base/Button';
-import ContentTemplate, {
-  ContentHeader,
-  ContentSection,
-} from 'components/base/ContentTemplate';
+import { ContentHeader, ContentSection } from 'components/base/ContentTemplate';
 import Icon from 'components/base/Icon';
 import {
   useAuthSelector,
@@ -12,6 +9,7 @@ import {
 } from 'hooks/redux';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
+import { useHistory } from 'react-router-dom';
 import ProfileHeader from './ProfileHeader';
 import TweetList from '../tweet/TweetList';
 import ProfileBiography from './ProfileBiography';
@@ -22,6 +20,10 @@ const BackButton = styled(Button)`
   &:hover {
     background-color: ${hexToRgbA(ColorPalette.SKYBLUE, 0.1)};
   }
+`;
+
+const ProfileHeaderSection = styled(ContentSection)`
+  padding: 0;
 `;
 
 const UserInfoContainer = styled.div`
@@ -37,6 +39,11 @@ const TweetCount = styled.div`
   color: ${ColorPalette.GRAY_70};
 `;
 
+const SpaceSection = styled(ContentSection)`
+  background-color: ${ColorPalette.GRAY_F9};
+  height: 12px;
+`;
+
 interface ProfileMainProps {
   userId: string;
   handleFetchFeed: () => Promise<void>;
@@ -50,6 +57,7 @@ const ProfileMain: React.FC<ProfileMainProps> = (props) => {
   const user = useUserRecordSelector((state) => state.userRecord[userId]);
   const feed = useHomeSelector((state) => state.feed);
   const userFeedCount = useHomeSelector((state) => state.totalCount);
+  const history = useHistory();
 
   if (!user) {
     return null;
@@ -57,10 +65,14 @@ const ProfileMain: React.FC<ProfileMainProps> = (props) => {
 
   const isMyProfile = currentUser?.user_id === user.user_id;
 
+  const goToBack = () => {
+    history.goBack();
+  };
+
   return (
     <>
       <ContentHeader>
-        <BackButton>
+        <BackButton onClick={goToBack}>
           <Icon iconType={BasicType.LEFT_ARROW} />
         </BackButton>
         <UserInfoContainer>
@@ -70,20 +82,19 @@ const ProfileMain: React.FC<ProfileMainProps> = (props) => {
           </TweetCount>
         </UserInfoContainer>
       </ContentHeader>
-      <ContentSection>
+      <ProfileHeaderSection>
         <ProfileHeader user={user} isCurrentUser={isMyProfile} />
-      </ContentSection>
+      </ProfileHeaderSection>
       <ContentSection>
         <ProfileBiography user={user} />
       </ContentSection>
-      <ContentTemplate>
-        <TweetList
-          feed={feed}
-          handleFetchFeed={handleFetchFeed}
-          isLoading={isLoading}
-          isError={isError}
-        />
-      </ContentTemplate>
+      <SpaceSection />
+      <TweetList
+        feed={feed}
+        handleFetchFeed={handleFetchFeed}
+        isLoading={isLoading}
+        isError={isError}
+      />
     </>
   );
 };

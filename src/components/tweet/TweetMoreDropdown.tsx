@@ -1,8 +1,8 @@
+import React from 'react';
 import Icon from 'components/base/Icon';
 import { useRootDispatch } from 'hooks/redux';
-import { homeActions } from 'modules/home';
 import Tweet from 'models/tweet';
-import React from 'react';
+import { homeActions } from 'modules/home';
 import { BasicType } from 'utils/iconUtils';
 import Dropdown, { DropdownItem } from '../base/Dropdown';
 
@@ -15,7 +15,6 @@ const TweetMoreDropdown: React.FC<TweetMoreDropdownProps> = (props) => {
   const dispatch = useRootDispatch();
 
   const handleDelete = () => {
-    // TODO?
     dispatch(homeActions.deleteTweet(tweet.tweet_id));
   };
 

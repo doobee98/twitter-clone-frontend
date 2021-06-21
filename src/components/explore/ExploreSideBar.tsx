@@ -1,18 +1,18 @@
+import React from 'react';
+import styled from 'styled-components';
 import { ContentHeader, ContentSection } from 'components/base/ContentTemplate';
 import Icon from 'components/base/Icon';
 import { useRootDispatch, useUserRecordSelector } from 'hooks/redux';
 import { useDebouncePreset } from 'hooks/useDebounce';
 import useInput from 'hooks/useInput';
 import { userRecordActions } from 'modules/userRecord';
-import React from 'react';
-import styled from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
 import UserSummary from './UserSummary';
 
 const SearchHeader = styled(ContentHeader)`
-  margin-top: 15px;
-  padding-bottom: 15px;
+  margin-top: 10px;
+  padding-bottom: 20px;
 `;
 
 const SearchIcon = styled(Icon)`
@@ -44,6 +44,11 @@ const SearchBarInput = styled.input`
 
 const SearchItem = styled(ContentSection)`
   padding: 0;
+
+  &:hover {
+    background-color: ${ColorPalette.GRAY_F9};
+    cursor: pointer;
+  }
 `;
 
 const ExploreSideBar: React.FC = () => {
@@ -74,7 +79,7 @@ const ExploreSideBar: React.FC = () => {
         <SearchBarInput value={keyword} onChange={onChangeKeyword} />
       </SearchHeader>
       {searchResult.map((user) => (
-        <SearchItem key={user.user_id}>
+        <SearchItem key={`search-${user.user_id}`}>
           <UserSummary user={user} />
         </SearchItem>
       ))}

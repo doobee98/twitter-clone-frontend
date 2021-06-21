@@ -1,20 +1,18 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { setTimeout } from 'timers';
 import Icon from 'components/base/Icon';
 import { BasicType } from 'utils/iconUtils';
-import { useHistory } from 'react-router-dom';
 import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
 import ProfileTooltip from '../base/ProfileTooltip';
 import Tweet from '../../models/tweet';
-import getTweetedTimeGap from '../../utils/getTweetedTimeGap';
+import { getTweetedTimeGap } from '../../utils';
 import TweetMoreDropdown from './TweetMoreDropdown';
 
 const TweetMainTopItem = styled.div`
   width: auto;
-
   margin: 1px;
-
   display: inline-block;
 `;
 
@@ -80,6 +78,7 @@ const TweetMainTopContainer = styled.div`
 interface TweetMainTopDescriptionProps {
   tweet: Tweet;
 }
+
 export const TweetMainTopDescription: React.FC<TweetMainTopDescriptionProps> = (
   props,
 ) => {
@@ -99,10 +98,11 @@ export const TweetMainTopDescription: React.FC<TweetMainTopDescriptionProps> = (
 
 interface TweetMainTopProps {
   tweet: Tweet;
+  hideInteraction?: boolean;
 }
 
 const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
-  const { tweet } = props;
+  const { tweet, hideInteraction } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
   const [isMore, setIsMore] = useState(false);
@@ -150,16 +150,18 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
             @{tweet.writer_id} - {elapsed}
           </TweetMainTopUseridTweetedAt>
         </TweetMainTopLeftContainer>
-        <TweetMainTopRightContainer>
-          <TweetMainTopMore onClick={handleMore}>
-            <HoverArea highlightColor={ColorPalette.SKYBLUE}>
-              <HoverIcon
-                iconType={isMore ? BasicType.CANCEL : BasicType.MORE}
-              />
-            </HoverArea>
-          </TweetMainTopMore>
-          {isMore && <TweetMoreDropdown tweet={tweet} />}
-        </TweetMainTopRightContainer>
+        {!hideInteraction && (
+          <TweetMainTopRightContainer>
+            <TweetMainTopMore onClick={handleMore}>
+              <HoverArea highlightColor={ColorPalette.SKYBLUE}>
+                <HoverIcon
+                  iconType={isMore ? BasicType.CANCEL : BasicType.MORE}
+                />
+              </HoverArea>
+            </TweetMainTopMore>
+            {isMore && <TweetMoreDropdown tweet={tweet} />}
+          </TweetMainTopRightContainer>
+        )}
       </TweetMainTopContainer>
       <ProfileTooltip
         isOpen={isOpen}

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
-import { BasicType } from 'utils/iconUtils';
 import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
+import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
+import { BasicType } from 'utils/iconUtils';
 import TweetPostToolBar from './TweetPostToolBar';
 import TweetPostText from './TweetPostText';
 import useInput from '../../hooks/useInput';
@@ -123,13 +123,13 @@ const TweetPostContent: React.FC<TweetPostContentProps> = (props) => {
     {
       id: 0,
       description: 'Everyone can reply',
-      value: undefined,
+      replyPermission: undefined,
       iconType: BasicType.EARTH,
     },
     {
       id: 1,
       description: 'People you follow can reply',
-      value: 'follower',
+      replyPermission: 'follower' as const,
       iconType: BasicType.FRIENDS,
     },
   ];
@@ -139,7 +139,6 @@ const TweetPostContent: React.FC<TweetPostContentProps> = (props) => {
     setPermissionIndex((permissionIndex + 1) % permissions.length);
   };
 
-  //   Not work
   const handleImgInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setFile(URL.createObjectURL(e.target.files[0]) || '');
@@ -157,12 +156,7 @@ const TweetPostContent: React.FC<TweetPostContentProps> = (props) => {
   };
 
   const handleCreatePost = () => {
-    onPost(
-      tweetContent,
-      permissions[permissionIndex].value === 'follower'
-        ? 'follower'
-        : undefined,
-    );
+    onPost(tweetContent, permissions[permissionIndex].replyPermission);
     clearTweetPost();
   };
 

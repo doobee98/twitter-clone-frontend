@@ -1,8 +1,8 @@
 import React from 'react';
+import styled from 'styled-components';
 import PageTemplate from 'components/base/PageTemplate';
 import Error from 'components/base/Error';
 import ContentTemplate from 'components/base/ContentTemplate';
-import styled from 'styled-components';
 
 const ErrorWrapper = styled.div`
   padding-top: 80px;
