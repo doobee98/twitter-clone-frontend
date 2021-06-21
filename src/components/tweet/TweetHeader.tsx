@@ -1,4 +1,5 @@
 import Icon from 'components/base/Icon';
+import ProfileTooltip from 'components/base/ProfileTooltip';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
@@ -11,11 +12,6 @@ const TweetHeaderContainer = styled.div`
 
   width: 100%;
   padding: 7px 50px;
-
-  color: ${ColorPalette.GRAY_96};
-
-  font-weight: bold;
-  font-size: 12px;
 `;
 
 const TweetHeaderItemWrapper = styled.div`
@@ -24,6 +20,18 @@ const TweetHeaderItemWrapper = styled.div`
   align-items: center;
 
   margin-right: 4px;
+
+  color: ${ColorPalette.GRAY_96};
+
+  font-weight: bold;
+  font-size: 12px;
+`;
+
+const TweetHeaderTextWrapper = styled(TweetHeaderItemWrapper)`
+  &: hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `;
 
 interface TweetHeaderProps {
@@ -32,15 +40,46 @@ interface TweetHeaderProps {
 
 const TweetHeader: React.FC<TweetHeaderProps> = (props) => {
   const { tweet } = props;
+  const [isOpen, setIsOpen] = useState(false);
+  const [timer, setTimer] = useState<NodeJS.Timeout>();
+
+  if (!tweet.retweet_writer_id) {
+    return null;
+  }
+
+  const openProfileTooltip = () => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    const newTimer = setTimeout(() => setIsOpen(true), 500);
+    setTimer(newTimer);
+  };
+
+  const closeProfileTooltip = () => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    const newTimer = setTimeout(() => setIsOpen(false), 500);
+    setTimer(newTimer);
+  };
 
   return (
     <TweetHeaderContainer>
       <TweetHeaderItemWrapper>
         <Icon iconType={BasicType.RETWEET} iconSize={14} />
       </TweetHeaderItemWrapper>
-      <TweetHeaderItemWrapper>
+      <TweetHeaderTextWrapper
+        onMouseEnter={openProfileTooltip}
+        onMouseLeave={closeProfileTooltip}
+      >
         {tweet.retweet_writer_id} Retweeted
-      </TweetHeaderItemWrapper>
+      </TweetHeaderTextWrapper>
+      <ProfileTooltip
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        userId={tweet.retweet_writer_id}
+      />
     </TweetHeaderContainer>
   );
 };

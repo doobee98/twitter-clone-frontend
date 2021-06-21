@@ -104,7 +104,7 @@ interface TweetMainTopProps {
 const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
   const { tweet } = props;
   const [isOpen, setIsOpen] = useState(false);
-  const [timer, setTimer] = useState<NodeJS.Timeout | undefined>();
+  const [timer, setTimer] = useState<NodeJS.Timeout>();
   const [isMore, setIsMore] = useState(false);
   const history = useHistory();
 
