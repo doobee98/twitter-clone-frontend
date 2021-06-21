@@ -14,6 +14,7 @@ import Tweet from 'models/tweet';
 import { homeActions } from 'modules/home';
 import { userRecordActions } from 'modules/userRecord';
 import { ColorPalette } from 'utils/colorUtils';
+import { authActions } from 'modules/auth';
 
 const SpaceSection = styled(ContentSection)`
   background-color: ${ColorPalette.GRAY_F9};
@@ -48,6 +49,11 @@ const HomePage: React.FC = () => {
 
   const initialFetch = async () => {
     await dispatch(homeActions.clearHomeState());
+
+    if (currentUser) {
+      await dispatch(userRecordActions.fetchUser(currentUser.user_id));
+    }
+
     handleFetchFeed();
   };
 
