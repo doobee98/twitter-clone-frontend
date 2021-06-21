@@ -106,7 +106,7 @@ const TweetButton = styled(Button)`
 
 interface TweetPostContentProps {
   placeholder?: string;
-  onPost: (content: string) => void;
+  onPost: (content: string, replyPermission?: 'follower') => void;
 }
 
 const TweetPostContent: React.FC<TweetPostContentProps> = (props) => {
@@ -123,16 +123,13 @@ const TweetPostContent: React.FC<TweetPostContentProps> = (props) => {
     {
       id: 0,
       description: 'Everyone can reply',
+      value: undefined,
       iconType: BasicType.EARTH,
     },
     {
       id: 1,
-      description: 'Only people you mention can reply',
-      iconType: BasicType.AT,
-    },
-    {
-      id: 2,
       description: 'People you follow can reply',
+      value: 'follower',
       iconType: BasicType.FRIENDS,
     },
   ];
@@ -160,7 +157,12 @@ const TweetPostContent: React.FC<TweetPostContentProps> = (props) => {
   };
 
   const handleCreatePost = () => {
-    onPost(tweetContent);
+    onPost(
+      tweetContent,
+      permissions[permissionIndex].value === 'follower'
+        ? 'follower'
+        : undefined,
+    );
     clearTweetPost();
   };
 

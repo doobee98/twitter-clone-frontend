@@ -65,10 +65,11 @@ export const createTweet = createAsyncThunk(
   'home/createTweet',
   async (tweetCreateRequest: TweetCreateRequest, thunkAPI) => {
     try {
-      const { content, image_src_list } = tweetCreateRequest;
+      const { content, image_src_list, reply_permission } = tweetCreateRequest;
       const response = await TweetsApi.instance.createTweet(
         content,
         image_src_list,
+        reply_permission,
       );
       return response.data;
     } catch (error) {
@@ -159,11 +160,13 @@ export const replyTweet = createAsyncThunk(
   'home/replyTweet',
   async (replyCreateRequest: ReplyCreateRequest, thunkAPI) => {
     try {
-      const { original_tweet_id, content, image_src_list } = replyCreateRequest;
+      const { original_tweet_id, content, image_src_list, reply_permission } =
+        replyCreateRequest;
       const response = await TweetsApi.instance.replyTweet(
         original_tweet_id,
         content,
         image_src_list,
+        reply_permission,
       );
       return response.data;
     } catch (error) {

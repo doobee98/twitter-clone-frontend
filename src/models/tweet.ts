@@ -13,6 +13,8 @@ export default interface Tweet {
   retweet_count: number;
   like_count: number;
 
+  reply_permission?: 'follower';
+
   retweet_flag: boolean;
   like_flag: boolean;
 

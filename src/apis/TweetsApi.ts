@@ -25,11 +25,15 @@ class TweetsApi extends Api {
     return this._instance;
   }
 
-  createTweet(content: string, image_src_list?: string[]): AxiosPromise<Tweet> {
+  createTweet(
+    content: string,
+    image_src_list?: string[],
+    reply_permission?: 'follower',
+  ): AxiosPromise<Tweet> {
     return ApiBuilder.create()
       .post()
       .url(this.apiEndPoints.CREATE_TWEET)
-      .data({ content, image_src_list })
+      .data({ content, image_src_list, reply_permission })
       .build();
   }
 
@@ -71,11 +75,12 @@ class TweetsApi extends Api {
     original_tweet_id: string,
     content: string,
     image_src_list?: string[],
+    reply_permission?: 'follower',
   ): AxiosPromise<Tweet> {
     return ApiBuilder.create()
       .post()
       .url(this.apiEndPoints.REPLY(original_tweet_id))
-      .data({ content, image_src_list })
+      .data({ content, image_src_list, reply_permission })
       .build();
   }
 
