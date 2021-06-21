@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useAppDispatch, useAuthSelector } from 'hooks/redux';
 import { logout } from 'modules/auth';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType, HighlightType } from 'utils/iconUtils';
 import { openPostModal } from 'modules/modal';
-import Dropdown, { DropdownItem } from './Dropdown';
 import NavItem from './NavItem';
 import Button from './Button';
 import Icon from './Icon';
@@ -51,9 +50,10 @@ const TweetButton = styled(Button)`
 
 const UserButton = styled(Button)`
   width: 100%;
+  border: 1px solid ${ColorPalette.WHITE};
 
   &:hover {
-    background-color: ${hexToRgbA(ColorPalette.SKYBLUE, 0.1)};
+    border: 1px solid ${ColorPalette.SKYBLUE};
   }
 `;
 
@@ -76,6 +76,17 @@ const UserId = styled.span`
   color: ${ColorPalette.GRAY_70};
 `;
 
+const PowerOffIcon = styled(Icon)`
+  border-radius: 9999px;
+  width: 40px;
+  height: 40px;
+
+  &:hover {
+    color: ${ColorPalette.SKYBLUE};
+    background-color: ${hexToRgbA(ColorPalette.SKYBLUE, 0.2)};
+  }
+`;
+
 const BottomContainer = styled.div`
   width: 100%;
   margin: 12px 0;
@@ -86,15 +97,11 @@ const NavigationSideBar: React.FC = () => {
   const dispatch = useAppDispatch();
   const { currentUser } = authStore;
   const dispatchPopup = useAppDispatch();
-  const [isOpenedDropdown, setIsOpenedDropdown] = useState(false);
 
   const openPopup = () => {
     dispatchPopup(openPostModal());
   };
 
-  const toggleLogoutDropdown = () => {
-    setIsOpenedDropdown((state) => !state);
-  };
   const fetchLogout = () => {
     dispatch(logout());
   };
@@ -150,20 +157,16 @@ const NavigationSideBar: React.FC = () => {
       </TopContainer>
       <BottomContainer>
         {currentUser && (
-          <UserButton onClick={toggleLogoutDropdown}>
+          <UserButton>
             <UserButtonTextArea>
               <Username>{currentUser.username}</Username>
               <UserId>@{currentUser.user_id}</UserId>
             </UserButtonTextArea>
-            <Icon iconType={BasicType.MORE} iconSize={20} />
-            {isOpenedDropdown && (
-              <Dropdown>
-                <DropdownItem onClick={fetchLogout}>
-                  <Icon iconType={BasicType.CANCEL} />
-                  로그아웃
-                </DropdownItem>
-              </Dropdown>
-            )}
+            <PowerOffIcon
+              iconType={BasicType.POWER_OFF}
+              iconSize={20}
+              onClick={fetchLogout}
+            />
           </UserButton>
         )}
       </BottomContainer>

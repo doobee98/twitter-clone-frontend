@@ -40,7 +40,7 @@ import {
   AiOutlineSchedule,
 } from 'react-icons/ai';
 import { GiCancel } from 'react-icons/gi';
-import { BiAt } from 'react-icons/bi';
+import { BiAt, BiPowerOff } from 'react-icons/bi';
 import { VscSmiley } from 'react-icons/vsc';
 import { SiGooglecalendar } from 'react-icons/si';
 import { IoLocationSharp } from 'react-icons/io5';
@@ -55,6 +55,7 @@ export enum BasicType {
   TWITTER = 'basic-twitter',
   MORE_CIRCLE = 'basic-more-circle',
   MORE = 'basic-more',
+  POWER_OFF = 'basic-power-off',
   LEFT_ARROW = 'basic-left-arrow',
 
   ERROR = 'basic-error',
@@ -104,6 +105,7 @@ const basicRecord = {
   [BasicType.TWITTER]: FaTwitter,
   [BasicType.MORE_CIRCLE]: CgMoreO,
   [BasicType.MORE]: FiMoreHorizontal,
+  [BasicType.POWER_OFF]: BiPowerOff,
   [BasicType.LEFT_ARROW]: HiOutlineArrowLeft,
 
   [BasicType.ERROR]: MdError,
