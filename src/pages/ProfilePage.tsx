@@ -9,7 +9,6 @@ import {
   useAuthSelector,
   useUserRecordSelector,
 } from 'hooks/redux';
-import { profileActions } from 'modules/profile';
 import { userRecordActions } from 'modules/userRecord';
 import { homeActions } from 'modules/home';
 import Tweet from 'models/tweet';
@@ -54,7 +53,6 @@ const ProfilePage: React.FC = () => {
   };
 
   useEffect(() => {
-    dispatch(profileActions.clearProfileState());
     dispatch(homeActions.clearHomeState());
     handleFetchFeed();
   }, [paramId]);
