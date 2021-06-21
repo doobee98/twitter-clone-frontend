@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
-import { useAppDispatch } from 'hooks/redux';
+import { useAppDispatch, useUserSelector } from 'hooks/redux';
 import {
   dislikeTweet,
   likeTweet,
@@ -78,12 +78,16 @@ const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
   const [isRetweetFlag, setIsRetweetFlag] = useState<boolean>(
     tweet.retweet_flag,
   );
+  const writer = useUserSelector(tweet.writer_id);
   const dispatch = useAppDispatch();
 
   const dispatchPopup = useAppDispatch();
 
   const handleReply = () => {
-    dispatchPopup(openReplyModal(tweet));
+    const isFollowingWriter = writer?.following_flag;
+    if (tweet.reply_permission && !isFollowingWriter) {
+      window.alert('reply not permitted!!');
+    } else dispatchPopup(openReplyModal(tweet));
   };
 
   const handleRetweet = async () => {
