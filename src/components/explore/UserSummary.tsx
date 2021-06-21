@@ -45,9 +45,9 @@ const UserSummary: React.FC<UserSummaryProps> = (props) => {
   };
 
   return (
-    <UserSummaryContainer>
+    <UserSummaryContainer onClick={goToUserProfile}>
       <ProfileImage userid={user.user_id} username={user.username} size={40} />
-      <TextContainer onClick={goToUserProfile}>
+      <TextContainer>
         <Username>{user.username}</Username>
         <UserId>@{user.user_id}</UserId>
       </TextContainer>
