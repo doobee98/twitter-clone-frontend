@@ -1,6 +1,7 @@
+import Profile from 'components/base/Profile';
+import User from 'models/user';
 import React from 'react';
 import styled from 'styled-components';
-import { ColorPalette } from 'utils/colorUtils';
 
 const TweetProfileWrapper = styled.div`
   width: 10%;
@@ -15,20 +16,16 @@ const ImageWrapper = styled.div`
   padding-top: 4px;
 `;
 
-// [REMOVED]
-const TestImage = styled.div`
-  margin-left: 0;
-  width: 48px;
-  height: 48px;
-  border-radius: ${48 / 2}px;
-  background-color: ${ColorPalette.GREEN};
-`;
+interface TweetPostProfileProps {
+  currentUser: User;
+}
 
-const TweetPostProfile: React.FC = () => {
+const TweetPostProfile: React.FC<TweetPostProfileProps> = (props) => {
+  const { currentUser } = props;
   return (
     <TweetProfileWrapper>
       <ImageWrapper>
-        <TestImage />
+        <Profile userid={currentUser.user_id} username={currentUser.username} />
       </ImageWrapper>
     </TweetProfileWrapper>
   );

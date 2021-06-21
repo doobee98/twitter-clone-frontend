@@ -1,4 +1,4 @@
-import { useAppDispatch } from 'hooks/redux';
+import { useAppDispatch, useAuthSelector } from 'hooks/redux';
 import { createTweet, replyTweet } from 'modules/home';
 import React from 'react';
 import styled from 'styled-components';
@@ -7,8 +7,9 @@ import TweetPostProfile from './TweetPostProfile';
 
 const TweetPostContainer = styled.div`
   display: flex;
-  padding: 8px 14px;
-  width: 100%;
+  padding: 8px 10px;
+  margin: 0px -20px;
+  width: 120%;
 `;
 
 interface TweetPostProps {
@@ -20,6 +21,8 @@ interface TweetPostProps {
 const TweetPost: React.FC<TweetPostProps> = (props) => {
   const { isReply, originalTweetId, onCreatePost } = props;
   const dispatch = useAppDispatch();
+  const authStore = useAuthSelector();
+  const { currentUser } = authStore;
 
   const handlePost = async (tweetContent: string) => {
     dispatch(
@@ -33,9 +36,10 @@ const TweetPost: React.FC<TweetPostProps> = (props) => {
     if (onCreatePost) onCreatePost();
   };
 
+  if (!currentUser) return null;
   return (
     <TweetPostContainer>
-      <TweetPostProfile />
+      <TweetPostProfile currentUser={currentUser} />
       <TweetPostContent
         placeholder={!isReply ? "What's happening?" : 'Add another Tweet'}
         onPost={handlePost}
