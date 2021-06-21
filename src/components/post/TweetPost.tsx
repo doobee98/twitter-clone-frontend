@@ -21,7 +21,10 @@ const TweetPost: React.FC<TweetPostProps> = (props) => {
   const { isReply, originalTweetId, onCreatePost } = props;
   const dispatch = useAppDispatch();
 
-  const handlePost = async (tweetContent: string, replyPermission?: string) => {
+  const handlePost = async (
+    tweetContent: string,
+    replyPermission?: 'follower',
+  ) => {
     dispatch(
       !originalTweetId
         ? createTweet({

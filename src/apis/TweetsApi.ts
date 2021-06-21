@@ -28,7 +28,7 @@ class TweetsApi extends Api {
   createTweet(
     content: string,
     image_src_list?: string[],
-    reply_permission?: string,
+    reply_permission?: 'follower',
   ): AxiosPromise<Tweet> {
     return ApiBuilder.create()
       .post()
@@ -75,7 +75,7 @@ class TweetsApi extends Api {
     original_tweet_id: string,
     content: string,
     image_src_list?: string[],
-    reply_permission?: string,
+    reply_permission?: 'follower',
   ): AxiosPromise<Tweet> {
     return ApiBuilder.create()
       .post()

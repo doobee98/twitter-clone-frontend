@@ -106,7 +106,7 @@ const TweetButton = styled(Button)`
 
 interface TweetPostContentProps {
   placeholder?: string;
-  onPost: (content: string, replyPermission?: string) => void;
+  onPost: (content: string, replyPermission?: 'follower') => void;
 }
 
 const TweetPostContent: React.FC<TweetPostContentProps> = (props) => {
@@ -157,7 +157,12 @@ const TweetPostContent: React.FC<TweetPostContentProps> = (props) => {
   };
 
   const handleCreatePost = () => {
-    onPost(tweetContent, permissions[permissionIndex].value);
+    onPost(
+      tweetContent,
+      permissions[permissionIndex].value === 'follower'
+        ? 'follower'
+        : undefined,
+    );
     clearTweetPost();
   };
 
