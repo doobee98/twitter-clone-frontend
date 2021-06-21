@@ -11,7 +11,6 @@ import {
   useUserRecordSelector,
 } from 'hooks/redux';
 import Tweet from 'models/tweet';
-import { profileActions } from 'modules/profile';
 import { userRecordActions } from 'modules/userRecord';
 import { homeActions } from 'modules/home';
 
@@ -58,7 +57,6 @@ const ProfilePage: React.FC = () => {
   };
 
   const initialFetch = async () => {
-    await dispatch(profileActions.clearProfileState());
     await dispatch(homeActions.clearHomeState());
     handleFetchFeed();
   };
