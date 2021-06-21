@@ -13,7 +13,6 @@ class AuthApi extends Api {
     INFO: `${authApiPrefix}/info`,
     SIGNUP: `${authApiPrefix}/signup`,
     EDIT: `${authApiPrefix}/editInfo`,
-    CURRENT_USER: `${authApiPrefix}/`, // [TO BE REMOVED] TEST endpoint
   };
 
   private static _instance: AuthApi;
@@ -60,14 +59,6 @@ class AuthApi extends Api {
       .post()
       .url(`${this.apiEndPoints.EDIT}`)
       .data({ username, profile_img_src, bio, website, location })
-      .build();
-  }
-
-  // [TO BE REMOVED] TEST method
-  checkCurrentUser(): AxiosPromise<User> {
-    return ApiBuilder.create()
-      .get()
-      .url(`${this.apiEndPoints.CURRENT_USER}`)
       .build();
   }
 }
