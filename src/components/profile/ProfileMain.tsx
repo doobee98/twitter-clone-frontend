@@ -12,6 +12,7 @@ import {
 } from 'hooks/redux';
 import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
+import { useHistory } from 'react-router-dom';
 import ProfileHeader from './ProfileHeader';
 import TweetList from '../tweet/TweetList';
 import ProfileBiography from './ProfileBiography';
@@ -50,6 +51,7 @@ const ProfileMain: React.FC<ProfileMainProps> = (props) => {
   const user = useUserRecordSelector((state) => state.userRecord[userId]);
   const feed = useHomeSelector((state) => state.feed);
   const userFeedCount = useHomeSelector((state) => state.totalCount);
+  const history = useHistory();
 
   if (!user) {
     return null;
@@ -57,10 +59,14 @@ const ProfileMain: React.FC<ProfileMainProps> = (props) => {
 
   const isMyProfile = currentUser?.user_id === user.user_id;
 
+  const goToBack = () => {
+    history.goBack();
+  };
+
   return (
     <>
       <ContentHeader>
-        <BackButton>
+        <BackButton onClick={goToBack}>
           <Icon iconType={BasicType.LEFT_ARROW} />
         </BackButton>
         <UserInfoContainer>
