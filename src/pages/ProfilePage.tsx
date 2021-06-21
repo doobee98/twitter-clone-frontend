@@ -53,10 +53,14 @@ const ProfilePage: React.FC = () => {
     );
   };
 
-  useEffect(() => {
-    dispatch(profileActions.clearProfileState());
-    dispatch(homeActions.clearHomeState());
+  const initialFetch = async () => {
+    await dispatch(profileActions.clearProfileState());
+    await dispatch(homeActions.clearHomeState());
     handleFetchFeed();
+  };
+
+  useEffect(() => {
+    initialFetch();
   }, [paramId]);
 
   if (!currentUser) {

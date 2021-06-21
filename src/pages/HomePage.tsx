@@ -46,9 +46,13 @@ const HomePage: React.FC = () => {
     );
   };
 
-  // INIT FETCH
-  useEffect(() => {
+  const initialFetch = async () => {
+    await dispatch(homeActions.clearHomeState());
     handleFetchFeed();
+  };
+
+  useEffect(() => {
+    initialFetch();
   }, []);
 
   if (!currentUser) {
