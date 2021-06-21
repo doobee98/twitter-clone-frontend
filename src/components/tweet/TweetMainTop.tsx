@@ -98,10 +98,11 @@ export const TweetMainTopDescription: React.FC<TweetMainTopDescriptionProps> = (
 
 interface TweetMainTopProps {
   tweet: Tweet;
+  hideInteraction?: boolean;
 }
 
 const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
-  const { tweet } = props;
+  const { tweet, hideInteraction } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [timer, setTimer] = useState<NodeJS.Timeout>();
   const [isMore, setIsMore] = useState(false);
@@ -149,16 +150,18 @@ const TweetMainTop: React.FC<TweetMainTopProps> = (props) => {
             @{tweet.writer_id} - {elapsed}
           </TweetMainTopUseridTweetedAt>
         </TweetMainTopLeftContainer>
-        <TweetMainTopRightContainer>
-          <TweetMainTopMore onClick={handleMore}>
-            <HoverArea highlightColor={ColorPalette.SKYBLUE}>
-              <HoverIcon
-                iconType={isMore ? BasicType.CANCEL : BasicType.MORE}
-              />
-            </HoverArea>
-          </TweetMainTopMore>
-          {isMore && <TweetMoreDropdown tweet={tweet} />}
-        </TweetMainTopRightContainer>
+        {!hideInteraction && (
+          <TweetMainTopRightContainer>
+            <TweetMainTopMore onClick={handleMore}>
+              <HoverArea highlightColor={ColorPalette.SKYBLUE}>
+                <HoverIcon
+                  iconType={isMore ? BasicType.CANCEL : BasicType.MORE}
+                />
+              </HoverArea>
+            </TweetMainTopMore>
+            {isMore && <TweetMoreDropdown tweet={tweet} />}
+          </TweetMainTopRightContainer>
+        )}
       </TweetMainTopContainer>
       <ProfileTooltip
         isOpen={isOpen}

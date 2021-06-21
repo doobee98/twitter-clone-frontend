@@ -18,10 +18,11 @@ const TweetWrapper = styled.div`
 
 interface TweetComponentProps {
   tweet: Tweet;
+  hideInteraction?: boolean;
 }
 
 const TweetComponent: React.FC<TweetComponentProps> = (props) => {
-  const { tweet } = props;
+  const { tweet, hideInteraction } = props;
 
   return (
     <TweetContainer>
@@ -30,7 +31,7 @@ const TweetComponent: React.FC<TweetComponentProps> = (props) => {
       </TweetWrapper>
       <TweetWrapper>
         <TweetSide tweet={tweet} />
-        <TweetMain tweet={tweet} />
+        <TweetMain tweet={tweet} hideInteraction={hideInteraction} />
       </TweetWrapper>
     </TweetContainer>
   );

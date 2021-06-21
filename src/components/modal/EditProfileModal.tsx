@@ -15,24 +15,24 @@ import PopupBackground from './PopupBackground';
 import Modal from './Modal';
 
 const EditProfileModalHeaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-left: 10px;
+
   border-bottom: 1px solid ${hexToRgbA(ColorPalette.BLACK, 0.2)};
-  margin-bottom: 10px;
   height: 50px;
 `;
 
-const EditPorfileHeader = styled.h2`
+const EditProfileHeader = styled.h2`
+  margin-left: 10px;
   display: inline-block;
-  position: relative;
-  left: 10px;
 `;
 
 const CloseButton = styled(Button)`
-  display: inline-block;
-  position: relative;
-
   width: 48px;
   height: 48px;
-  margin-top: 4px;
+
   color: ${ColorPalette.SKYBLUE};
 
   &:hover {
@@ -53,7 +53,7 @@ const EditProfileModalHeader: React.FC<EditProfileModalHeaderProps> = (
       <CloseButton>
         <Icon iconType={BasicType.CLOSE} iconSize={20} />
       </CloseButton>
-      <EditPorfileHeader>Edit Profile</EditPorfileHeader>
+      <EditProfileHeader>Edit Profile</EditProfileHeader>
     </EditProfileModalHeaderWrapper>
   );
 };
@@ -96,7 +96,7 @@ const Input = styled.input`
   width: 90%;
   padding: 10px;
   outline: none;
-  border: 1px solid ${ColorPalette.GRAY_E6};
+  border: none;
   border-radius: 3px;
   font-size: 18px;
 `;
@@ -107,7 +107,7 @@ const BiographyText = styled.textarea`
   padding: 10px;
   margin: 0px;
   outline: none;
-  border: 1px solid ${ColorPalette.GRAY_E6};
+  border: none;
   border-radius: 3px;
   font-size: 20px;
   resize: none;

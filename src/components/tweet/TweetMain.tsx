@@ -17,16 +17,17 @@ const TweetMainContainer = styled.div`
 
 interface TweetMainProps {
   tweet: Tweet;
+  hideInteraction?: boolean;
 }
 
 const TweetMain: React.FC<TweetMainProps> = (props) => {
-  const { tweet } = props;
+  const { tweet, hideInteraction } = props;
 
   return (
     <TweetMainContainer>
-      <TweetMainTop tweet={tweet} />
+      <TweetMainTop tweet={tweet} hideInteraction={hideInteraction} />
       <TweetMainCenter tweet={tweet} />
-      <TweetMainBottom tweet={tweet} />
+      {!hideInteraction && <TweetMainBottom tweet={tweet} />}
     </TweetMainContainer>
   );
 };
