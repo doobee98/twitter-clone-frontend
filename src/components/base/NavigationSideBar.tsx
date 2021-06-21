@@ -83,8 +83,8 @@ const PowerOffIcon = styled(Icon)`
   height: 40px;
 
   &:hover {
-    color: ${ColorPalette.SKYBLUE};
-    background-color: ${hexToRgbA(ColorPalette.SKYBLUE, 0.2)};
+    color: ${ColorPalette.MAGENTA};
+    background-color: ${hexToRgbA(ColorPalette.MAGENTA, 0.2)};
   }
 `;
 
