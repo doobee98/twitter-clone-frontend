@@ -6,7 +6,7 @@ const PROFILEPAGE_FEED_INITIAL_COUNT = 10;
 
 const name = 'profile';
 
-interface ProfileState {
+export interface ProfileState {
   feed: Tweet[];
   totalCount: number;
 }

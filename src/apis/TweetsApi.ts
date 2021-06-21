@@ -79,6 +79,20 @@ class TweetsApi extends Api {
       .build();
   }
 
+  retweetTweet(tweet_id: string): AxiosPromise<void> {
+    return ApiBuilder.create()
+      .post()
+      .url(this.apiEndPoints.RETWEET(tweet_id))
+      .build();
+  }
+
+  unretweetTweet(tweet_id: string): AxiosPromise<void> {
+    return ApiBuilder.create()
+      .delete()
+      .url(this.apiEndPoints.RETWEET(tweet_id))
+      .build();
+  }
+
   likeTweet(tweet_id: string): AxiosPromise<void> {
     return ApiBuilder.create()
       .post()
