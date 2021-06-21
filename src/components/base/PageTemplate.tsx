@@ -34,6 +34,8 @@ const ContentWrapper = styled.main`
   flex-grow: 1;
   flex-shrink: 1;
 
+  min-height: 100vh;
+
   display: flex;
 `;
 

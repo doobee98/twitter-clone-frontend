@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 import Button from 'components/base/Button';
-import ContentTemplate, {
-  ContentHeader,
-  ContentSection,
-} from 'components/base/ContentTemplate';
+import { ContentHeader, ContentSection } from 'components/base/ContentTemplate';
 import Icon from 'components/base/Icon';
 import {
   useAuthSelector,
@@ -40,6 +37,11 @@ const TweetCount = styled.div`
   margin-top: 1px;
   font-size: 12px;
   color: ${ColorPalette.GRAY_70};
+`;
+
+const SpaceSection = styled(ContentSection)`
+  background-color: ${ColorPalette.GRAY_F9};
+  height: 12px;
 `;
 
 interface ProfileMainProps {
@@ -86,14 +88,13 @@ const ProfileMain: React.FC<ProfileMainProps> = (props) => {
       <ContentSection>
         <ProfileBiography user={user} />
       </ContentSection>
-      <ContentTemplate>
-        <TweetList
-          feed={feed}
-          handleFetchFeed={handleFetchFeed}
-          isLoading={isLoading}
-          isError={isError}
-        />
-      </ContentTemplate>
+      <SpaceSection />
+      <TweetList
+        feed={feed}
+        handleFetchFeed={handleFetchFeed}
+        isLoading={isLoading}
+        isError={isError}
+      />
     </>
   );
 };
