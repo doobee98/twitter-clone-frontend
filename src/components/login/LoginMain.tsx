@@ -2,9 +2,11 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
-import { useRootDispatch } from 'hooks/redux';
+import SignupModal from 'components/modal/SignupModal';
+import { useRootDispatch, useModalSelector } from 'hooks/redux';
 import useInput from 'hooks/useInput';
 import { authActions } from 'modules/auth';
+import { modalActions } from 'modules/modal';
 import { ColorPalette } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
 
@@ -71,6 +73,9 @@ const LoginHelpItem = styled.div`
 const LoginMain: React.FC = () => {
   const [id, onChangeId] = useInput('');
   const [password, onChangePassword] = useInput('');
+  const isOpenedSignupModal = useModalSelector(
+    (state) => state.isOpenedSignupModal,
+  );
 
   const history = useHistory();
   const dispatch = useRootDispatch();
@@ -84,25 +89,30 @@ const LoginMain: React.FC = () => {
   };
 
   const goToSignup = () => {
-    // TODO
+    dispatch(modalActions.openSignupModal());
   };
 
   return (
-    <LoginMainContainer>
-      <TwitterIcon iconType={BasicType.TWITTER} iconSize={40} />
-      <LoginTitle>Log in to Twitter</LoginTitle>
-      <LoginInput value={id} onChange={onChangeId} placeholder="Id" />
-      <LoginInput
-        type="password"
-        value={password}
-        onChange={onChangePassword}
-        placeholder="Password"
-      />
-      <LoginButton onClick={fetchLogin}>Log in</LoginButton>
-      <LoginHelpContainer>
-        <LoginHelpItem onClick={goToSignup}>Sign Up for Twitter</LoginHelpItem>
-      </LoginHelpContainer>
-    </LoginMainContainer>
+    <>
+      <LoginMainContainer>
+        <TwitterIcon iconType={BasicType.TWITTER} iconSize={40} />
+        <LoginTitle>Log in to Twitter</LoginTitle>
+        <LoginInput value={id} onChange={onChangeId} placeholder="Id" />
+        <LoginInput
+          type="password"
+          value={password}
+          onChange={onChangePassword}
+          placeholder="Password"
+        />
+        <LoginButton onClick={fetchLogin}>Log in</LoginButton>
+        <LoginHelpContainer>
+          <LoginHelpItem onClick={goToSignup}>
+            Sign Up for Twitter
+          </LoginHelpItem>
+        </LoginHelpContainer>
+      </LoginMainContainer>
+      <SignupModal isOpened={isOpenedSignupModal} />
+    </>
   );
 };
 

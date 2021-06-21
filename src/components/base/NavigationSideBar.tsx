@@ -31,6 +31,10 @@ const LogoNavItem = styled(NavItem)`
   width: 40px;
 `;
 
+const NotImplementedNavItem = styled(NavItem)`
+  color: ${ColorPalette.GRAY_96};
+`;
+
 const TweetButton = styled(Button)`
   width: 90%;
   margin: 20px 0;
@@ -46,9 +50,10 @@ const TweetButton = styled(Button)`
 
 const UserButton = styled(Button)`
   width: 100%;
+  border: 1px solid ${ColorPalette.WHITE};
 
   &:hover {
-    background-color: ${hexToRgbA(ColorPalette.SKYBLUE, 0.1)};
+    border: 1px solid ${ColorPalette.SKYBLUE};
   }
 `;
 
@@ -71,12 +76,21 @@ const UserId = styled.span`
   color: ${ColorPalette.GRAY_70};
 `;
 
+const PowerOffIcon = styled(Icon)`
+  border-radius: 9999px;
+  width: 40px;
+  height: 40px;
+
+  &:hover {
+    color: ${ColorPalette.SKYBLUE};
+    background-color: ${hexToRgbA(ColorPalette.SKYBLUE, 0.2)};
+  }
+`;
+
 const BottomContainer = styled.div`
   width: 100%;
   margin: 12px 0;
 `;
-
-const ToBeRemovedWrapper = styled(React.Fragment)``;
 
 const NavigationSideBar: React.FC = () => {
   const currentUser = useAuthSelector((state) => state.currentUser);
@@ -87,7 +101,6 @@ const NavigationSideBar: React.FC = () => {
     dispatchPopup(modalActions.openPostModal());
   };
 
-  // [TODO: NEED TO BE REMOVED] test for logout button
   const fetchLogout = () => {
     dispatch(authActions.logout());
   };
@@ -100,46 +113,59 @@ const NavigationSideBar: React.FC = () => {
           <NavItem iconType={HighlightType.HOME} link="/home">
             Home
           </NavItem>
-          <NavItem iconType={HighlightType.EXPLORE} link="/explore">
+          <NotImplementedNavItem
+            iconType={HighlightType.EXPLORE}
+            link="/explore"
+          >
             Explore
-          </NavItem>
-          <NavItem iconType={HighlightType.NOTIFICATIONS} link="/notifications">
+          </NotImplementedNavItem>
+          <NotImplementedNavItem
+            iconType={HighlightType.NOTIFICATIONS}
+            link="/notifications"
+          >
             Notifications
-          </NavItem>
-          <NavItem iconType={HighlightType.MESSAGES} link="/messages">
+          </NotImplementedNavItem>
+          <NotImplementedNavItem
+            iconType={HighlightType.MESSAGES}
+            link="/messages"
+          >
             Messages
-          </NavItem>
+          </NotImplementedNavItem>
           {/* TODO: need to change routing '/i/bookmarks' */}
-          <NavItem iconType={HighlightType.BOOKMARKS} link="/bookmarks">
+          <NotImplementedNavItem
+            iconType={HighlightType.BOOKMARKS}
+            link="/bookmarks"
+          >
             Bookmarks
-          </NavItem>
+          </NotImplementedNavItem>
           {/* TODO: need to change routing '/:user_id/lists' */}
-          <NavItem iconType={HighlightType.LISTS} link="/lists">
+          <NotImplementedNavItem iconType={HighlightType.LISTS} link="/lists">
             Lists
-          </NavItem>
+          </NotImplementedNavItem>
           <NavItem
             iconType={HighlightType.PROFILE}
             link={currentUser ? `/${currentUser.user_id}` : '/'}
           >
             Profile
           </NavItem>
-          <NavItem iconType={BasicType.MORE_CIRCLE}>More</NavItem>
+          <NotImplementedNavItem iconType={BasicType.MORE_CIRCLE}>
+            More
+          </NotImplementedNavItem>
         </NavList>
         <TweetButton onClick={openPopup}>Tweet</TweetButton>
       </TopContainer>
       <BottomContainer>
-        <ToBeRemovedWrapper>
-          <button type="button" onClick={fetchLogout}>
-            로그아웃
-          </button>
-        </ToBeRemovedWrapper>
         {currentUser && (
           <UserButton>
             <UserButtonTextArea>
               <Username>{currentUser.username}</Username>
               <UserId>@{currentUser.user_id}</UserId>
             </UserButtonTextArea>
-            <Icon iconType={BasicType.MORE} iconSize={20} />
+            <PowerOffIcon
+              iconType={BasicType.POWER_OFF}
+              iconSize={20}
+              onClick={fetchLogout}
+            />
           </UserButton>
         )}
       </BottomContainer>

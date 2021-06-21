@@ -1,5 +1,6 @@
 export interface TweetCreateRequest {
   content: string;
+  reply_permission?: 'follower';
   image_src_list?: string[];
 }
 
@@ -11,4 +12,11 @@ export interface TweetEditRequest {
 export interface TweetFeedRequest {
   offset: number;
   count: number;
+}
+
+export interface ReplyCreateRequest {
+  original_tweet_id: string;
+  content: string;
+  reply_permission?: 'follower';
+  image_src_list?: string[];
 }

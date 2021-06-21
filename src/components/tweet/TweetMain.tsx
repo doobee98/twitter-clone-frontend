@@ -21,7 +21,7 @@ interface TweetMainProps {
 }
 
 const TweetMain: React.FC<TweetMainProps> = (props) => {
-  const { children, tweet } = props;
+  const { tweet } = props;
 
   return (
     <TweetMainContainer>

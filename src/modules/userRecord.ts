@@ -5,9 +5,12 @@ import User from '../models/user';
 
 const name = 'userRecord';
 
-export type UserRecordState = Record<string, User>;
+export interface UserRecordState {
+  userRecord: Record<string, User>;
+  searchResult: User[];
+}
 
-const initialState: UserRecordState = {};
+const initialState: UserRecordState = { userRecord: {}, searchResult: [] };
 
 const fetchUser = createAsyncThunk(
   `${name}/fetchUser`,
@@ -29,16 +32,29 @@ const getUser = createAsyncThunk(
   async (userId: string, thunkAPI) => {
     try {
       const rootState = thunkAPI.getState() as any;
-      const userRecord = rootState.userRecord as UserRecordState;
+      const state = rootState.userRecord as UserRecordState;
 
-      if (userId in userRecord) {
-        return userRecord[userId];
+      if (userId in state.userRecord) {
+        return state.userRecord[userId];
       }
-
-      console.log('fetch');
 
       // fetchUser
       const response = await UsersApi.instance.getUser(userId);
+      return response.data;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  },
+);
+
+export const searchUser = createAsyncThunk(
+  `${name}/searchUser`,
+  async (keyword: string, thunkAPI) => {
+    try {
+      const response = await UsersApi.instance.searchUser(keyword);
       return response.data;
     } catch (error) {
       if (!error.response) {
@@ -83,37 +99,53 @@ export const userRecord = createSlice({
   name,
   initialState,
   reducers: {
-    clearUserRecord: (state, action) => {
-      state = {};
+    clearUserRecord: (state) => {
+      state.userRecord = {};
+    },
+    clearSearchResult: (state) => {
+      state.searchResult = [];
     },
   },
   extraReducers: {
     [fetchUser.fulfilled.type]: (state, action) => {
       const user: User = action.payload;
-      state[user.user_id] = user;
+      state.userRecord[user.user_id] = user;
     },
     [fetchUser.rejected.type]: (state, error) => {
       console.log(error.payload);
-      window.alert(error.payload.msg);
+      // window.alert(error.payload.msg);
     },
     [getUser.fulfilled.type]: (state, action) => {
       const user: User = action.payload;
-      state[user.user_id] = user;
+      state.userRecord[user.user_id] = user;
     },
     [getUser.rejected.type]: (state, error) => {
       console.log(error.payload);
-      window.alert(error.payload.msg);
+      // window.alert(error.payload.msg);
+    },
+    [searchUser.fulfilled.type]: (state, action) => {
+      const userList: User[] = action.payload;
+      userList.forEach((user) => {
+        state.userRecord[user.user_id] = user;
+      });
+      state.searchResult = userList;
+    },
+    [searchUser.rejected.type]: (state, error) => {
+      console.log(error.payload);
+      // window.alert(error.payload.msg);
     },
     [followUser.fulfilled.type]: (state, action) => {
       const userId = action.payload;
-      state[userId].following_flag = true;
+      state.userRecord[userId].following_flag = true;
+      state.userRecord[userId].follower_count += 1;
     },
     [followUser.rejected.type]: (state, error) => {
       console.log(error.payload);
     },
     [unfollowUser.fulfilled.type]: (state, action) => {
       const userId = action.payload;
-      state[userId].following_flag = false;
+      state.userRecord[userId].following_flag = false;
+      state.userRecord[userId].follower_count -= 1;
     },
     [unfollowUser.rejected.type]: (state, error) => {
       console.log(error.payload);
@@ -124,6 +156,7 @@ export const userRecord = createSlice({
 export const userRecordActions = {
   fetchUser,
   getUser,
+  searchUser,
   followUser,
   unfollowUser,
   ...userRecord.actions,

@@ -3,15 +3,17 @@ import { ColorPalette, hexToRgbA } from 'utils/colorUtils';
 import { BasicType } from 'utils/iconUtils';
 import TweetPost from 'components/post/TweetPost';
 import { useEffect, useRef } from 'react';
-import { useRootDispatch } from 'hooks/redux';
+import { useRootDispatch, useModalSelector } from 'hooks/redux';
 import { modalActions } from 'modules/modal';
 import useClickOutside from 'hooks/useClickOutside';
+import TweetDescription from 'components/tweet/TweetDescription';
+import Tweet from 'models/tweet';
 import Modal from './Modal';
 import PopupBackground from './PopupBackground';
 import Button from '../base/Button';
 import Icon from '../base/Icon';
 
-const PostPopupModalHeaderWrapper = styled.div`
+const ReplyPopupModalHeaderWrapper = styled.div`
   border-bottom: 1px solid ${hexToRgbA(ColorPalette.BLACK, 0.2)};
   margin-bottom: 10px;
   height: 50px;
@@ -28,51 +30,60 @@ const CloseButton = styled(Button)`
   }
 `;
 
-interface PostPopupModalHeaderProps {
+interface ReplyPopupModalHeaderProps {
   onClose: () => void;
 }
 
-const PostPopupModalHeader: React.FC<PostPopupModalHeaderProps> = (props) => {
+const ReplyPopupModalHeader: React.FC<ReplyPopupModalHeaderProps> = (props) => {
   const { onClose } = props;
   return (
-    <PostPopupModalHeaderWrapper onClick={onClose}>
+    <ReplyPopupModalHeaderWrapper onClick={onClose}>
       <CloseButton>
         <Icon iconType={BasicType.CLOSE} iconSize={20} />
       </CloseButton>
-    </PostPopupModalHeaderWrapper>
+    </ReplyPopupModalHeaderWrapper>
   );
 };
 
-const PostPopupModalContentWrapper = styled.div`
+const ReplyPopupModalContentWrapper = styled.div`
+  margin-bottom: 10px;
   width: 88%;
-  padding: 0 12px 0 16px;
+  padding: 10px 12px 0 24px;
   & :last-child {
     border: none;
   }
 `;
 
-interface PostPopupModalContentProps {
+interface ReplyPopupModalContentProps {
+  tweet: Tweet;
   onCreateTweet: () => void;
 }
 
-const PostPopupModalContent: React.FC<PostPopupModalContentProps> = (props) => {
-  const { onCreateTweet } = props;
+const ReplyPopupModalContent: React.FC<ReplyPopupModalContentProps> = (
+  props,
+) => {
+  const { tweet, onCreateTweet } = props;
   return (
-    <PostPopupModalContentWrapper>
-      <TweetPost onCreatePost={onCreateTweet} />
-    </PostPopupModalContentWrapper>
+    <ReplyPopupModalContentWrapper>
+      <TweetPost
+        isReply
+        originalTweetId={tweet.tweet_id}
+        onCreatePost={onCreateTweet}
+      />
+    </ReplyPopupModalContentWrapper>
   );
 };
 
-interface PostPopupModalProps {
+interface ReplyPopupModalProps {
   isOpened: boolean;
   className?: string;
 }
 
-const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
+const ReplyPopupModal: React.FC<ReplyPopupModalProps> = (props) => {
   const { isOpened } = props;
   const popup = useRef<HTMLDivElement>(null);
   const dispatch = useRootDispatch();
+  const originalTweet = useModalSelector((state) => state.originalTweet);
 
   const initLock = async () => {
     document.body.style.paddingRight = ` ${
@@ -92,27 +103,29 @@ const PostPopupModal: React.FC<PostPopupModalProps> = (props) => {
   }, [isOpened]);
 
   const closePopup = () => {
-    dispatch(modalActions.closePostModal());
+    dispatch(modalActions.closeReplyModal());
   };
 
   useClickOutside(popup, () => {
     closePopup();
   });
 
-  if (!isOpened) {
-    return null;
-  }
-
+  if (!isOpened) return null;
+  if (!originalTweet) return null;
   return (
     <PopupBackground>
       <Modal width={600}>
         <div ref={popup}>
-          <PostPopupModalHeader onClose={() => closePopup()} />
-          <PostPopupModalContent onCreateTweet={() => closePopup()} />
+          <ReplyPopupModalHeader onClose={closePopup} />
+          <TweetDescription tweet={originalTweet} />
+          <ReplyPopupModalContent
+            tweet={originalTweet}
+            onCreateTweet={closePopup}
+          />
         </div>
       </Modal>
     </PopupBackground>
   );
 };
 
-export default PostPopupModal;
+export default ReplyPopupModal;

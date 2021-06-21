@@ -1,10 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import styled, { css } from 'styled-components';
 import Button from 'components/base/Button';
 import Icon from 'components/base/Icon';
+import { useRootDispatch, useUserRecordSelector } from 'hooks/redux';
+import { homeActions } from 'modules/home';
 import { ColorPalette, hexToRgbA } from '../../utils/colorUtils';
 import Tweet from '../../models/tweet';
-import { BasicType } from '../../utils/iconUtils';
+import { BasicType, HighlightType } from '../../utils/iconUtils';
+import { modalActions } from '../../modules/modal';
 
 const TweetMainBottomContainer = styled.div`
   display: flex;
@@ -19,14 +22,15 @@ const TweetMainBottomItem = styled(Button)`
   align-items: center;
 `;
 
-// change component order to avoid hoisting
 const HoverIcon = styled(Icon)`
   width: 30px;
   height: 30px;
   border-radius: 9999px;
 `;
+
 interface HoverAreaProps {
   highlightColor: string;
+  isLikeFlag?: boolean;
 }
 
 const HoverArea = styled.div<HoverAreaProps>`
@@ -41,11 +45,22 @@ const HoverArea = styled.div<HoverAreaProps>`
       background-color: ${(props) => hexToRgbA(props.highlightColor, 0.1)};
     }
   }
+
+  ${HoverIcon} {
+    color: ${(props) => props.isLikeFlag && props.highlightColor};
+  }
 `;
 
-const HoverText = styled.div`
+interface HoverTextProps {
+  isLikeFlag?: boolean;
+  highlightColor?: string;
+}
+
+const HoverText = styled.div<HoverTextProps>`
   padding: 0 12px;
   font-size: 13px;
+
+  color: ${(props) => props.isLikeFlag && props.highlightColor};
 `;
 
 interface TweetMainBottomProps {
@@ -54,17 +69,43 @@ interface TweetMainBottomProps {
 
 const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
   const { tweet } = props;
+  const [isLikeFlag, setIsLikeFlag] = useState<boolean>(tweet.like_flag);
+  const [isRetweetFlag, setIsRetweetFlag] = useState<boolean>(
+    tweet.retweet_flag,
+  );
+  const writer = useUserRecordSelector(
+    (state) => state.userRecord[tweet.writer_id],
+  );
+  const dispatch = useRootDispatch();
+
+  const dispatchPopup = useRootDispatch();
 
   const handleReply = () => {
-    // TODO
+    const isFollowingWriter = writer?.following_flag;
+    if (tweet.reply_permission && !isFollowingWriter) {
+      window.alert('reply not permitted!!');
+    } else dispatchPopup(modalActions.openReplyModal(tweet));
   };
 
-  const handleRetweet = () => {
+  const handleRetweet = async () => {
     // TODO
+    if (isRetweetFlag) {
+      await dispatch(homeActions.unretweetTweet(tweet.tweet_id));
+    } else {
+      await dispatch(homeActions.retweetTweet(tweet.tweet_id));
+    }
+
+    setIsRetweetFlag(!isRetweetFlag);
   };
 
-  const handleLike = () => {
-    // TODO
+  const handleLike = async () => {
+    if (isLikeFlag) {
+      await dispatch(homeActions.dislikeTweet(tweet.tweet_id));
+    } else {
+      await dispatch(homeActions.likeTweet(tweet.tweet_id));
+    }
+
+    setIsLikeFlag(!isLikeFlag);
   };
 
   const handleShare = () => {
@@ -80,15 +121,39 @@ const TweetMainBottom: React.FC<TweetMainBottomProps> = (props) => {
         </HoverArea>
       </TweetMainBottomItem>
       <TweetMainBottomItem onClick={handleRetweet}>
-        <HoverArea highlightColor={ColorPalette.GREEN}>
-          <HoverIcon iconType={BasicType.RETWEET} iconSize={16} />
-          <HoverText>{tweet.retweet_count}</HoverText>
+        <HoverArea
+          highlightColor={ColorPalette.GREEN}
+          isLikeFlag={isRetweetFlag}
+        >
+          <HoverIcon
+            iconType={BasicType.RETWEET}
+            iconSize={16}
+            isHighlighted={!isRetweetFlag}
+          />
+          <HoverText
+            isLikeFlag={isRetweetFlag}
+            highlightColor={ColorPalette.GREEN}
+          >
+            {tweet.retweet_count}
+          </HoverText>
         </HoverArea>
       </TweetMainBottomItem>
       <TweetMainBottomItem onClick={handleLike}>
-        <HoverArea highlightColor={ColorPalette.MAGENTA}>
-          <HoverIcon iconType={BasicType.LIKE} iconSize={16} />
-          <HoverText>{tweet.like_count}</HoverText>
+        <HoverArea
+          highlightColor={ColorPalette.MAGENTA}
+          isLikeFlag={isLikeFlag}
+        >
+          <HoverIcon
+            iconType={HighlightType.LIKE}
+            iconSize={16}
+            isHighlighted={!isLikeFlag}
+          />
+          <HoverText
+            isLikeFlag={isLikeFlag}
+            highlightColor={ColorPalette.MAGENTA}
+          >
+            {tweet.like_count}
+          </HoverText>
         </HoverArea>
       </TweetMainBottomItem>
       <TweetMainBottomItem onClick={handleShare}>

@@ -3,15 +3,16 @@ import Tweet, { TweetList } from 'models/tweet';
 import User from 'models/user';
 import Api from './Api';
 import ApiBuilder from './ApiBuilder';
+import config from '../config';
 
-const apiPrefix = 'http://localhost:8000/api';
-const usersApiPrefix = `${apiPrefix}/users`;
+const usersApiPrefix = `${config.apiHost}/users`;
 
 class UsersApi extends Api {
   apiEndPoints = {
     USER: (id: string) => `${usersApiPrefix}/${id}`,
     USER_FEED: (id: string) => `${usersApiPrefix}/${id}/feed`,
     USER_FOLLOW: (id: string) => `${usersApiPrefix}/${id}/follow`,
+    USER_SEARCH: `${usersApiPrefix}/search`,
   };
 
   private static _instance: UsersApi;
@@ -36,6 +37,14 @@ class UsersApi extends Api {
       .post()
       .url(this.apiEndPoints.USER_FEED(id))
       .data({ offset, count })
+      .build();
+  }
+
+  searchUser(keyword: string): AxiosPromise<User[]> {
+    return ApiBuilder.create()
+      .get()
+      .url(this.apiEndPoints.USER_SEARCH)
+      .params({ keyword })
       .build();
   }
 

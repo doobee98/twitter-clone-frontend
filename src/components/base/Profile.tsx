@@ -3,41 +3,39 @@ import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { ColorPalette } from 'utils/colorUtils';
 import Button from './Button';
+import defaultImg from '../../resources/defaultProfile.png';
 
 // TO BE REFACTORED into Button
-const ProfileWrapper = styled.div`
+interface ProfileWrapperProps {
+  size: number;
+}
+
+const ProfileWrapper = styled.div<ProfileWrapperProps>`
   display: flex;
   justify-content: center;
   align-items: center;
 
-  width: 50px;
-  height: 50px;
+  width: ${(props) => props.size}px;
+  height: ${(props) => props.size}px;
 
   cursor: pointer;
 `;
 
-interface ImageWrapperProps {
-  profileSrc?: string;
-}
-const ImageWrapper = styled.div<ImageWrapperProps>`
+const ImageWrapper = styled.img`
   width: 100%;
   height: 100%;
-  border-radius: 24px;
-
-  background-color: ${(props) => props.profileSrc || ColorPalette.GREEN};
+  border-radius: 50%;
 `;
-
-// [REMOVED]
-const TestImage = styled.div<ImageWrapperProps>``;
 
 interface ProfileProps {
   userid: string;
   username: string;
   profileSrc?: string;
+  size?: number;
 }
 
 const Profile: React.FC<ProfileProps> = (props) => {
-  const { userid, username, profileSrc } = props;
+  const { userid, username, profileSrc, size = 50 } = props;
 
   const history = useHistory();
   const goToUserProfile = () => {
@@ -45,10 +43,8 @@ const Profile: React.FC<ProfileProps> = (props) => {
   };
 
   return (
-    <ProfileWrapper onClick={goToUserProfile}>
-      <ImageWrapper profileSrc={profileSrc}>
-        <TestImage />
-      </ImageWrapper>
+    <ProfileWrapper size={size} onClick={goToUserProfile}>
+      <ImageWrapper src={defaultImg} />
     </ProfileWrapper>
   );
 };

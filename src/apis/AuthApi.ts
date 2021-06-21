@@ -2,9 +2,9 @@ import { AxiosPromise } from 'axios';
 import User from 'models/user';
 import Api from './Api';
 import ApiBuilder from './ApiBuilder';
+import config from '../config';
 
-const apiPrefix = 'http://localhost:8000/api';
-const authApiPrefix = `${apiPrefix}/auth`;
+const authApiPrefix = `${config.apiHost}/auth`;
 
 class AuthApi extends Api {
   apiEndPoints = {
@@ -12,6 +12,7 @@ class AuthApi extends Api {
     LOGOUT: `${authApiPrefix}/logout`,
     INFO: `${authApiPrefix}/info`,
     SIGNUP: `${authApiPrefix}/signup`,
+    EDIT: `${authApiPrefix}/editInfo`,
     CURRENT_USER: `${authApiPrefix}/`, // [TO BE REMOVED] TEST endpoint
   };
 
@@ -45,6 +46,20 @@ class AuthApi extends Api {
       .post()
       .url(`${this.apiEndPoints.SIGNUP}`)
       .data({ id, password, username })
+      .build();
+  }
+
+  editInfo(
+    username?: string,
+    profile_img_src?: string,
+    bio?: string,
+    website?: string,
+    location?: string,
+  ): AxiosPromise<User> {
+    return ApiBuilder.create()
+      .post()
+      .url(`${this.apiEndPoints.EDIT}`)
+      .data({ username, profile_img_src, bio, website, location })
       .build();
   }
 
