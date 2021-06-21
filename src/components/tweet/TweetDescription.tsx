@@ -7,8 +7,7 @@ import { TweetMainTopDescription } from './TweetMainTop';
 
 const TweetContainer = styled.div`
   display: flex;
-
-  padding: 2px 2px 4px;
+  padding: 10px 2px 20px;
   margin: 0px 9px;
   border-bottom: 3px solid ${ColorPalette.GRAY_E6};
 `;

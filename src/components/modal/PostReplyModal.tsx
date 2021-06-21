@@ -47,6 +47,8 @@ const ReplyPopupModalHeader: React.FC<ReplyPopupModalHeaderProps> = (props) => {
 
 const ReplyPopupModalContentWrapper = styled.div`
   margin-bottom: 10px;
+  width: 88%;
+  padding: 10px 12px 0 24px;
   & :last-child {
     border: none;
   }
