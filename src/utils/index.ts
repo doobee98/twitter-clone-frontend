@@ -7,6 +7,21 @@ export const isEnumType = <E>(
   return Object.values(enumObject).includes(value as E);
 };
 
+const monthRecord = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
+
 export const getTweetedTimeGap = (tweetedAt: string) => {
   const oldTime = new Date(tweetedAt);
   const curTime = new Date();
@@ -32,9 +47,12 @@ export const getTweetedTimeGap = (tweetedAt: string) => {
   }
 
   const elapsedDay = Math.floor(elapsedHour / 24);
+  const month = monthRecord[oldTime.getMonth()];
+  const day = oldTime.getDate();
   if (elapsedDay < 365) {
-    return `${oldTime.getMonth()}m ${oldTime.getDate()}d`;
+    return `${month} ${day}`;
   }
 
-  return `${oldTime.getFullYear()}y ${oldTime.getMonth()}m ${oldTime.getDate()}d`;
+  const year = oldTime.getFullYear();
+  return `${month} ${day}, ${year}`;
 };
